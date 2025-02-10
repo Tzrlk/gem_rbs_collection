@@ -6,3 +6,7 @@ tmp
 /gems/*/*/_test/rbs_collection.yaml
 /gems/*/*/_test/Gemfile.back
 /gems/*/*/_test/Gemfile.lock.back
+
+# IntelliJ
+.idea/
+*.iml
