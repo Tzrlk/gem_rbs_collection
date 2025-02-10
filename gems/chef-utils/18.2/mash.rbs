@@ -1,0 +1,66 @@
+module ChefUtils
+	type mash_values = String | Numeric | Symbol | Array[mash_values] | Mash | nil
+	class Mash < Hash[String, mash_values]
+
+		def initialize: () -> void
+			| (Hash[Symbol|String,mash_values]) -> void
+			| (mash_values) -> void
+			| () { (self,String) -> mash_values } -> void
+
+		def initialize_copy: (Mash) -> self
+
+		def default: ((Symbol|String)?) -> mash_values?
+
+		alias regular_reader []
+		alias regular_writer []=
+		alias regular_update update
+		alias regular_clear clear
+		alias regular_delete delete
+
+		def []: (Symbol|String) -> mash_values?
+
+		def []=: (Symbol|String,mash_values) -> mash_values?
+
+		def internal_get: (Symbol|String) -> mash_values?
+
+		def internal_set: (Symbol|String,mash_values) -> mash_values?
+
+		def update: (Hash[Symbol|String,mash_values]) -> self
+
+		alias merge! update
+
+		def key?: (Symbol|String) -> bool
+
+		alias include? key?
+		alias has_key? key?
+		alias member? key?
+
+		def fetch: (Symbol|String, *(Symbol|String)) -> mash_values?
+
+		def values_at: (*(Symbol|String)) -> Array[mash_values?]
+
+		def merge: (Hash[Symbol|String,mash_values]) -> self
+
+		def delete: (Symbol|String) -> mash_values?
+
+		def except: (*(Symbol|String)) -> Hash[String,mash_values]
+
+		def stringify_keys!: () -> self
+
+		def symbolize_keys: () -> Hash[Symbol,mash_values]
+
+		def to_hash: () -> Hash[Symbol|String,mash_values]
+
+		def self.from_hash: [K] (Hash[K,mash_values]) -> Mash
+
+		private
+
+		def convert_key: (Symbol|String) -> String
+			| [O] (O) -> O
+
+		def convert_value: (Hash[Symbol|String,mash_values]) -> Mash
+			| (Array[mash_values & Hash[Symbol|String,mash_values]]) -> Array[mash_values]
+			| [O] (O) -> O
+
+	end
+end
