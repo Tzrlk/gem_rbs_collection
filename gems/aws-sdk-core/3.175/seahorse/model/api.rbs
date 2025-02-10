@@ -1,0 +1,37 @@
+module Seahorse
+	module Model
+		class Api
+			@version: String?
+			@metadata: Hash[String, String]
+			@endpoint_operation: Symbol?
+			@require_endpoint_discovery: bool?
+			@operations: Hash[Symbol, Operation]
+			@authorizers: Hash[Symbol, Authorizer]
+
+			def initialize: () -> void
+
+			def operations: () -> Enumerator[Symbol, Operation]
+				| () { (Symbol, Operation) -> void } -> void
+
+			def operation: (Symbol) -> Operation
+
+			def operation_names: () -> Array[Symbol]
+
+			def async_operation_names: () -> Array[Symbol]
+
+			def add_operation: (Symbol, Operation) -> Operation
+
+			def authorizers: () -> Enumerator[Symbol, Authorizer]
+				| () { (Symbol, Authorizer) -> void } -> void
+
+			def authorizer: (Symbol) -> Authorizer
+
+			def authorizer_names: () -> Array[Symbol]
+
+			def add_authorizer: (Symbol, Authorizer) -> Authorizer
+
+			def inspect: (*untyped) -> String
+
+		end
+	end
+end

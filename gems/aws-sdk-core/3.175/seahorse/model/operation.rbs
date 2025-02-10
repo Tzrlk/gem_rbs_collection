@@ -1,0 +1,31 @@
+module Seahorse
+	module Model
+		class Operation
+
+			@name: String?
+			@http_method: String
+			@http_request_uri: String
+			@http_checksum_required: bool
+			@http_checksum: Hash[untyped, untyped]
+			@request_compression: Hash[untyped, untyped]
+			@deprecated: bool
+			@endpoint_operation: bool
+			@endpoint_discovery: Hash[untyped, untyped]
+			@documentation: String?
+			@endpoint_pattern: Hash[untyped, untyped]?
+			@authorizer: String?
+			@input: Shapes::ShapeRef?
+			@output: Shapes::ShapeRef?
+			@errors: Array[Shapes::ShapeRef]
+			@require_apikey: bool
+			@async: bool
+
+			def initialize: () -> void
+
+			def []: (String|Symbol) -> untyped
+
+			def []=: (String|Symbol, untyped) -> untyped
+
+		end
+	end
+end

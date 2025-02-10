@@ -1,0 +1,13 @@
+module Seahorse
+	module Model
+		class Authorizer
+
+			@name: String
+			@type: String
+			@placement: Hash[untyped, untyped]
+
+			def initialize: () -> void
+
+		end
+	end
+end

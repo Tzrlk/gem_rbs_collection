@@ -1,0 +1,129 @@
+module Seahorse
+	module Model
+		module Shapes
+
+			class ShapeRef
+
+				def initialize: (Hash[untyped, untyped]) -> void
+
+				@shape: Shape
+				@required: bool
+				@documentation: String?
+				@deprecated: bool
+				@event: bool
+				@eventstream: bool
+				@eventpayload: bool
+				@eventheader: bool
+				@eventpayload_type: String
+				@eventheader_type: bool
+				@document: bool
+
+				def location: () -> String?
+
+				def location=: (String) -> String
+
+				def location_name: () -> String?
+
+				def location_name=: (String) -> String
+
+				def []: (String | Symbol) -> untyped?
+
+				# Sets metadata for the given `key`.
+				def []=: (String | Symbol, untyped) -> untyped
+
+			end
+
+			class Shape
+
+				def initialize: (Hash[untyped, untyped]) -> void
+
+				@name: String
+				@documentation: String?
+				@union: bool
+
+				def []: (String | Symbol) -> untyped
+
+				def []=: (String | Symbol, untyped) -> untyped
+
+			end
+
+			class BlobShape < Shape
+				@min: Integer?
+				@max: Integer?
+			end
+
+			class BooleanShape < Shape
+			end
+
+			class FloatShape < Shape
+				@min: Integer?
+				@max: Integer?
+			end
+
+			class IntegerShape < Shape
+				@min: Integer?
+				@max: Integer?
+			end
+
+			class ListShape < Shape
+				@member: ShapeRef
+				@min: Integer?
+				@max: Integer?
+				@flattened: bool
+			end
+
+			class MapShape < Shape
+				@key: ShapeRef
+				@value: ShapeRef
+				@min: Integer?
+				@max: Integer?
+				@flattened: bool
+			end
+
+			class StringShape < Shape
+				@enum: Set[String]?
+				@min: Integer?
+				@max: Integer?
+			end
+
+			class StructureShape < Shape
+
+				def initialize: (Hash[untyped, untyped]) -> void
+
+				@required: Set[Symbol]
+				@struct_class: Class
+
+				def add_member: (Symbol, ShapeRef) -> ShapeRef
+
+				def member_names: () -> Array[Symbol]
+
+				def member?: (Symbol) -> bool
+
+				def members: () -> Enumerator[Symbol, ShapeRef]
+
+				def member: (Symbol) -> ShapeRef
+
+				def member_by_location_name: (untyped) -> untyped
+
+			end
+
+			class UnionShape < StructureShape
+
+				def initialize: (Hash[untyped, untyped]) -> void
+
+				def member_subclass: (untyped) -> untyped
+
+				def add_member_subclass: (untyped, untyped) -> untyped
+			end
+
+			class TimestampShape < Shape
+
+			end
+
+			class DocumentShape < Shape
+
+			end
+
+		end
+	end
+end

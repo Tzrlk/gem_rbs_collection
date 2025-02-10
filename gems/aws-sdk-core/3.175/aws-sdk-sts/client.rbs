@@ -1,0 +1,9 @@
+module Aws
+	module STS
+		class Client
+
+			def api: () -> Seahorse::Model::Api
+
+		end
+	end
+end
