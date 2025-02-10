@@ -1,0 +1,22 @@
+class Chef
+	module DSL
+		module Recipe
+			include Compliance
+			include Universal
+			include DeclareResource
+			include Mixin::NotifyingBlock
+			include IncludeRecipe
+			include RebootPending
+			include Resources
+			include Definitions
+			extend Mixin::LazyModuleInclude
+
+			def resource_class_for: (Symbol) -> Resource
+
+			def have_resource_class_for?: (Symbol) -> bool
+
+			def exec: (untyped) -> void
+
+		end
+	end
+end

@@ -1,0 +1,7 @@
+class Chef
+	module Mixin
+		module Provides
+
+		end
+	end
+end

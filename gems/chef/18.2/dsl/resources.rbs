@@ -1,0 +1,12 @@
+class Chef
+	module DSL
+		module Resources
+			include DSL::Cheffish
+
+			def self.add_resource_dsl: (Symbol) -> void
+
+			def self.remove_resource_dsl: (Symbol) -> void
+
+		end
+	end
+end

@@ -1,0 +1,13 @@
+class Chef
+	module Mixin
+		module FromFile
+
+			attr_accessor source_file: String
+
+			def from_file: (String) -> void
+
+			def class_from_file: (String) -> void
+
+		end
+	end
+end

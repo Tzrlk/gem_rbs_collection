@@ -1,0 +1,7 @@
+class Chef
+	module DSL
+		module Compliance
+
+		end
+	end
+end

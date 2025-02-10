@@ -1,0 +1,109 @@
+class Chef
+
+	class Resource
+		class Execute < Resource
+
+			type allowed_actions
+				= :nothing
+				| :run
+
+			@default_action: :run
+			@allowed_actions: [ :nothing, :run ]
+			@action: Array[allowed_actions]
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+			def command
+				: (String) -> String
+				| (Array[String]) -> Array[String]
+				| () -> ( String | Array[String] )
+
+			def creates
+				: (String) -> String
+				| () -> String
+
+			def cwd
+				: (String) -> String
+				| () -> String
+
+			def default_env
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def domain
+				: (String) -> String
+				| () -> String
+
+			def elevated
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def environment
+				: (Hash[String, String]) -> Hash[String, String]
+				| () -> Hash[String, String]
+
+			def group
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def input
+				: (String) -> String
+				| () -> String
+
+			def live_stream
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def login
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def password
+				: (String) -> String
+				| () -> String
+
+			def returns
+				: (Integer) -> Integer
+				| (Array[Integer]) -> Array[Integer]
+				| () -> ( Integer | Array[Integer] )
+
+			def timeout
+				: (Integer) -> Integer
+				| (String) -> String
+				| (Float) -> Float
+				| () -> ( Integer | String | Float )
+
+			def user
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def execute
+				: (String) { () [ self: Resource::Execute ] -> void }
+					-> Resource::Execute
+
+		end
+	end
+
+end

@@ -1,0 +1,59 @@
+class Chef
+
+	class Resource
+		class Directory < Resource
+
+			type allowed_actions
+				= :create
+				| :delete
+				| :nothing
+
+			@default_action: :create
+			@allowed_actions: [ :create, :delete, :nothing ]
+			@action: Array[allowed_actions]
+
+			def group
+				: () -> String
+				| (String) -> String
+
+			def mode
+				: () -> ( String | Integer )
+				| (String | Integer) -> ( String | Integer )
+
+			def owner
+				: () -> String
+				| (String) -> String
+
+			def path
+				: () -> String
+				| (String) -> String
+
+			def recursive
+				: () -> bool
+				| (bool) -> bool
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def directory
+				: (String) { () [ self: Resource::Directory ] -> void } -> Resource::Directory
+
+		end
+	end
+
+end

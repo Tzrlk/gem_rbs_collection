@@ -1,0 +1,11 @@
+class Chef
+	class RunContext
+
+		@rest: ServerAPI
+		@rest_clean: ServerAPI
+		@node: Node
+
+		def node=: (Node) -> void
+
+	end
+end

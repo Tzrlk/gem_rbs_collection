@@ -1,0 +1,49 @@
+class Chef
+	module DSL
+		module Cheffish
+
+			def chef_acl: (*untyped) { () -> untyped } -> untyped
+
+			def chef_client: (*untyped) { () -> untyped } -> untyped
+
+			def chef_container: (*untyped) { () -> untyped } -> untyped
+
+			def chef_data_bag_item: (*untyped) { () -> untyped } -> untyped
+
+			def chef_data_bag: (*untyped) { () -> untyped } -> untyped
+
+			def chef_environment: (*untyped) { () -> untyped } -> untyped
+
+			def chef_group: (*untyped) { () -> untyped } -> untyped
+
+			def chef_mirror: (*untyped) { () -> untyped } -> untyped
+
+			def chef_node: (*untyped) { () -> untyped } -> untyped
+
+			def chef_organization: (*untyped) { () -> untyped } -> untyped
+
+			def chef_role: (*untyped) { () -> untyped } -> untyped
+
+			def chef_user: (*untyped) { () -> untyped } -> untyped
+
+			def private_key: (*untyped) { () -> untyped } -> untyped
+
+			def public_key: (*untyped) { () -> untyped } -> untyped
+
+			def with_chef_data_bag: (*untyped) { () -> untyped } -> untyped
+
+			def with_chef_environment: (*untyped) { () -> untyped } -> untyped
+
+			def with_chef_data_bag_item_encryption: (*untyped) { () -> untyped } -> untyped
+
+			def with_chef_server: (*untyped) { () -> untyped } -> untyped
+
+			def with_chef_local_server: (*untyped) { () -> untyped } -> untyped
+
+			def get_private_key: (*untyped) { () -> untyped } -> untyped
+
+			def self.load_cheffish: () -> void
+
+		end
+	end
+end

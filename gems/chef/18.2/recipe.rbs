@@ -1,0 +1,41 @@
+class Chef
+	class Recipe
+		include DSL::Recipe
+		include Mixin::FromFile
+		include Mixin::Deprecation
+
+		attr_accessor cookbook_name: String
+		attr_accessor recipe_name: String
+		attr_accessor recipe: untyped
+		attr_accessor params: Hash[String, untyped]
+		attr_accessor run_context: RunContext
+
+		def initialize
+			: (String, String, RunContext) -> void
+
+		def node
+			: () -> Node
+
+		def tag
+			: (*String) -> Array[String]
+
+		def untag
+			: (*String) -> void
+
+		def from_yaml_file
+			: (String) -> void
+
+		def from_yaml
+			: (String) -> void
+
+		def from_hash
+			: (Hash[String, untyped]) -> void
+
+		def to_s
+			: () -> String
+
+		def inspect
+			: () -> String
+
+	end
+end

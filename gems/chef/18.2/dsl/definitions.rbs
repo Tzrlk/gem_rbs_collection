@@ -1,0 +1,7 @@
+class Chef
+	module DSL
+		module Definitions
+
+		end
+	end
+end

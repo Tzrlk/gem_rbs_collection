@@ -1,0 +1,86 @@
+class Chef
+
+	class Resource
+		class RemoteFile < File
+
+			# Inherits all allowed actions from File.
+
+			def authentication
+				: (:local) -> :local
+				| (:remote) -> :remote
+				| () -> ( :local | :remote )
+
+			def ftp_active_mode
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def headers
+				: (Hash[String, String]) -> Hash[String, String]
+				| () -> Hash[String, String]
+
+			type http_opts = {
+					?http_retry_count: Integer,
+					?http_retry_delay: Integer,
+				}
+
+			def http_options
+				: (http_opts) -> http_opts
+				| () -> http_opts
+
+			def remote_domain
+				: (String) -> String
+				| () -> String
+
+			def remote_password
+				: (String) -> String
+				| () -> String
+
+			def remote_user
+				: (String) -> String
+				| () -> String
+
+			def source
+				: (String) -> String
+				| (Array[String]) -> Array[String]
+				| () -> ( String | Array[String] )
+
+			def show_progress
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def ssl_verify_mode
+				: (:verify_none) -> :verify_none
+				| (:veriy_peer) -> :verify_peer
+				| () -> ( :verify_none | :verify_peer )
+
+			def use_conditional_get
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def use_etag
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def use_last_modified
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def remote_file
+				: (String) { () [ self: Resource::RemoteFile ] -> void }
+					-> Resource::RemoteFile
+
+		end
+	end
+
+end

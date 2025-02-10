@@ -1,0 +1,21 @@
+class Chef
+	class Node
+
+		class AttrArray[V] < Array[V]
+			include Chef::Node::Mixin::MashyArray
+
+			# TODO
+
+			prepend Chef::Node::Mixin::StateTracking
+		end
+
+		class VividMash < ChefUtils::Mash
+			include CommonAPI
+
+			# TODO
+
+			prepend Chef::Node::Mixin::StateTracking
+		end
+
+	end
+end

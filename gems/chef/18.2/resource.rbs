@@ -1,0 +1,212 @@
+class Chef
+	class Resource
+		include DSL::DeclareResource
+		include DSL::RebootPending
+		extend Mixin::Provides
+		include DSL::Universal
+		extend DSL::Universal
+		include Mixin::Properties
+
+		type allowed_actions
+			= :nothing
+		type timing
+			= :delayed
+			| :immediate
+			| :immediately
+			| :before
+
+		@run_context: RunContext
+		@logger: untyped
+		@before: nil
+		@params: {}
+		@provider: Provider?
+		@allowed_actions: [ :nothing ]
+		@action: Array[allowed_actions]
+		@updated: bool
+		@updated_by_last_action: bool
+		@not_if: Array[Conditional]
+		@only_if: Array[Conditional]
+		@source_line: String?
+		@deprecated: bool
+		@skip_docs: bool
+		@guard_interpreter: ( Symbol | String | Execute )?
+		@default_guard_interpreter: :default
+		@elapsed_time: Integer
+		@executed_by_runner: bool
+
+		def name
+			: () -> String
+			| (String) -> String
+
+		def node
+			: () -> Node
+
+		def initialize
+			: (String) -> void
+			| (String, RunContext) -> void
+
+		def action
+			: () -> ( allowed_actions | Array[allowed_actions] )
+			| (allowed_actions) -> allowed_actions
+			| (Array[allowed_actions]) -> Array[allowed_actions]
+
+		alias action= action
+
+		def delayed_action
+			: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+		type resource_spec = String | Resource | Array[Resource]
+
+		def notifies
+			: (Symbol, resource_spec) -> bool
+			| (Symbol, resource_spec, timing) -> bool
+
+		class UnresolvedSubscribes < Resource
+			alias to_s name
+			alias declared_key name
+		end
+
+		def subscribes
+			: (allowed_actions, resource_spec) -> bool
+			| (allowed_actions, resource_spec, timing) -> bool
+
+		type guard_opts = {
+				valid_exit_codes?: Array[Integer],
+				cwd?:     String,
+				input?:   String | Array[String],
+				timeout?: Integer,
+			}
+
+		def only_if
+			: () -> Array[Conditional]
+			| (String) -> Array[Conditional]
+			| (String, guard_opts) -> Array[Conditional]
+			| () { () -> bool } -> Array[Conditional]
+			| (String) { () -> bool } -> Array[Conditional]
+			| (String, guard_opts) { () -> bool } -> Array[Conditional]
+
+		def not_if
+			: () -> Array[Conditional]
+			| (String) -> Array[Conditional]
+			| (String, guard_opts) -> Array[Conditional]
+			| () { () -> bool } -> Array[Conditional]
+			| (String) { () -> bool } -> Array[Conditional]
+			| (String, guard_opts) { () -> bool } -> Array[Conditional]
+
+		def retries
+			: () -> Integer
+			| (Integer) -> Integer
+
+		def retry_delay
+			: () -> Integer
+			| (Integer) -> Integer
+
+		def sensitive
+			: () -> bool
+			| (bool) -> bool
+
+		def compile_time: () -> bool
+			| (bool) -> bool
+
+		def umask
+			: () -> ( String | Integer | nil )
+			| (String | Integer) -> ( String | Integer )
+
+		attr_reader elapsed_time: Integer
+
+		attr_accessor executed_by_runner: bool
+
+		def guard_interpreter
+			: [T < Execute] () -> ( T | Symbol | String )
+			| [T < Execute] (T) -> T
+			| (Symbol) -> Symbol
+			| (String) -> String
+
+		def state_for_resource_reporter
+			: () -> Hash[Symbol, untyped]
+
+		def identity
+			: () -> ( untyped | Hash[Symbol, untyped] )
+
+		def ignore_failure
+			: () -> ( bool | :quiet | 'quiet' )
+			| (bool) -> bool
+			| (:quiet) -> :quiet
+			| ('quiet') -> 'quiet'
+
+		def load_from
+			: (Resource) -> void
+
+		def run_action
+			: (Symbol) -> void
+			| (Symbol, untyped) -> void
+			| (Symbol, untyped, Resource) -> void
+
+		def with_umask
+			: () { () -> void } -> void
+
+		attr_reader resource_initializing: bool
+
+		def resource_initializing=
+			: (bool) -> bool
+
+		def to_s
+			: () -> String
+
+		def to_text
+			: () -> String
+
+		def value_to_text
+			: (untyped) -> String
+
+		def inspect
+			: () -> String
+
+		def as_json
+			: (*untyped) -> {
+				"json_class"    => String,
+				"instance_vars" => Hash[String, untyped]
+			}
+
+		type json_opts = {
+				validate_utf8?: bool,
+				pretty?:        bool,
+				indent?:        String,
+			}
+
+		def to_json
+			: (*untyped) -> String
+			| (json_opts) -> String
+
+		def to_h
+			: () -> Hash[Symbol, untyped]
+
+		alias to_hash to_h
+
+		def self.from_hash
+			: (Hash[String, untyped]) -> Resource
+
+		def self.json_create
+			: (Hash[String, untyped]) -> Resource
+
+		def self.from_json
+			: (String) -> Resource
+
+		include Mixin::Deprecation
+
+		def provider
+			: () -> Provider
+			| [T < Provider] (String | Symbol | T) -> T
+
+		def provider=
+			: [T < Provider] (String | Symbol | T) -> T
+
+		# TODO: So much.
+
+		attr_writer allowed_actions: Array[Symbol]
+
+		def self.resource_for_node
+			: (Symbol, Node) -> Resource
+
+	end
+end

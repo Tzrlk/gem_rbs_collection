@@ -1,0 +1,7 @@
+class Chef
+	module DSL
+		module RebootPending
+
+		end
+	end
+end

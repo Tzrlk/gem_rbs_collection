@@ -1,0 +1,47 @@
+class Chef
+
+	class Resource
+		class RubyBlock < Resource
+
+			type allowed_actions
+				= :create
+				| :nothing
+				| :run
+
+			@default_action: :run
+			@allowed_actions: [ :create, :nothing, :run ]
+			@action: Array[allowed_actions]
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+			def block
+				: () { () -> void } -> ^() -> void
+				| () -> ^() -> void
+
+			def block_name
+				: (String) -> String
+				| () -> String
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def ruby_block
+				: (String) { () [ self: Resource::RubyBlock ] -> void } -> Resource::RubyBlock
+
+		end
+	end
+
+end

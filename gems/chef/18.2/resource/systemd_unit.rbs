@@ -1,0 +1,150 @@
+class Chef
+
+	class Resource
+		class SystemdUnit < Resource
+
+			type allowed_actions
+				= :create
+				| :delete
+				| :preset
+				| :revert
+				| :enable
+				| :disable
+				| :reenable
+				| :mask
+				| :unmask
+				| :start
+				| :stop
+				| :restart
+				| :reload
+				| :try_restart
+				| :reload_or_restart
+				| :reload_or_try_restart
+				| :nothing
+
+			@default_action: :nothing
+			@action: Array[allowed_actions]
+			@allowed_actions: [
+					:create,
+					:delete,
+					:preset,
+					:revert,
+					:enable,
+					:disable,
+					:reenable,
+					:mask,
+					:unmask,
+					:start,
+					:stop,
+					:restart,
+					:reload,
+					:try_restart,
+					:reload_or_restart,
+					:reload_or_try_restart,
+					:nothing,
+				]
+
+			def enabled
+				: () -> bool
+				| (bool) -> bool
+
+			def active
+				: () -> bool
+				| (bool) -> bool
+
+			def masked
+				: () -> bool
+				| (bool) -> bool
+
+			def static
+				: () -> bool
+				| (bool) -> bool
+
+			def indirect
+				: () -> bool
+				| (bool) -> bool
+
+			def user
+				: () -> String
+				| (String) -> String
+
+			type unit_spec = {
+					Unit: {
+							?Description: String,
+							?Documentation: String,
+							?ConditionFileNotEmpty: String | Array[String],
+							?ConditionPathIsReadWrite: String | Array[String],
+							?Wants: String | Array[String],
+							?After: String | Array[String],
+						},
+					?Service: {
+							?Type: 'notify' | 'oneshot' | 'forking',
+							?PIDFile: String,
+							?User: String,
+							?Group: String,
+							?Environment: String | Array[String],
+							?ExecStart: String | Array[String],
+							?ExecStop: String | Array[String],
+							?ExecReload: String | Array[String],
+							?KillMode: 'process',
+							?KillSignal: 'SIGINT' | 'SIGKILL',
+							?Restart: 'on-failure',
+							?RestartSec: Integer | String,
+							?TimeoutStopSec: Integer | String,
+						},
+					?Timer: {
+							?Unit: String,
+							?OnStartupSec: Integer | String,
+							?OnUnitInactiveSec: Integer | String,
+							?Persistent: bool,
+						},
+					?Install: {
+							?WantedBy: String | Array[String],
+						},
+				}
+
+			def content
+				: () -> ( String | unit_spec )
+				| (String) -> String
+				| (unit_spec) -> unit_spec
+
+			def triggers_reload
+				: () -> bool
+				| (bool) -> bool
+
+			def verify
+				: () -> bool
+				| (bool) -> bool
+
+			def unit_name
+				: () -> String
+				| (String) -> String
+
+			def to_ini
+				: () -> String
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def systemd_unit
+				: (String) { () [ self: Resource::SystemdUnit ] -> void } -> Resource::SystemdUnit
+
+		end
+	end
+
+end

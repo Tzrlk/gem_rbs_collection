@@ -1,0 +1,7 @@
+class Chef
+	module Mixin
+		module LazyModuleInclude
+
+		end
+	end
+end

@@ -1,0 +1,7 @@
+class Chef
+	class Resource
+		class Conditional
+
+		end
+	end
+end

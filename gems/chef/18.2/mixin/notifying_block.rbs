@@ -1,0 +1,7 @@
+class Chef
+	module Mixin
+		module NotifyingBlock
+
+		end
+	end
+end

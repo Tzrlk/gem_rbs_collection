@@ -1,0 +1,106 @@
+class Chef
+
+	class Resource
+		class File < Resource
+
+			type allowed_actions
+				= :create
+				| :create_if_missing
+				| :delete
+				| :nothing
+				| :touch
+
+			@default_action: :create
+			@allowed_actions: [ :create, :create_if_missing, :delete, :nothing, :touch ]
+			@action: Array[allowed_actions]
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+			def atomic_update
+				: (bool) -> bool
+				| () -> bool
+
+			def backup
+				: (Integer) -> Integer
+				| (false) -> false
+				| () -> ( Integer | false )
+
+			def checksum
+				: (String) -> String
+				| () -> String
+
+			def content
+				: (String) -> String
+				| () -> String
+
+			def force_unlink
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def group
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def inherits
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def manage_symlink_source
+				: (true) -> true
+				| (false) -> false
+				| () -> bool
+
+			def mode
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def owner
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def path
+				: (String) -> String
+				| () -> String
+
+			def rights
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def verify
+				: (String) -> String
+				| (:json) -> :json
+				| (:yaml) -> :yaml
+				| (:systemd_unit) -> :systemd_unit
+				| (^() -> bool) -> ^() -> bool
+				| () -> ( String | ^() -> bool )
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def file
+				: (String) { () [ self: Resource::File ] -> void }
+					-> Resource::File
+
+		end
+	end
+
+end

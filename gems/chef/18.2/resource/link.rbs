@@ -1,0 +1,68 @@
+class Chef
+
+	class Resource
+		class Link < Resource
+
+			type allowed_actions
+				= :create
+				| :delete
+				| :nothing
+
+			@default_action: :create
+			@allowed_actions: [ :create, :delete, :nothing ]
+			@action: Array[allowed_actions]
+
+			def action
+				: () -> ( allowed_actions | Array[allowed_actions] )
+				| (allowed_actions) -> allowed_actions
+				| (Array[allowed_actions]) -> Array[allowed_actions]
+
+			def delayed_action
+				: ( allowed_actions | Array[allowed_actions] ) -> Array[Notification]
+
+			def subscribes
+				: (allowed_actions, resource_spec) -> bool
+				| (allowed_actions, resource_spec, timing) -> bool
+
+			def group
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def link_type
+				: (:hard | 'hard') -> :hard
+				| (:symbolic | 'symbolic') -> :symbolic
+				| () -> ( :hard | :symbolic )
+
+			def mode
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def owner
+				: (Integer) -> Integer
+				| (String) -> String
+				| () -> ( Integer | String )
+
+			def target_file
+				: (String) -> String
+				| () -> String
+
+			def to
+				: (String) -> String
+				| () -> String
+
+		end
+	end
+
+	module DSL
+		module Resources
+
+			def link
+				: (String) { () [ self: Resource::Link ] -> void }
+					-> Resource::Link
+
+		end
+	end
+
+end

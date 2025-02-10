@@ -1,0 +1,105 @@
+class Chef
+	class Environment
+
+		DEFAULT: 'default'
+
+		include Mixin::ParamsValidate
+		include Mixin::FromFile
+
+		COMBINED_COOKBOOK_CONSTRAINT: String
+
+		@name: String
+		@description: String
+		@default_attributes: ChefUtils::Mash[untyped]
+		@override_attributes: ChefUtils::Mash[untyped]
+		@cookbook_versions: Hash[untyped,untyped]
+		@chef_server_rest: ServerAPI?
+
+		def initialize: (ServerAPI?) -> void
+
+		def chef_server_rest: () -> ServerAPI
+
+		def name: (String?) -> String?
+
+		def description: (String?) -> String?
+
+		def default_attributes: (Hash[untyped,untyped]?) -> Hash[untyped,untyped]?
+
+		def default_attributes=: (Hash[untyped,untyped]) -> Hash[untyped,untyped]
+
+		def override_attributes: (Hash[untyped,untyped]?) -> Hash[untyped,untyped]?
+
+		def override_attributes=: (Hash[untyped,untyped]) -> Hash[untyped,untyped]
+
+		def cookbook_versions: (Hash[String,String]?) -> Hash[String,String]
+
+		def cookbook: (String, String) -> void
+
+		def to_h: () -> {
+			name: String?,
+			description: String?,
+			cookbook_versions: Hash[String,String],
+			json_class: String,
+			chef_type: 'environment',
+			default_attributes: Hash[untyped,untyped],
+			override_attributes: Hash[untyped,untyped],
+		}
+
+		alias to_hash to_h
+
+		def to_json: (*untyped) -> String
+
+		def update_from: (Environment) -> self
+
+		def update_attributes_from_params: ({
+				default_attributes?: String?,
+				override_attributes?: String?,
+			}) -> void
+
+		def update_from_params: ({
+				name?: String?,
+				description?: String?,
+				cookbook_version?: Hash[String,String]?,
+			}) -> bool
+
+		def update_cookbook_constraint_from_param: (String, String) -> bool
+
+		def add_cookbook_constraint_error: (String, String) -> void
+
+		def invalid_fields: () -> {
+			name?: String,
+			cookbook_version?: Hash[String,String]
+		}
+
+		def validate_required_attrs_present: () -> bool
+
+		def self.from_hash: ({
+				name?: String?,
+				description?: String?,
+				cookbook_versions?: Hash[String,String]?,
+				default_attributes?: Hash[untyped,untyped]?,
+				override_attributes?: Hash[untyped,untyped]?,
+			}) -> instance
+
+		def self.list: (bool?) -> Hash[untyped,untyped]
+
+		def self.load: (String) -> instance
+
+		def self.load_from_file: (String) -> instance
+
+		def destroy: () -> void
+
+		def save: () -> self
+
+		def create: () -> self
+
+		def self.load_filtered_recipe_list: (String) -> untyped
+
+		def to_s: () -> String?
+
+		def self.validate_cookbook_versions: (Hash[String,String]) -> bool
+
+		def self.validate_cookbook_version: (String) -> bool
+
+	end
+end

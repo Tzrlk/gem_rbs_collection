@@ -1,0 +1,7 @@
+class Chef
+	module Mixin
+		module ParamsValidate
+
+		end
+	end
+end

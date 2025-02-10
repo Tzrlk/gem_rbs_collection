@@ -1,0 +1,7 @@
+class Chef
+	module Mixin
+		module Deprecation
+
+		end
+	end
+end
