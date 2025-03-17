@@ -1,0 +1,9 @@
+class Chef
+	class HTTP
+		class SocketlessChefZeroClient
+
+			# TODO
+
+		end
+	end
+end

@@ -1,0 +1,5 @@
+class Chef
+	class Config < ChefConfig::Config
+
+	end
+end

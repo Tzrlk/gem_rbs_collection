@@ -1,7 +1,34 @@
-# manifest.yaml describes dependencies which do not appear in the gemspec.
-# If this gem includes such dependencies, comment-out the following lines and
-# declare the dependencies.
-# If all dependencies appear in the gemspec, you should remove this file.
-#
-# dependencies:
-#   - name: pathname
+dependencies:
+  - name: chef-config
+  - name: chef-powershell
+  - name: chef-utils
+  - name: chef-zero
+  - name: date
+  - name: delegate
+  - name: diff
+  - name: etc
+  - name: fast_xs
+  - name: fcntl
+  - name: ffi
+  - name: fileutils
+  - name: forwardable
+  - name: logger
+  - name: mixlib
+  - name: ohai
+  - name: open-uri
+  - name: openssl
+  - name: pp
+  - name: proxifier
+  - name: rbconfig
+  - name: ruby-prof
+  - name: securerandom
+  - name: singleton
+  - name: socket
+  - name: syslog-logger
+  - name: tempfile
+  - name: time
+  - name: timeout
+  - name: tmpdir
+  - name: win32
+  - name: win32-certstore
+  - name: zlib

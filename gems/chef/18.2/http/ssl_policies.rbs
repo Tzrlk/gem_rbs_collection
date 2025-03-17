@@ -1,0 +1,51 @@
+class Chef
+	class HTTP
+
+		class DefaultSSLPolicy
+
+			def self.apply_to: (Net::HTTP) -> Net::HTTP
+
+			@http_client: Net::HTTP
+
+			attr_reader http_client: Net::HTTP
+
+			def initialize: (Net::HTTP) -> void
+
+			def apply: () -> void
+
+			def set_verify_mode: () -> void
+
+			def set_ca_store: () -> void
+
+			def set_custom_certs: () -> void
+
+			def set_client_credentials: () -> void
+
+			def config: () -> Config
+
+			private
+
+			def add_trusted_cert: (OpenSSL::X509::Certificate) -> void
+
+		end
+
+		class APISSLPolicy < DefaultSSLPolicy
+
+			def set_verify_mode: () -> void
+
+		end
+
+		class VerifyPeerSSLPolicy < DefaultSSLPolicy
+
+			def set_verify_mode: () -> void
+
+		end
+
+		class VerifyNoneSSLPolicy < DefaultSSLPolicy
+
+			def set_verify_mode: () -> void
+
+		end
+
+	end
+end

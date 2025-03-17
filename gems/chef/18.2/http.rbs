@@ -1,0 +1,180 @@
+class Chef
+	class HTTP
+
+		type req_method  = :HEAD | :GET | :PUT | :POST | :DELETE
+		type req_body
+			= String
+			| Hash[String, String]
+			| Array[Hash[String, String] & { content: (String | File) }]
+		type opts_nethttp = {
+
+			}
+		type opts = {
+				nethttp?: opts_nethttp,
+				http_retry_delay?: int,
+				http_retry_count?: int,
+				http_disable_auth_on_redirect?: bool,
+			}
+
+		class StreamHandler
+			@stream_handlers: Array[untyped]
+
+			def initialize: (Array[untyped], untyped) -> void
+
+			def handle_chunk: (untyped) -> void
+
+		end
+
+		def self.middlewares: () -> Array[untyped]
+
+		def self.use: (untyped) -> void
+
+		@url: String
+		@middlewares: Array[untyped]
+		@default_headers: Hash[String, String]
+		@redirects_followed: int
+		@sign_on_redirect: bool
+		@redirect_limit: int
+		@keepalives: bool
+		@options: Hash[Symbol, untyped]
+		@nethttp_opts: opts_nethttp
+		@http_client: BasicClient | SocketlessChefZeroClient
+
+		attr_reader url: String
+		attr_reader sign_on_redirect: bool
+		attr_reader redirect_limit: int
+		attr_reader options: opts
+		attr_reader middlewares: Array[untyped]
+		attr_reader keepalives: bool
+		attr_reader nethttp_opts: opts_nethttp
+
+		def initialize
+			: (string, ?opts) -> void
+
+		def head
+			: (String, ?Hash[String, String])
+				-> ( String | false | nil )
+
+		def get
+			: (String, ?Hash[String, String])
+				-> ( String | false | nil )
+
+		def put
+			: (String, req_body, ?Hash[String, String])
+				-> ( String | false | nil )
+
+		def post
+			: (String, req_body, ?Hash[String, String])
+				-> ( String | false | nil )
+
+		def delete
+			: (String, ?Hash[String, String])
+				-> ( String | false | nil )
+
+		def request
+			: (req_method, String, ?Hash[String, String], ?req_body)
+				-> ( String | false | nil )
+
+		def streaming_request_with_progress
+			: (String, ?Hash[String, String], ?Tempfile?)
+				{ () -> void }
+				-> Tempfile?
+
+		def streaming_request
+			: (String, ?Hash[String, String], ?Tempfile?)
+				{ (Tempfile) -> void }
+				-> Tempfile?
+
+		def http_client
+			: (?nil)
+				-> ( BasicClient | SocketlessChefZeroClient )
+			| (String | URI)
+				-> ( BasicClient | SocketlessChefZeroClient )
+
+		def last_response
+			: () -> Net::HTTPResponse
+
+		private
+
+		def ssl_policy
+			: ()
+				-> ( APISSLPolicy | VerifyNoneSSLPolicy | VerifyPeerSSLPolicy )
+
+		def build_http_client
+			: (String)
+				-> ( BasicClient | SocketlessChefZeroClient )
+
+		def create_url
+			: (URI | String | nil)
+				-> URI
+
+		def apply_request_middleware
+			: [T] (req_method, String | URI, Hash[String, String], T)
+				-> [ Net::HTTPResponse, Net::HTTPRequest, T ]
+
+		def apply_response_middleware
+			: [T] (Net::HTTPResponse, Net::HTTPRequest, T)
+				-> [ Net::HTTPResponse, Net::HTTPRequest, T ]
+
+		def apply_stream_complete_middleware
+			: [T] (Net::HTTPResponse, Net::HTTPRequest, T)
+				-> [ Net::HTTPResponse, Net::HTTPRequest, T ]
+
+		def log_failed_request
+			: (Net::HTTPResponse, ?{ 'error' => ({ join: ^(String) -> String } | { to_s: ^() -> String }) })
+				-> void
+
+		def success_response?
+			: (Net::HTTPResponse) -> bool
+
+		def send_http_request
+			: (req_method, String | URI, Hash[String, String], req_body)
+				?{ (HTTP::Message, String) -> void }
+				-> [ Net::HTTPResponse, Net::HTTPRequest, String | false | nil ]
+
+		def retrying_http_errors
+			: [T] (String | URI)
+				{ () -> [ Net::HTTPResponse, Net::HTTPRequest, T ] }
+				-> [ Net::HTTPResponse, Net::HTTPRequest, T ]
+
+		def version_retries
+			: () -> int
+
+		def http_retry_delay
+			: () -> int
+
+		def http_retry_count
+			: () -> int
+
+		def http_disable_auth_on_redirect
+			: () -> bool
+
+		def config
+			: () -> Config
+
+		def follow_redirect
+			: [T] () { () -> T }
+				-> T
+
+		def chef_zero_uri?
+			: (String | URI) -> bool
+			| ({ scheme: "chefzero" }) -> true
+
+		def redirected_to
+			: (Net::HTTPResponse) -> String?
+			| (Net::HTTPRedirection) -> nil
+			| (Net::HTTPNotModified) -> nil
+
+		def build_headers
+			: (req_method?, String?, ?Hash[String, String])
+				-> Hash[String, String]
+			| (req_method?, String?, Hash[String, String], req_body)
+				-> ( Hash[String, String] & { "Content-Length" => String } )
+
+		def stream_to_tempfile
+			: (String?, Net::HTTPResponse, Tempfile?)
+				?{ () -> untyped }
+				-> Tempfile
+
+	end
+end

@@ -1,0 +1,9 @@
+class Chef
+	class HTTP
+		class BasicClient
+
+			# TODO
+
+		end
+	end
+end

@@ -1,0 +1,10 @@
+class Chef
+
+	type attr_key = String | Symbol
+
+	type attr_val = Array[attr_val] | String | Symbol | bool | nil
+
+	type attr_map = Hash[attr_key, attr_val | attr_map ]
+
+
+end
