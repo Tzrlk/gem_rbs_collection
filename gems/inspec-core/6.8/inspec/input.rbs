@@ -11,6 +11,17 @@ end
 
 module Inspec
   class Input
+    type type_opts = 'String' | 'Numeric' | 'Regexp' | 'Array' | 'Hash' | 'Boolean' | 'Any'
+    type type_vals = String | Numeric | Regexp | Array[untyped] | Hash[untyped, untyped] | bool | untyped
+    type input_opts = {
+      title?: String,
+      description?: String,
+      required?: bool,
+      type?: type_opts,
+      sensitive?: bool,
+      pattern?: String,
+    }
+
     class Error < Inspec::Error
     end
 
@@ -94,23 +105,23 @@ module Inspec
     # are free to go higher.
     DEFAULT_PRIORITY_FOR_VALUE_SET: 60
 
-    attr_reader description: untyped
+    attr_reader description: String?
 
-    attr_reader events: untyped
+    attr_reader events: Array[Event]
 
     attr_reader identifier: untyped
 
-    attr_reader name: untyped
+    attr_reader name: String?
 
-    attr_reader required: untyped
+    attr_reader required: bool?
 
-    attr_reader sensitive: untyped
+    attr_reader sensitive: bool?
 
-    attr_reader title: untyped
+    attr_reader title: String?
 
-    attr_reader type: untyped
+    attr_reader type: type_opts?
 
-    attr_reader pattern: untyped
+    attr_reader pattern: String?
 
     def initialize: (untyped name, ?::Hash[untyped, untyped] options) -> void
 
@@ -119,7 +130,7 @@ module Inspec
 
     def diagnostic_string: () -> untyped
 
-    def update: (untyped options) -> untyped
+    def update: (input_opts options) -> void
 
     # We can determine a value:
     # 1. By event.value (preferred)
@@ -138,11 +149,11 @@ module Inspec
 
     public
 
-    def value=: (untyped new_value, ?untyped priority) -> untyped
+    def value=: (type_vals new_value, ?Integer priority) -> void
 
-    def value: () -> untyped
+    def value: () -> (type_vals|NO_VALUE_SET)
 
-    def has_value?: () -> untyped
+    def has_value?: () -> bool
 
     def to_hash: () -> untyped
 

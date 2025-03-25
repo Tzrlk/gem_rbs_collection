@@ -1,3 +1,4 @@
 module Inspec::Plugin::V2
-  Activator: untyped
+	class Activator
+	end
 end

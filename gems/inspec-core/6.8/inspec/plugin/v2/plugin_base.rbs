@@ -1,9 +1,10 @@
 module Inspec::Plugin::V2
   # Base class for all plugins.  Specific plugin types *may* inherit from this; but they must register with it.
   class PluginBase
+
     # The global registry.
     # @returns [Inspec::Plugin::V2::Registry] the singleton Plugin Registry object.
-    def self.registry: () -> untyped
+    def self.registry: () -> Registry
 
     # Inform the plugin system of a new plgin type.
     # This has the following effects:
@@ -13,7 +14,7 @@ module Inspec::Plugin::V2
     #
     # @param [Symbol] plugin_type_name
     # @param [Class] the plugin type class, defaults to assuming inheritance
-    def self.register_plugin_type: (untyped plugin_type_name, ?untyped new_plugin_type_base_class) -> untyped
+    def self.register_plugin_type: (Symbol plugin_type_name, ?Class new_plugin_type_base_class) -> Symbol
 
     # Determine the base class for a given plugin type
     # @param [Symbol] plugin_type_name
@@ -30,6 +31,15 @@ module Inspec::Plugin::V2
     #
     # @param [Symbol] Name of the plugin.  If a string is provided, it is converted to a Symbol.
     # @returns [Symbol] Name of the plugin
-    def self.plugin_name: (?untyped? name) -> untyped
+    def self.plugin_name: (?(String|Symbol)? name) -> Symbol
+
+    # Loaded by plugin registration
+    def self.input: (Symbol) { () -> Module } -> untyped
+    def self.outer_profile_dsl: (Symbol) { () -> Module } -> untyped
+    def self.control_dsl: (Symbol) { () -> Module } -> untyped
+    def self.describe_dsl: (Symbol) { () -> Module } -> untyped
+    def self.test_dsl: (Symbol) { () -> Module } -> untyped
+    def self.resource_dsl: (Symbol) { () -> Module } -> untyped
+
   end
 end

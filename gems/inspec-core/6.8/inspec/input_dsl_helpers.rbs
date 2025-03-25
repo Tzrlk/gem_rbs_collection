@@ -7,6 +7,6 @@ module Inspec
     # @param [String] Input Name
     # @param [Hash] Input options - see input docs on website
     # @returns [Object] Input value
-    def input_with_profile_id: (untyped profile_id, untyped input_name, untyped options) -> untyped
+    def input_with_profile_id: (String profile_id, String input_name, Hash[Symbol,untyped] options) -> Object
   end
 end

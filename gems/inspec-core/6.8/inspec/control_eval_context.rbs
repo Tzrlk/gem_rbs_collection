@@ -8,9 +8,12 @@ module Inspec
   # etc).
   #
   class ControlEvalContext
-    include Inspec::DSL
+    type control_opts = {
+      skip_only_if_eval?: bool,
+    }
 
-    include Inspec::DSL::RequireOverride
+    include DSL
+    include DSL::RequireOverride
 
     attr_accessor skip_file: untyped
 
@@ -24,15 +27,18 @@ module Inspec
 
     alias profile_context_owner profile_context
 
-    def profile_id: () -> untyped
+    def profile_id: () -> String
 
     def to_s: () -> ::String
 
-    def title: (untyped arg) -> untyped
+    def title: (String arg) -> void
 
-    def profile_name: () -> untyped
+    def profile_name: () -> String
 
-    def control: (untyped id, ?::Hash[untyped, untyped] opts) ?{ () -> untyped } -> untyped
+    def control
+      : (String|Symbol, control_opts)
+        ?{ (Rule) [ self: Rule ] -> untyped }
+        -> untyped
 
     alias rule control
 
@@ -43,7 +49,10 @@ module Inspec
     # generate a control for them automatically and then execute
     # the describe block in the context of that control.
     #
-    def describe: (*untyped args) ?{ () -> untyped } -> untyped
+    def describe
+      : (*untyped args)
+        ?{ () -> untyped }
+        -> untyped
 
     def add_resource: (untyped name, untyped new_res) -> untyped
 
@@ -53,7 +62,15 @@ module Inspec
 
     def register_control: (untyped control) ?{ () -> untyped } -> untyped
 
-    def input: (untyped input_name, ?::Hash[untyped, untyped] options) -> untyped
+    def input
+      : (Symbol|String, Input::input_opts?) -> Input::type_vals
+      | (Symbol|String, Input::input_opts & { type: 'String' }) -> String
+      | (Symbol|String, Input::input_opts & { type: 'Numeric' }) -> Numeric
+      | (Symbol|String, Input::input_opts & { type: 'Regexp' }) -> Regexp
+      | (Symbol|String, Input::input_opts & { type: 'Array' }) -> Array[untyped]
+      | (Symbol|String, Input::input_opts & { type: 'Hash' }) -> Hash[untyped,untyped]
+      | (Symbol|String, Input::input_opts & { type: 'Boolean' }) -> bool
+      | (Symbol|String, Input::input_opts & { type: 'Any' }) -> untyped
 
     # Find the Input object, but don't collapse to a value.
     # Will return nil on a miss.
@@ -65,7 +82,7 @@ module Inspec
 
     alias skip_rule skip_control
 
-    def only_if: (?untyped? message) ?{ () -> untyped } -> (nil | untyped)
+    def only_if: (String?) { () -> bool } -> void
 
     # Check if the given control exist in the --tags option
     def tag_exist_in_control_tags?: (untyped tag_ids) -> untyped
@@ -86,5 +103,6 @@ module Inspec
     def profile_config_exist?: () -> untyped
 
     def profile_tag_config_exist?: () -> untyped
+
   end
 end

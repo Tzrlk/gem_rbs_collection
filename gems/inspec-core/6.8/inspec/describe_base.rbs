@@ -1,6 +1,6 @@
 module Inspec
   class DescribeBase
-    include Inspec::InputDslHelpers
+    include InputDslHelpers
 
     def initialize: (untyped action) -> void
 

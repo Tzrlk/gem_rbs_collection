@@ -1,10 +1,20 @@
 # Impact scores based off CVSS 3.0
 module Inspec::Impact
-  IMPACT_SCORES: ::Hash[::String, ::Float]
+  type impact_score = 'none' | 'low' | 'medium' | 'high' | 'critical'
 
-  def self.impact_from_string: (untyped value) -> untyped
+  # We'd specify the values explicitly, but we can't represent floats in rbs
+  # for some reason.
+  IMPACT_SCORES: ::Hash[impact_score, ::Float]
 
-  def self.is_number?: (untyped value) -> untyped
+  def self.impact_from_string
+    : (Numeric value) -> Numeric
+    | (impact_score) -> Float
 
-  def self.string_from_impact: (untyped value) -> untyped
+  def self.is_number?
+    : (Float value) -> true
+    | (untyped value) -> false
+
+  def self.string_from_impact
+    : (Float value) -> impact_score
+
 end

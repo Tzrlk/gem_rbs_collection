@@ -20,13 +20,13 @@ module Inspec
       attr_accessor input_name: untyped
     end
 
-    attr_reader inputs_by_profile: untyped
+    attr_reader inputs_by_profile: Hash[String,Input]
 
-    attr_reader profile_aliases: untyped
+    attr_reader profile_aliases: Hash[String,String]
 
-    attr_reader plugins: untyped
+    attr_reader plugins: Array[untyped]
 
-    attr_accessor cache_inputs: untyped
+    attr_accessor cache_inputs: bool
 
     def initialize: () -> void
 

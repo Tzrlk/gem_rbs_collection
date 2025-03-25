@@ -1,32 +1,56 @@
 module Inspec
   class Rule
+    type refs = Array[refs_item]
+    type refs_item = Hash[Symbol|String, untyped] & {
+      ref?: untyped,
+    }
+    type descriptions = Hash[Symbol|String, String]
+    type tags = Hash[untyped,untyped]
+    type rule_opts = {
+      skip_only_if_eval?: bool,
+    }
+
+    @impact: Float?
+    @title: String?
+    @descriptions: descriptions
+    @refs: refs
+    @tags: tags
+
     include ::RSpec::Matchers
 
     attr_reader __waiver_data: untyped
 
-    attr_accessor resource_dsl: untyped
+    attr_accessor resource_dsl: resource_dsl
 
     attr_accessor na_impact_freeze: untyped
 
     attr_reader __profile_id: untyped
 
-    def initialize: (untyped id, untyped profile_id, untyped resource_dsl, untyped opts) ?{ () -> untyped } -> void
+    def initialize
+      : (String|Symbol id, String|Symbol profile_id, resource_dsl resource_dsl, rule_opts opts)
+        ?{ (self & resource_dsl) [ self: self & resource_dsl ] -> void }
+        -> void
 
-    def to_s: () -> untyped
+    def to_s: () -> String
 
-    def id: (*untyped _) -> untyped
+    def id: (*untyped _) -> String
 
-    def impact: (?untyped? v) -> untyped
+    def impact: (?(String|Float)? v) -> Float
 
-    def title: (?untyped? v) -> untyped
+    def title: (?String? v) -> String
 
-    def desc: (?untyped? v, ?untyped? data) -> untyped
+    def desc
+      : () -> String
+      | (String? v, ?String? data) -> void
 
-    def descriptions: (?untyped? description_hash) -> untyped
+    def descriptions: (?descriptions? description_hash) -> descriptions
 
-    def ref: (?untyped? ref, ?::Hash[untyped, untyped] opts) -> untyped
+    def ref
+      : () -> refs
+      | (refs_item) -> refs
+      | (untyped? ref, refs_item opts) -> refs
 
-    def tag: (*untyped args) -> untyped
+    def tag: (*(tags|untyped) args) -> tags
 
     def source_file: () -> untyped
 
@@ -34,7 +58,7 @@ module Inspec
     #
     # @param [Type] &block returns true if tests are added, false otherwise
     # @return [nil]
-    def only_if: (?untyped? message, ?impact: untyped?) { () -> untyped } -> (nil | untyped)
+    def only_if: (?String? message, ?impact: untyped?) { () -> bool } -> nil
 
     def only_applicable_if: (?untyped? message) { () -> untyped } -> (nil | untyped)
 
@@ -50,12 +74,24 @@ module Inspec
     # @param [any] Resource to be describe, string, or nil
     # @param [Proc] An optional block containing tests for the described resource
     # @return [nil|DescribeBase] if called without arguments, returns DescribeBase
-    def describe: (*untyped values) ?{ () -> untyped } -> untyped
+    def describe
+      : () -> ( DescribeBase & resource_dsl )
+      | (*untyped?)
+        ?{ () [ self: DescribeBase & resource_dsl ] -> void }
+        -> void
 
     def expect: (untyped value) ?{ () -> untyped } -> untyped
 
     # allow attributes to be accessed within control blocks
-    def input: (untyped input_name, ?::Hash[untyped, untyped] options) -> untyped
+    def input
+      : (Symbol|String, Input::input_opts?) -> Input::type_vals
+      | (Symbol|String, Input::input_opts & { type: 'String' }) -> String
+      | (Symbol|String, Input::input_opts & { type: 'Numeric' }) -> Numeric
+      | (Symbol|String, Input::input_opts & { type: 'Regexp' }) -> Regexp
+      | (Symbol|String, Input::input_opts & { type: 'Array' }) -> Array[untyped]
+      | (Symbol|String, Input::input_opts & { type: 'Hash' }) -> Hash[untyped,untyped]
+      | (Symbol|String, Input::input_opts & { type: 'Boolean' }) -> bool
+      | (Symbol|String, Input::input_opts & { type: 'Any' }) -> untyped
 
     # Find the Input object, but don't collapse to a value.
     # Will return nil on a miss.
