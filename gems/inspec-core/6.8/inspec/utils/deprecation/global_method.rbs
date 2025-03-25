@@ -1,0 +1,3 @@
+module Inspec
+  def self.deprecate: (untyped group, ?::String msg, ?::Hash[untyped, untyped] opts) -> untyped
+end

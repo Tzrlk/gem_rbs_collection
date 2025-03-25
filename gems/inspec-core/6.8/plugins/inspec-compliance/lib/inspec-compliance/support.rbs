@@ -1,0 +1,15 @@
+module InspecPlugins
+  module Compliance
+    # is a helper that provides information which version of compliance supports
+    # which feature
+    class Support
+      # for a feature, returns either:
+      #  - a version v0:                      v supports v0       iff v0 <= v
+      #  - an array [v0, v1] of two versions: v supports [v0, v1] iff v0 <= v < v1
+      def self.version_with_support: (untyped feature) -> untyped
+
+      # determines if the given version support a certain feature
+      def self.supported?: (untyped feature, untyped version) -> untyped
+    end
+  end
+end

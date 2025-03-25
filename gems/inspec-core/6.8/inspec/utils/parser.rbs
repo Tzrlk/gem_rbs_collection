@@ -1,0 +1,67 @@
+module Inspec
+  module Utils
+    module PasswdParser
+      # Parse /etc/passwd files.
+      #
+      # @param [String] content the raw content of /etc/passwd
+      # @return [Array] Collection of passwd entries
+      def parse_passwd: (untyped content) -> untyped
+
+      # Parse a line of /etc/passwd
+      #
+      # @param [String] line a line of /etc/passwd
+      # @return [Hash] Map of entries in this line
+      def parse_passwd_line: (untyped line) -> ::Hash[::String, untyped]
+    end
+
+    module CommentParser
+      # Parse a line with a command. For example: `a = b   # comment`.
+      # Retrieves the actual content.
+      #
+      # @param [String] raw the content lines you want to be parsed
+      # @param [Hash] opts optional configuration
+      # @return [Array] contains the actual line and the position of the line end
+      def parse_comment_line: (untyped raw, untyped opts) -> ::Array[untyped]
+    end
+
+    module LinuxMountParser
+      # this parses the output of mount command (only tested on linux)
+      # this method expects only one line of the mount output
+      def parse_mount_options: (untyped mount_line, ?bool compatibility) -> untyped
+
+      # Device-/Sharename or Mountpoint includes whitespaces?
+      def includes_whitespaces?: (untyped mount_line) -> untyped
+    end
+
+    module BsdMountParser
+      # this parses the output of mount command (only tested on freebsd)
+      # this method expects only one line of the mount output
+      def parse_mount_options: (untyped mount_line, ?bool _compatibility) -> (::Hash[untyped, untyped] | { device: untyped, type: untyped, options: untyped })
+    end
+
+    module SolarisNetstatParser
+      # takes this as a input and parses the values
+      # UDP: IPv4
+      #    Local Address        Remote Address      State
+      # -------------------- -------------------- ----------
+      #       *.*                                 Unbound
+      def parse_netstat: (untyped content) -> (::Array[untyped] | untyped)
+
+      private
+
+      # takes a line like "-------------------- -------------------- ----------"
+      # as input and calculates the length of each column
+      def columns: (untyped line) -> untyped
+
+      # takes a line and the width of the columns to extract the values
+      def split_columns: (untyped columns, untyped line) -> untyped
+    end
+
+    # This parser for xinetd (extended Internet daemon) configuration files
+    module XinetdParser
+      def xinetd_include_dir: (untyped dir) -> (::Array[untyped] | untyped)
+
+      def parse_xinetd: (untyped raw) -> (::Hash[untyped, untyped] | untyped)
+    end
+  end
+end

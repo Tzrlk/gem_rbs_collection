@@ -1,0 +1,32 @@
+module Inspec::Resources
+  # known and supported MS privilege rights
+  # @see https://technet.microsoft.com/en-us/library/dd277311.aspx
+  # @see https://msdn.microsoft.com/en-us/library/windows/desktop/bb530716(v=vs.85).aspx
+  MS_PRIVILEGES_RIGHTS: ::Array["SeNetworkLogonRight" | "SeBackupPrivilege" | "SeChangeNotifyPrivilege" | "SeSystemtimePrivilege" | "SeCreatePagefilePrivilege" | "SeDebugPrivilege" | "SeRemoteShutdownPrivilege" | "SeAuditPrivilege" | "SeIncreaseQuotaPrivilege" | "SeIncreaseBasePriorityPrivilege" | "SeLoadDriverPrivilege" | "SeBatchLogonRight" | "SeServiceLogonRight" | "SeInteractiveLogonRight" | "SeSecurityPrivilege" | "SeSystemEnvironmentPrivilege" | "SeProfileSingleProcessPrivilege" | "SeSystemProfilePrivilege" | "SeAssignPrimaryTokenPrivilege" | "SeRestorePrivilege" | "SeShutdownPrivilege" | "SeTakeOwnershipPrivilege" | "SeUndockPrivilege" | "SeManageVolumePrivilege" | "SeRemoteInteractiveLogonRight" | "SeImpersonatePrivilege" | "SeCreateGlobalPrivilege" | "SeIncreaseWorking" | "SeTimeZonePrivilege" | "SeCreateSymbolicLinkPrivilege" | "SeDenyNetworkLogonRight" | "SeDenyInteractiveLogonRight" | "SeDenyBatchLogonRight" | "SeDenyServiceLogonRight" | "SeTcbPrivilege" | "SeMachineAccountPrivilege" | "SeCreateTokenPrivilege" | "SeCreatePermanentPrivilege" | "SeEnableDelegationPrivilege" | "SeLockMemoryPrivilege" | "SeSyncAgentPrivilege" | "SeUnsolicitedInputPrivilege" | "SeTrustedCredManAccessPrivilege" | "SeRelabelPrivilege" | "SeDenyRemoteInteractiveLogonRight"]
+
+  class SecurityPolicy
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def content: () -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def method_missing: (untyped name) -> (nil | ::Array[untyped] | untyped)
+
+    def to_s: () -> "Security Policy"
+
+    def resource_id: () -> "Security Policy"
+
+    private
+
+    def read_content: () -> untyped
+
+    def read_params: () -> untyped
+
+    # extracts the values, this methods detects:
+    # numbers and SIDs and optimizes them for further usage
+    def extract_value: (untyped key, untyped val) -> untyped
+
+    def convert_hash: (untyped hash) -> untyped
+  end
+end

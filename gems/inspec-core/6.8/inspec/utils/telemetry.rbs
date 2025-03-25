@@ -1,0 +1,22 @@
+module Inspec
+  class Telemetry
+    def self.instance: () -> untyped
+
+    def self.determine_backend_class: () -> untyped
+
+    def self.license: () -> untyped
+
+    # ####
+    # These class methods make it convenient to call from anywhere within the InSpec codebase.
+    # ####
+    def self.run_starting: (untyped opts) -> untyped
+
+    def self.run_ending: (untyped opts) -> untyped
+
+    def self.note_feature_usage: (untyped feature_name) -> untyped
+
+    def self.config: () -> untyped
+
+    def self.telemetry_disabled?: () -> (false | untyped)
+  end
+end

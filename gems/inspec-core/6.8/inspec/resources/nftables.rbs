@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class NfTables
+    def initialize: (?::Hash[untyped, untyped] params) -> void
+
+    # Let's have a generic method to retrieve attributes for chains and sets
+    def _get_attr: (untyped name) -> untyped
+
+    def has_rule?: (?untyped? rule, ?untyped? _family, ?untyped? _table, ?untyped? _chain) -> untyped
+
+    def has_element?: (?untyped? element, ?untyped? _family, ?untyped? _table, ?untyped? _chain) -> untyped
+
+    def retrieve_set_elements: () -> (untyped | ::Array[untyped])
+
+    # Method to sanitize input
+    def sanitize_input: (untyped input) -> untyped
+
+    def retrieve_chain_rules: () -> (untyped | ::Array[untyped])
+
+    def retrieve_chain_attrs: () -> (untyped | ::Hash[untyped, untyped])
+
+    def retrieve_set_attrs: () -> (untyped | ::Hash[untyped, untyped])
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def remove_comments_from_rules: (untyped rules) -> untyped
+
+    def find_nftables_or_error: () -> untyped
+  end
+end

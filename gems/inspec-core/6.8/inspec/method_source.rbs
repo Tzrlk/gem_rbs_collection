@@ -1,0 +1,5 @@
+module Inspec
+  module MethodSource
+    def self.code_at: (untyped location, untyped source_reader) -> untyped
+  end
+end

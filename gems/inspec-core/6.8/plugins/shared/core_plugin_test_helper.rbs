@@ -1,0 +1,36 @@
+# Configure Minitest to expose things like `let`
+class Module
+  include Minitest::Spec::DSL
+end
+
+# TODO: remove me! There's no need!
+module CorePluginBaseHelper
+end
+
+module CorePluginFunctionalHelper
+  include CorePluginBaseHelper
+
+  include FunctionalHelper
+
+  # This helper does some fancy footwork to make InSpec think a plugin
+  # under development is temporarily installed.
+  # @param String command_line Invocation, without the word 'inspec'
+  # @param Hash opts options as for run_inspec_process, with more options:
+  #    :pre_run: Proc(plugin_statefile_data, tmp_dir_path) - optional setup block.
+  #       Modify plugin_statefile_data as needed; it will be written to a plugins.json
+  #       in tmp_dir_path.  You may also copy in other things to the tmp_dir_path. Your PWD
+  #       will be in the tmp_dir, and it will exist and be empty.
+  #    :post_run: Proc(CommandResult, tmp_dir_path) - optional result capture block.
+  #       Your PWD will be the tmp_dir, and it will still exist (for a moment!)
+  def run_inspec_process_with_this_plugin: (untyped command_line, ?::Hash[untyped, untyped] opts) -> untyped
+
+  def __find_plugin_path_from_caller: (?::Integer frames_back) -> untyped
+
+  def __make_plugin_file_data_structure_with_path: (untyped path) -> untyped
+
+  def __make_empty_plugin_file_data_structure: () -> ::Hash[::String, "1.0.0" | ::Array[untyped]]
+end
+
+module CorePluginUnitHelper
+  include CorePluginBaseHelper
+end

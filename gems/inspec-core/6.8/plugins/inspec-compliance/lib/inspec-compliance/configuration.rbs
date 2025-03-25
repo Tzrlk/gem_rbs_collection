@@ -1,0 +1,39 @@
+module InspecPlugins
+  module Compliance
+    # stores configuration on local filesystem
+    class Configuration
+      def initialize: () -> void
+
+      # direct access to config
+      def []: (untyped key) -> untyped
+
+      def []=: (untyped key, untyped value) -> untyped
+
+      def key?: (untyped key) -> untyped
+
+      def clean: () -> untyped
+
+      # return the json data
+      def get: () -> untyped
+
+      # stores a hash to json
+      def store: () -> untyped
+
+      # deletes data
+      def destroy: () -> (untyped | true)
+
+      # return if the (stored) api version does not support a certain feature
+      def supported?: (untyped feature) -> (nil | untyped)
+
+      # exit 1 if the version of compliance that we're working with doesn't support odic
+      def legacy_check!: (untyped feature) -> (nil | untyped)
+
+      private
+
+      # for a feature, returns either:
+      #  - a version v0:                      v supports v0       iff v0 <= v
+      #  - an array [v0, v1] of two versions: v supports [v0, v1] iff v0 <= v < v1
+      def version_with_support: (untyped feature) -> untyped
+    end
+  end
+end

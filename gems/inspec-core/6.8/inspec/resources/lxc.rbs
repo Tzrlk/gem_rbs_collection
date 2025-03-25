@@ -1,0 +1,42 @@
+module Inspec::Resources
+  class Lxc
+    attr_reader container_info: untyped
+
+    attr_reader container_name: untyped
+
+    # Resource initialization.
+    def initialize: (untyped container_name) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def exists?: () -> untyped
+
+    def running?: () -> untyped
+
+    def name: () -> untyped
+
+    def status: () -> untyped
+
+    def type: () -> untyped
+
+    def architecture: () -> untyped
+
+    def pid: () -> untyped
+
+    def created_at: () -> untyped
+
+    def last_used_at: () -> untyped
+
+    def resources: () -> untyped
+
+    private
+
+    def populate_container_info: () -> untyped
+
+    def find_lxc_or_error: () -> untyped
+
+    def parse_command_output: (untyped output) -> untyped
+  end
+end

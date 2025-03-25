@@ -1,0 +1,19 @@
+module Inspec::Reporters
+  class JsonAutomate < Json
+    def initialize: (untyped config) -> void
+
+    def render: () -> untyped
+
+    def report: () -> untyped
+
+    private
+
+    def merge_profiles: () -> untyped
+
+    def find_master_parent: (untyped profile) -> untyped
+
+    def merge_controls: (untyped parent, untyped child) -> untyped
+
+    def merge_depends: (untyped parent, untyped child) -> (nil | untyped)
+  end
+end

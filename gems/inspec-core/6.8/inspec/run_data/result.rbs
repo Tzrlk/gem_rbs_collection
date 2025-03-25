@@ -1,0 +1,5 @@
+module Inspec
+  class RunData
+    Result: untyped
+  end
+end

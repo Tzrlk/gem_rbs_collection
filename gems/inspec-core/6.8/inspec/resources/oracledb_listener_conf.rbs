@@ -1,0 +1,31 @@
+module Inspec::Resources
+  class OracledbListenerConf
+    include FindFiles
+
+    include FileReader
+
+    include ObjectTraverser
+
+    def initialize: (?untyped? conf_path) -> void
+
+    def content: () -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def value: (untyped key) -> untyped
+
+    def method_missing: (*untyped keys) -> (nil | untyped)
+
+    def to_s: () -> "Oracle Listener Configuration"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def read_content: () -> untyped
+
+    def include_files: (untyped params, untyped base_dir) -> untyped
+
+    def read_file: (untyped path) -> untyped
+  end
+end

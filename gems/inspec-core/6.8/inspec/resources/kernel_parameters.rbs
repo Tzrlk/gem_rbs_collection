@@ -1,0 +1,13 @@
+module Inspec::Resources
+  class KernelParameters
+    def initialize: () -> void
+
+    def to_s: () -> "Kernel Parameters"
+
+    private
+
+    def params: () -> untyped
+
+    def parse_kernel_paramater: (untyped stdout) -> untyped
+  end
+end

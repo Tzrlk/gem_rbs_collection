@@ -1,0 +1,13 @@
+module Inspec::Resources
+  class WindowsHotfix
+    attr_accessor content: untyped
+
+    def initialize: (?untyped? hotfix_id) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def installed?: () -> (false | untyped)
+  end
+end

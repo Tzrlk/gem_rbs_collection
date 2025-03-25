@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class RsaKey
+    include FileReader
+
+    include PkeyReader
+
+    def initialize: (untyped keypath, ?untyped? passphrase) -> void
+
+    def public?: () -> (nil | untyped)
+
+    def public_key: () -> (nil | untyped)
+
+    def private?: () -> (nil | untyped)
+
+    def private_key: () -> (nil | untyped)
+
+    def key_length: () -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

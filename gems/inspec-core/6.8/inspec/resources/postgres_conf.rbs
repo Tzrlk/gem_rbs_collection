@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class PostgresConf
+    include FindFiles
+
+    include FileReader
+
+    include ObjectTraverser
+
+    attr_accessor conf_path: untyped
+
+    def initialize: (?untyped? conf_path) -> void
+
+    def content: () -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def value: (untyped key) -> untyped
+
+    def method_missing: (*untyped keys) -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "PostgreSQL Configuration"
+
+    private
+
+    def read_content: () -> untyped
+
+    def include_files: (untyped params, untyped base_dir) -> untyped
+
+    def read_file: (untyped path) -> untyped
+  end
+end

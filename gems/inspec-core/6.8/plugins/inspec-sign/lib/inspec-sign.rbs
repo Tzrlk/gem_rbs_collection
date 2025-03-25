@@ -1,0 +1,6 @@
+module InspecPlugins
+  module Sign
+    class Plugin
+    end
+  end
+end

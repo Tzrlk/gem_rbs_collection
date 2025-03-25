@@ -1,0 +1,9 @@
+module Inspec::Plugin::V2
+  # Track loading status of each plugin.  These are the elements of the Registry.
+  #
+  # Lifecycle of an installed plugin:
+  #  If present in the config file, bundled, or core, it is "known"
+  #  All known plugins are loaded.  v1 plugins auto-activate. All loaded plugins know their version.
+  #  v2 plugins activate when they are used.  All activated plugins know their implementation class.
+  Status: untyped
+end

@@ -1,0 +1,5 @@
+module Inspec
+  class List < Value
+    def map: () { (untyped) -> untyped } -> (nil | self)
+  end
+end

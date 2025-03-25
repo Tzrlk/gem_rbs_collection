@@ -1,0 +1,6 @@
+module Inspec::Reporters
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def self.render: (untyped reporter, untyped run_data, ?bool enhanced_outcomes) -> untyped
+
+  def self.report: (untyped reporter, untyped run_data) -> untyped
+end

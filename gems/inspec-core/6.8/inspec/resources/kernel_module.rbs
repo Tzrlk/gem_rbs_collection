@@ -1,0 +1,29 @@
+module Inspec::Resources
+  class KernelModule
+    def initialize: (?untyped? modulename) -> void
+
+    def loaded?: () -> (false | untyped)
+
+    def disabled?: () -> untyped
+
+    def blacklisted?: () -> untyped
+
+    def version: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def modprobe_output: () -> untyped
+
+    def modinfo_cmd_for_os: () -> ("/sbin/modinfo" | "modinfo")
+
+    def modprobe_cmd_for_os: () -> ("/sbin/modprobe" | "modprobe")
+
+    def disabled_via_bin_true?: () -> untyped
+
+    def disabled_via_bin_false?: () -> untyped
+  end
+end

@@ -1,0 +1,4 @@
+module Inspec::Formatters
+  class ShowProgress < RSpec::Core::Formatters::ProgressFormatter
+  end
+end

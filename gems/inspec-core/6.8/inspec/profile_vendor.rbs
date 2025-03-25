@@ -1,0 +1,44 @@
+module Inspec
+  class ProfileVendor
+    attr_reader profile_path: untyped
+
+    def initialize: (untyped path) -> void
+
+    def vendor!: (untyped opts) -> untyped
+
+    # The URL fetcher uses a Tempfile to retrieve the vendored
+    # profile, which creates a file that is only readable by
+    # the current user. In most circumstances, this is likely OK.
+    # However, in environments like a Habitat package, these files
+    # need to be readable by all users or the Habitat Supervisor
+    # may not be able to start InSpec correctly.
+    #
+    # This method makes sure all vendored files are mode 644 for this
+    # use case. This method is not called by default - the caller
+    # vendoring the profile must make the decision as to whether this
+    # is necessary.
+    def make_readable: () -> untyped
+
+    def cache_path: () -> untyped
+
+    def lockfile: () -> untyped
+
+    private
+
+    def profile: () -> untyped
+
+    def profile_opts: () -> { vendor_cache: untyped, backend: untyped }
+
+    def vendor_dependencies!: (untyped opts) -> untyped
+
+    def delete_vendored_data: () -> untyped
+
+    def extract_archives: () -> untyped
+
+    # Check top-level profile metadata for any local archives
+    # if present, go ahead and inflate it into the vendor cache.
+    # This will cause subsequent fetchers to hit on the vendor cache,
+    # avoiding a possibly failing fetch under airgapped conditions.
+    def warm_vendor_cache_from_archives: () -> untyped
+  end
+end

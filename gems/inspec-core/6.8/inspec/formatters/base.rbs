@@ -1,0 +1,86 @@
+module Inspec::Formatters
+  class Base < RSpec::Core::Formatters::BaseFormatter
+    attr_accessor backend: untyped
+
+    attr_accessor run_data: untyped
+
+    attr_accessor enhanced_outcomes: untyped
+
+    def initialize: (untyped output) -> void
+
+    # RSpec Override: #dump_summary
+    #
+    # Supply run summary data, such as the InSpec version and the total duration.
+    def dump_summary: (untyped summary) -> untyped
+
+    # RSpec Override: #stop
+    #
+    # Called at the end of a complete RSpec run.
+    # We use this to map tests to controls and flesh out the rest of the run_data
+    # hash to include details about the run, the platform, etc.
+    def stop: (untyped notification) -> untyped
+
+    # Add the current profile to the list of executed profiles.
+    # Called by the runner during example collection.
+    def add_profile: (untyped profile) -> untyped
+
+    # These control count related methods are called via runner rspec library of inspec
+    # And these are used within streaming plugins to determine end of control
+    # ####### Start of control count related methods
+    def set_controls_count: (untyped controls_count) -> untyped
+
+    def set_control_checks_count_map: (untyped mapping) -> untyped
+
+    def get_controls_count: () -> untyped
+
+    def get_control_checks_count_map: () -> untyped
+
+    # Return all the collected output to the caller
+    def results: () -> untyped
+
+    private
+
+    def add_enhanced_outcomes_to_controls: () -> untyped
+
+    def determine_control_enhanced_outcome: (untyped control) -> (untyped | "passed")
+
+    def all_unique_controls: () -> untyped
+
+    def statistics: () -> untyped
+
+    def exception_message: (untyped exception) -> untyped
+
+    # RSpec Override: #format_example
+    #
+    # Called after test execution, this allows us to populate our own hash with data
+    # for this test that is necessary for the rest of our reports.
+    def format_example: (untyped example) -> untyped
+
+    def find_resource_params: (untyped example) -> (untyped | ::Array[untyped])
+
+    def format_expectation_message: (untyped example) -> (untyped | ::String)
+
+    # This formatter runs for all reports and we cannot error on missing fields.
+    # Return nil if not found or Train error. If needed, we will raise an error inside
+    # the proper report.
+    def platform: (untyped field) -> untyped
+
+    def backend_target: () -> (nil | untyped)
+
+    def examples: () -> untyped
+
+    def examples_without_controls: () -> untyped
+
+    def examples_with_controls: () -> untyped
+
+    def profiles_info: () -> untyped
+
+    def example2control: (untyped example) -> (nil | untyped)
+
+    def profile_from_example: (untyped example) -> untyped
+
+    def profile_contains_example?: (untyped profile, untyped example) -> (false | untyped)
+
+    def move_example_into_control: (untyped example, untyped control) -> untyped
+  end
+end

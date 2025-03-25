@@ -1,0 +1,32 @@
+module Inspec::Resources
+  class PipPackage
+    def initialize: (untyped package_name, ?untyped? pip_path) -> void
+
+    def info: () -> untyped
+
+    def installed?: () -> untyped
+
+    def version: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def cmd: () -> untyped
+
+    def cmd_successful?: () -> (true | false)
+
+    # Paths of Python and Pip on windows
+    # {"Pip" => nil, "Python" => "/path/to/python"}
+    #
+    # @return [Hash] of windows_paths
+    def windows_paths: () -> untyped
+
+    # Default path of python pip installation
+    #
+    # @return [String] of python pip path
+    def default_pip_path: () -> ("pip" | untyped | nil)
+  end
+end

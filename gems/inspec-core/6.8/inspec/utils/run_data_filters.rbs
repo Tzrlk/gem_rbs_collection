@@ -1,0 +1,34 @@
+module Inspec
+  module Utils
+    #   RunDataFilters is a mixin for core Reporters and plugin reporters.
+    # The methods operate on the run_data Hash (prior to any conversion to a
+    # full RunData object).
+    #   All methods here operate using the run_data accessor and modify
+    # its contents in place (if needed).
+    module RunDataFilters
+      # Long name, but we want to be clear this operates on the Hash
+      # This is the only method that client libraries need to call; any future
+      # feature growth should be handled internally here.
+      def apply_run_data_filters_to_hash: () -> untyped
+
+      # Apply options such as message and code_desc truncation, and removal of backtraces
+      def apply_report_resize_options: () -> untyped
+
+      # Filters profiles from report which don't have controls in it.
+      def filter_empty_profiles: () -> untyped
+
+      # Find any inputs with :sensitive = true and replace their values with "***"
+      def redact_sensitive_inputs: () -> untyped
+
+      # Optionally suppress diff output in the message field
+      def suppress_diff_output: () -> (nil | untyped)
+
+      # Optionally sort controls within each profile in report
+      def sort_controls: () -> (nil | untyped)
+
+      private
+
+      def process_truncation: (untyped result) -> untyped
+    end
+  end
+end

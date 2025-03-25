@@ -1,0 +1,26 @@
+module Inspec::Resources
+  class Bond < FileResource
+    include FileReader
+
+    def initialize: (untyped bond) -> void
+
+    def read_content: () -> untyped
+
+    # ensures the content is loaded before we return the params
+    def params: () -> untyped
+
+    def content: () -> untyped
+
+    def exist?: () -> untyped
+
+    def has_interface?: (untyped `interface`) -> untyped
+
+    def interfaces: () -> untyped
+
+    def mode: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

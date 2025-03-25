@@ -1,0 +1,53 @@
+module InspecPlugins
+  module Parallelism
+    class Runner
+      attr_accessor invocations: untyped
+
+      attr_accessor sub_cmd: untyped
+
+      attr_accessor total_jobs: untyped
+
+      attr_accessor run_in_background: untyped
+
+      attr_accessor log_path: untyped
+
+      def initialize: (untyped invocations, untyped cli_options, ?::String sub_cmd) -> void
+
+      def run: () -> untyped
+
+      def initiate_background_run: () -> untyped
+
+      def cleanup_daemon_process: () -> untyped
+
+      def cleanup_empty_error_log_files: () -> untyped
+
+      def kill_child_processes: () -> untyped
+
+      def wait_for_child_processes_to_die: () -> untyped
+
+      def rename_error_log_files: () -> untyped
+
+      def should_start_more_jobs?: () -> untyped
+
+      def spawn_another_process: () -> untyped
+
+      def fork_another_process: () -> untyped
+
+      # Still in parent
+      # Loop over children and check for finished processes
+      def cleanup_child_processes: () -> untyped
+
+      def update_ui_poll_select: (?untyped? target_pid) -> (nil | untyped)
+
+      def update_ui_with_line: (untyped pid, untyped update_line) -> untyped
+
+      private
+
+      def runner_invocation: (untyped runner_option) -> untyped
+
+      def create_logs: (untyped child_pid, untyped run_log, ?untyped? stderr) -> untyped
+
+      def rename_error_log: (untyped error_log_file, untyped child_pid) -> untyped
+    end
+  end
+end

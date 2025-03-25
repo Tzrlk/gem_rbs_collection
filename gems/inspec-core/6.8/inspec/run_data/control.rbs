@@ -1,0 +1,19 @@
+module Inspec
+  class RunData
+    Control: untyped
+
+    class Control
+      Ref: untyped
+
+      SourceLocation: untyped
+
+      # {
+      #   "expiration_date"=>#<Date: 2077-06-01 ((2479821j,0s,0n),+0s,2299161j)>,
+      #   "justification"=>"Lack of imagination",
+      #   "run"=>false,
+      #   "skipped_due_to_waiver"=>true,
+      #   "message"=>""}
+      WaiverData: untyped
+    end
+  end
+end

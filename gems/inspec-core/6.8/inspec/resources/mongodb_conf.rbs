@@ -1,0 +1,14 @@
+module Inspec::Resources
+  class MongodbConf < JsonConfig
+    def initialize: (?untyped? conf_path) -> void
+
+    # set resource_id to "" if system is not able to determine the @conf_path
+    def resource_id: () -> untyped
+
+    private
+
+    def parse: (untyped content) -> untyped
+
+    def resource_base_name: () -> "MongoDB Configuration"
+  end
+end

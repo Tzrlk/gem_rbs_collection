@@ -1,0 +1,35 @@
+module Inspec::Plugin::V2
+  # Base class for all plugins.  Specific plugin types *may* inherit from this; but they must register with it.
+  class PluginBase
+    # The global registry.
+    # @returns [Inspec::Plugin::V2::Registry] the singleton Plugin Registry object.
+    def self.registry: () -> untyped
+
+    # Inform the plugin system of a new plgin type.
+    # This has the following effects:
+    #  * enables Inspec.plugin(2, :your_type_here) to return the plugin
+    #    type base class
+    #  * defines the DSL method with the same name as the plugin type.
+    #
+    # @param [Symbol] plugin_type_name
+    # @param [Class] the plugin type class, defaults to assuming inheritance
+    def self.register_plugin_type: (untyped plugin_type_name, ?untyped new_plugin_type_base_class) -> untyped
+
+    # Determine the base class for a given plugin type
+    # @param [Symbol] plugin_type_name
+    # @returns [Class] the plugin type base class
+    def self.base_class_for_type: (untyped plugin_type_name) -> untyped
+
+    def self.find_name_by_implementation_class: (untyped impl_class) -> untyped
+
+    # If no name provided, looks up a known plugin by class and returns the name.
+    #
+    # DSL method to declare a plugin.  Once this has been called, the plugin will certainly be
+    # registered (known) with the Registry, and is eligible to be activated.
+    # This mainly handles status annotation.
+    #
+    # @param [Symbol] Name of the plugin.  If a string is provided, it is converted to a Symbol.
+    # @returns [Symbol] Name of the plugin
+    def self.plugin_name: (?untyped? name) -> untyped
+  end
+end

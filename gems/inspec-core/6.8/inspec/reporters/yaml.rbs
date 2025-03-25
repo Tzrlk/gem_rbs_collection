@@ -1,0 +1,7 @@
+module Inspec::Reporters
+  class Yaml < Base
+    def render: () -> untyped
+
+    def report: () -> { platform: untyped, profiles: untyped, statistics: { duration: untyped }, version: untyped }
+  end
+end

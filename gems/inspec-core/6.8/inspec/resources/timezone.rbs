@@ -1,0 +1,19 @@
+module Inspec::Resources
+  class TimeZone < Cmd
+    def initialize: () -> void
+
+    def identifier: () -> untyped
+
+    def name: () -> untyped
+
+    def time_offset: () -> untyped
+
+    def resource_id: () -> "timezone"
+
+    def to_s: () -> "Time Zone resource"
+
+    private
+
+    def split_and_fetch_last: (untyped string_value) -> untyped
+  end
+end

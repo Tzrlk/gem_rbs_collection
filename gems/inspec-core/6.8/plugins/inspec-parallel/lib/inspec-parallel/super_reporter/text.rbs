@@ -1,0 +1,13 @@
+module InspecPlugins::Parallelism
+  class SuperReporter
+    class Text < InspecPlugins::Parallelism::SuperReporter::Base
+      def child_spawned: (untyped pid, untyped _inv) -> untyped
+
+      def child_forked: (untyped pid, untyped _inv) -> untyped
+
+      def child_exited: (untyped pid) -> untyped
+
+      def child_status_update_line: (untyped pid, untyped update_line) -> untyped
+    end
+  end
+end

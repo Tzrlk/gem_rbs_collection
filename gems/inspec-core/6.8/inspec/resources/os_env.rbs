@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class OsEnv
+    def initialize: (?untyped? env, ?untyped? target) -> void
+
+    def split: () -> untyped
+
+    def content: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ("Environment variables" | ::String)
+
+    private
+
+    def value_for: (untyped env, ?untyped? target) -> untyped
+  end
+end

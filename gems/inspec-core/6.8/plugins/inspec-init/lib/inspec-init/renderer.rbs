@@ -1,0 +1,24 @@
+module InspecPlugins
+  module Init
+    class Renderer
+      attr_reader file_rename_map: untyped
+
+      attr_reader overwrite_mode: untyped
+
+      attr_reader skip_files: untyped
+
+      attr_reader templates_path: untyped
+
+      attr_reader ui: untyped
+
+      def initialize: (untyped cli_ui, ?::Hash[untyped, untyped] options) -> void
+
+      # rubocop: disable Metrics/AbcSize
+      def render_with_values: (untyped template_subdir_path, untyped template_type, ?::Hash[untyped, untyped] template_values) -> untyped
+
+      # This is a render helper to bind hash values to a ERB template
+      # ERB provides result_with_hash in ruby 2.5.0+, which does exactly this
+      def render: (untyped template_content, untyped hash) -> untyped
+    end
+  end
+end

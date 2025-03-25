@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class Nginx
+    attr_reader params: untyped
+
+    attr_reader bin_dir: untyped
+
+    attr_reader nginx_path: untyped
+
+    def initialize: (?::String nginx_path) -> void
+
+    def openssl_version: () -> untyped
+
+    def compiler_info: () -> untyped
+
+    def support_info: () -> untyped
+
+    def modules: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Nginx Environment"
+
+    private
+
+    def read_content: () -> untyped
+
+    def parse_config: () -> untyped
+
+    def parse_path: () -> untyped
+
+    def parse_http_path: () -> untyped
+  end
+end

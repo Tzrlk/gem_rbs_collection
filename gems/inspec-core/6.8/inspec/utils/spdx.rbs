@@ -1,0 +1,5 @@
+class Spdx
+  def self.licenses: () -> untyped
+
+  def self.valid_license?: (untyped license) -> untyped
+end

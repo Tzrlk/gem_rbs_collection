@@ -1,0 +1,19 @@
+module Inspec
+  class RunData
+    Profile: untyped
+
+    class Profile
+      Dependency: untyped
+
+      Support: untyped
+
+      Group: untyped
+
+      Input: untyped
+
+      class Input
+        Options: untyped
+      end
+    end
+  end
+end

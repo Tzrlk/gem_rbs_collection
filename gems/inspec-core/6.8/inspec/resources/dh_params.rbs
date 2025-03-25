@@ -1,0 +1,32 @@
+module Inspec::Resources
+  class DhParams
+    include FileReader
+
+    def initialize: (untyped filename) -> void
+
+    # it { should be_dh_params }
+    def dh_params?: () -> untyped
+
+    # its('generator') { should eq 2 }
+    def generator: () -> (nil | untyped)
+
+    # its('modulus') { should eq '00:91:a0:15:89:e5:bc:38:93:12:02:fc:...' }
+    def modulus: () -> (nil | untyped)
+
+    # its('pem') { should eq '-----BEGIN DH PARAMETERS...' }
+    def pem: () -> (nil | untyped)
+
+    # its('prime_length') { should be 2048 }
+    def prime_length: () -> (nil | untyped)
+
+    # its('text') { should eq 'human-readable-text' }
+    def text: () -> (nil | untyped)
+
+    # it { should be_valid }
+    def valid?: () -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

@@ -1,0 +1,12 @@
+module Inspec::Resources
+  class IniConfig < JsonConfig
+    # override file load and parse hash with simple config
+    def parse: (untyped content) -> untyped
+
+    private
+
+    # used by JsonConfig to build up a full to_s method
+    # based on whether a file path, content, or command was supplied.
+    def resource_base_name: () -> "INI"
+  end
+end

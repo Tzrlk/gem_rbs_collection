@@ -1,0 +1,22 @@
+module Inspec::Resources
+  class Cmd
+    attr_reader command: untyped
+
+    def initialize: (untyped cmd, ?::Hash[untyped, untyped] options) -> void
+
+    def result: () -> untyped
+
+    def stdout: () -> untyped
+
+    def stderr: () -> untyped
+
+    def exit_status: () -> untyped
+
+    def exist?: () -> (false | untyped)
+
+    # to_s method outputs the command which we are using here as UUID to identify resource and also it take cares of Redact output
+    def resource_id: () -> untyped
+
+    def to_s: () -> untyped
+  end
+end

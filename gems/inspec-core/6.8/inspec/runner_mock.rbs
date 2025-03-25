@@ -1,0 +1,21 @@
+module Inspec
+  class RunnerMock
+    attr_reader tests: untyped
+
+    attr_reader profiles: untyped
+
+    attr_writer backend: untyped
+
+    def initialize: () -> void
+
+    def reset: () -> untyped
+
+    def add_profile: (untyped profile) -> untyped
+
+    def add_test: (untyped example, untyped _rule) -> untyped
+
+    def example_group: (*untyped in_args) ?{ () -> untyped } -> untyped
+
+    def run: (?untyped? _with) -> untyped
+  end
+end

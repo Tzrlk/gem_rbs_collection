@@ -1,0 +1,24 @@
+module Inspec::Resources
+  class PostgresHbaConf
+    include FileReader
+
+    attr_reader conf_file: untyped
+
+    attr_reader params: untyped
+
+    # @todo add checks to ensure that we have data in our file
+    def initialize: (?untyped? hba_conf_path) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def clean_conf_file: (?untyped conf_file) -> untyped
+
+    def read_content: (?untyped config_file) -> untyped
+
+    def parse_conf: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> ::Hash[::String, untyped]
+  end
+end

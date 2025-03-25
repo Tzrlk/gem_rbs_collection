@@ -1,0 +1,5 @@
+module Modulator
+  def modules: () -> untyped
+
+  def add_module: (untyped name, untyped handler) -> untyped
+end

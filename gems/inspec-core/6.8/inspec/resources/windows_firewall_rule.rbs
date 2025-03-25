@@ -1,0 +1,46 @@
+module Inspec::Resources
+  class WindowsFirewallRule
+    def initialize: (untyped name) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def exist?: () -> untyped
+
+    def enabled?: () -> untyped
+
+    def allowed?: () -> untyped
+
+    def inbound?: () -> untyped
+
+    def outbound?: () -> untyped
+
+    def tcp?: () -> untyped
+
+    def udp?: () -> untyped
+
+    def icmp?: () -> untyped
+
+    def icmpv4?: () -> untyped
+
+    def icmpv6?: () -> untyped
+
+    # Access to return values from Powershell via `its("PROPERTY")` and `have_PROPERTY? "VALUE"`
+    def method_missing: (untyped method_name, *untyped arguments) ?{ () -> untyped } -> untyped
+
+    def respond_to_missing?: (untyped method_name, ?bool _include_private) -> untyped
+
+    private
+
+    def normalize_for_have_access: (untyped property) -> untyped
+
+    def access_property: (untyped property) -> untyped
+
+    def respond_to_have: (untyped property, untyped value) -> untyped
+
+    # Taken from Chef, but changed `firewall_action` to `action` for consistency
+    # @see https://github.com/chef/chef/blob/master/lib/chef/resource/windows_firewall_rule.rb
+    def load_firewall_state: (untyped rule_name) -> ::String
+  end
+end

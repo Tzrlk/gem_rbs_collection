@@ -1,0 +1,35 @@
+module Inspec::Plugin
+end
+
+module Inspec::Plugin::V2
+  Exclusion: untyped
+
+  class PluginFilter
+    include Singleton
+
+    def initialize: () -> void
+
+    def self.exclude?: (untyped plugin_name) -> untyped
+
+    def exclude?: (untyped plugin_name) -> (false | untyped)
+
+    private
+
+    def read_filter_data: () -> untyped
+
+    def validate_plugin_filter_file: (untyped _file_version) -> untyped
+  end
+
+  # To be a valid plugin name, the plugin must beign with either
+  # inspec- or train-, AND ALSO not be on the exclusion list.
+  # We maintain this exclusion list to avoid confusing users.
+  # For example, we want to have a real gem named inspec-test-fixture,
+  # but we don't want the users to see that.
+  module FilterPredicates
+    def train_plugin_name?: (untyped name) -> untyped
+
+    def inspec_plugin_name?: (untyped name) -> untyped
+
+    def valid_plugin_name?: (untyped name, ?::Symbol kind) -> (false | untyped)
+  end
+end

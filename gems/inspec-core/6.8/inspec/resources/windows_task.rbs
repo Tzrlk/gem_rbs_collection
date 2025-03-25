@@ -1,0 +1,28 @@
+module Inspec::Resources
+  class WindowsTasks
+    def initialize: (untyped taskuri) -> void
+
+    def exists?: () -> (true | false)
+
+    # rubocop:disable Style/WordArray
+    def enabled?: () -> (false | untyped)
+
+    def disabled?: () -> (false | untyped)
+
+    def logon_mode: () -> untyped
+
+    def last_result: () -> untyped
+
+    def task_to_run: () -> untyped
+
+    def run_as_user: () -> untyped
+
+    def type: () -> (untyped | nil)
+
+    def info: () -> (untyped | nil)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

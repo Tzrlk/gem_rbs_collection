@@ -1,0 +1,16 @@
+module ObjectTraverser
+  def extract_value: (untyped keys, untyped value) -> (nil | untyped)
+
+  private
+
+  # If the values to return from is an Array, allow returning by index.
+  # Otherwise, support methods on the Array itself.
+  def extract_from_array: (untyped key, untyped value) -> (untyped | untyped | nil)
+
+  # for Hashes, try to return the value by the key.
+  # We first try to find by the raw key before we stringify
+  # if the keys themselves are symbols, for example.
+  #
+  # This will return nil default if we can't find the key.
+  def extract_from_hash: (untyped key, untyped value) -> (untyped | untyped | nil)
+end

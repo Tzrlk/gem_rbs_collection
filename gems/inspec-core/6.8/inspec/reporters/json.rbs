@@ -1,0 +1,24 @@
+module Inspec::Reporters
+  # rubocop:disable Layout/AlignHash, Style/BlockDelimiters
+  class Json < Base
+    def render: () -> untyped
+
+    def report: () -> untyped
+
+    private
+
+    def platform: () -> untyped
+
+    def profile_results: (untyped control) -> untyped
+
+    def extract_resource_id: (untyped r) -> untyped
+
+    def profiles: () -> untyped
+
+    def profile_groups: (untyped profile) -> untyped
+
+    def profile_controls: (untyped profile) -> untyped
+
+    def convert_descriptions: (untyped data) -> untyped
+  end
+end

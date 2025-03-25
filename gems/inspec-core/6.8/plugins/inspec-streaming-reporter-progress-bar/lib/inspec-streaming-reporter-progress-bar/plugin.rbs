@@ -1,0 +1,6 @@
+module InspecPlugins
+  module StreamingReporterProgressBar
+    class Plugin
+    end
+  end
+end

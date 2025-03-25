@@ -1,0 +1,32 @@
+module Inspec::Resources
+  class AptRepository
+    def initialize: (untyped ppa_name) -> void
+
+    def exists?: () -> untyped
+
+    def enabled?: () -> (false | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def find_repo: () -> untyped
+
+    # TODO: remove this. just see if it is valid w/ URI.parse
+    HTTP_URL_RE: ::Regexp
+
+    def read_debs: () -> untyped
+
+    # resolves ppa urls
+    # @see http://bazaar.launchpad.net/~ubuntu-core-dev/software-properties/main/view/head:/softwareproperties/ppa.py
+    def determine_ppa_url: (untyped ppa_url) -> untyped
+  end
+
+  class PpaRepository < AptRepository
+    def exists?: () -> untyped
+
+    def enabled?: () -> untyped
+  end
+end

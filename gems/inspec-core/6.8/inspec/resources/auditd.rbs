@@ -1,0 +1,61 @@
+module Inspec::Resources
+  class AuditDaemon
+    extend Forwardable
+
+    attr_accessor lines: untyped
+
+    attr_reader params: untyped
+
+    def initialize: () -> void
+
+    def status: (?untyped? name) -> untyped
+
+    def parse_content: () -> untyped
+
+    def file_syscall_syntax_rules_for: (untyped line) -> untyped
+
+    def syscall_rules_for: (untyped line) -> untyped
+
+    def file_rules_for: (untyped line) -> untyped
+
+    def to_s: () -> "Auditd Rules"
+
+    private
+
+    def is_syscall?: (untyped line) -> untyped
+
+    def is_file?: (untyped line) -> untyped
+
+    def is_file_syscall_syntax?: (untyped line) -> untyped
+
+    def syscalls_for: (untyped line) -> untyped
+
+    # Processes the line and returns a pair of entries reflecting the 'action'
+    # and 'list' items.
+    #
+    # @return [Array[String,String]]
+    def action_list_for: (untyped line) -> ::Array[untyped]
+
+    def key_for: (untyped line) -> (untyped | nil)
+
+    def file_for: (untyped line) -> untyped
+
+    def file_syscall_syntax_for: (untyped line) -> untyped
+
+    def permissions_for: (untyped line) -> untyped
+
+    def rule_fields_for: (untyped line) -> untyped
+
+    def arch_in: (untyped fields) -> (untyped | nil)
+
+    def perms_in: (untyped fields) -> (untyped | nil)
+
+    def path_in: (untyped fields) -> (untyped | nil)
+
+    def exit_in: (untyped fields) -> (untyped | nil)
+
+    def key_in: (untyped field) -> untyped
+
+    def remove_key_from: (untyped fields) -> untyped
+  end
+end

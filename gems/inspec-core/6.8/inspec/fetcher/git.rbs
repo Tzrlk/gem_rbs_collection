@@ -1,0 +1,83 @@
+module Inspec::Fetcher
+  #
+  # The git fetcher uses the git binary to fetch remote git sources.
+  # Git-based sources should be specified with the `git:` key in the
+  # source hash. Additionally, we accept `:branch`, `:ref`, and `:tag`
+  # keys to allow users to pin to a particular revision.
+  #
+  # Parts of this class are derived from:
+  #
+  #  https://github.com/chef/omnibus/blob/master/lib/omnibus/fetchers/git_fetcher.rb
+  #
+  # which is Copyright 2012-2014 Chef Software, Inc. and offered under
+  # the same Apache 2 software license as inspec.
+  #
+  # Many thanks to the omnibus authors!
+  #
+  # Note that we haven't replicated all of omnibus' features here.  If
+  # you got to this file during debugging, you may want to look at the
+  # omnibus source for hints.
+  #
+  class Git
+    def self.resolve: (untyped target, ?::Hash[untyped, untyped] opts) -> (untyped | nil)
+
+    def initialize: (untyped remote_url, ?::Hash[untyped, untyped] opts) -> void
+
+    def expand_local_path: (untyped url_or_file_path) -> untyped
+
+    def fetch: (untyped destination_path) -> untyped
+
+    def perform_relative_path_fetch: (untyped destination_path, untyped working_dir) -> untyped
+
+    def cache_key: () -> untyped
+
+    def archive_path: () -> untyped
+
+    def resolved_source: () -> untyped
+
+    def update_from_opts: (untyped opts) -> untyped
+
+    # Git fetcher is sensitive to cache contention so it needs cache locking mechanism.
+    def requires_locking?: () -> true
+
+    private
+
+    def resolved_ref: () -> untyped
+
+    def resolve_ref: (?untyped? ref_name) -> untyped
+
+    #
+    # The following comment is a minor modification of the comment in
+    # the omnibus source for a similar function:
+    #
+    # Dereference annotated tags.
+    #
+    # The +remote_list+ parameter is assumed to look like this:
+    #
+    #   a2ed66c01f42514bcab77fd628149eccb4ecee28        refs/tags/rel-0.11.0
+    #   f915286abdbc1907878376cce9222ac0b08b12b8        refs/tags/rel-0.11.0^{}
+    #
+    # The SHA with ^{} is the commit pointed to by an annotated
+    # tag. If ref isn't an annotated tag, there will not be a line
+    # with trailing ^{}.
+    #
+    # @param [String] output
+    #   output from `git ls-remote origin` command
+    # @param [String] ref_name
+    #   the target git ref_name
+    #
+    # @return [String]
+    #
+    def parse_ls_remote: (untyped output, untyped ref_name) -> untyped
+
+    def cloned?: () -> untyped
+
+    def clone: (?untyped dir) -> untyped
+
+    def checkout: (?untyped dir) -> untyped
+
+    def git_cmd: (untyped cmd, ?untyped dir) -> untyped
+
+    def shellout: (untyped cmd, ?::Hash[untyped, untyped] opts) -> untyped
+  end
+end

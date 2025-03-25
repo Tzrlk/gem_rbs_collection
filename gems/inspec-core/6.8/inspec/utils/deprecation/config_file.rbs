@@ -1,0 +1,37 @@
+module Inspec
+  module Deprecation
+    class ConfigFile
+      GroupEntry: untyped
+
+      # What actions may you specify to be taken when a deprecation is encountered?
+      VALID_ACTIONS: ::Array[:exit | :fail_control | :ignore | :warn]
+
+      # Note that 'comment' is ignored, but listed here so you can have it present
+      # and pass validation.
+      VALID_GROUP_FIELDS: ::Array["action" | "suffix" | "prefix" | "exit_status" | "comment"]
+
+      attr_reader groups: untyped
+
+      attr_reader unknown_group_action: untyped
+
+      def initialize: (?untyped? io) -> void
+
+      private
+
+      def open_default_config_io: () -> untyped
+
+      def silence_deprecations_from_cli: () -> (nil | untyped)
+
+      # ===================================================================================================#
+      #                                          Validation
+      # ===================================================================================================#
+      def validate!: () -> untyped
+
+      def validate_file_version: () -> untyped
+
+      def validate_unknown_group_action: () -> untyped
+
+      def validate_group_entry: (untyped name, untyped opts) -> untyped
+    end
+  end
+end

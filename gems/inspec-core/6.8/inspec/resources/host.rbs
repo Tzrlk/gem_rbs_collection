@@ -1,0 +1,85 @@
+module Inspec::Resources
+  class Host
+    attr_reader hostname: untyped
+
+    attr_reader port: untyped
+
+    attr_reader protocol: untyped
+
+    def initialize: (untyped hostname, ?::Hash[untyped, untyped] params) -> void
+
+    def proto: () -> untyped
+
+    # if we get the IP address, the host is resolvable
+    def resolvable?: (?untyped? `type`) -> untyped
+
+    def reachable?: () -> untyped
+
+    def connection: () -> untyped
+
+    def socket: () -> untyped
+
+    # returns all A records of the IP address, will return an array
+    def ipaddress: () -> (nil | untyped)
+
+    # returns an array of the ipv4 addresses
+    def ipv4_address: () -> untyped
+
+    # returns an array of the ipv6 addresses
+    def ipv6_address: () -> untyped
+
+    def to_s: () -> untyped
+
+    def resource_id: () -> (::String | untyped)
+
+    private
+
+    def ping: () -> (untyped | ::Hash[untyped, untyped])
+
+    def resolve: () -> untyped
+  end
+
+  class HostProvider
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    def missing_requirements: (untyped _protocol) -> ::Array[untyped]
+  end
+
+  class UnixHostProvider < HostProvider
+    def initialize: (untyped inspec) -> void
+
+    def missing_requirements: (untyped protocol) -> untyped
+
+    def ping: (untyped hostname, untyped port, untyped protocol) -> { success: untyped, connection: untyped, socket: untyped }
+
+    def netcat_check_command: (untyped hostname, untyped port, untyped protocol) -> (nil | ::String)
+
+    def timeout: () -> "timeout"
+
+    def resolve_with_dig: (untyped hostname) -> untyped
+
+    def resolve_with_getent: (untyped hostname) -> (nil | untyped)
+  end
+
+  class DarwinHostProvider < UnixHostProvider
+    def timeout: () -> "gtimeout"
+
+    def resolve: (untyped hostname) -> untyped
+  end
+
+  class LinuxHostProvider < UnixHostProvider
+    def resolve: (untyped hostname) -> untyped
+  end
+
+  # Windows
+  # TODO: UDP is not supported yey, we need a custom ps1 script to add udp support
+  # @see http://blogs.technet.com/b/josebda/archive/2015/04/18/windows-powershell-equivalents-for-common-networking-commands-ipconfig-ping-nslookup.aspx
+  # @see http://blogs.technet.com/b/heyscriptingguy/archive/2014/03/19/creating-a-port-scanner-with-windows-powershell.aspx
+  class WindowsHostProvider < HostProvider
+    def ping: (untyped hostname, ?untyped? port, ?untyped? _proto) -> (::Hash[untyped, untyped] | { success: untyped })
+
+    def resolve: (untyped hostname) -> (nil | untyped)
+  end
+end

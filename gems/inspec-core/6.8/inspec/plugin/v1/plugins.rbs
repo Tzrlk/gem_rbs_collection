@@ -1,0 +1,21 @@
+module Inspec
+  # Resource Plugins
+  # NOTE: the autoloading here is rendered moot by the fact that
+  # all core plugins are `require`'d by the base inspec.rb
+  module Plugins
+  end
+
+  # PLEASE NOTE: The Plugin system is an internal mechanism for connecting
+  # inspec components. Its API is currently considered in an alpha state
+  # and may change between minor version revisions. A stable plugin API will be
+  # released in the future.
+  class PluginCtl
+    extend Forwardable
+
+    attr_reader registry: untyped
+
+    def initialize: (?untyped? home) -> void
+
+    def load: (untyped name) -> untyped
+  end
+end

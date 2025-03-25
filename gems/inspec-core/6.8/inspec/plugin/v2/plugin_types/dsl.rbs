@@ -1,0 +1,4 @@
+module Inspec::Plugin::V2::PluginType
+  class Dsl < Inspec::Plugin::V2::PluginBase
+  end
+end

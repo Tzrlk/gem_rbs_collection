@@ -1,0 +1,94 @@
+module Inspec::Resources
+  class Virtualization
+    def initialize: () -> void
+
+    def virtual_system?: () -> untyped
+
+    def physical_system?: () -> untyped
+
+    def params: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Virtualization Detection"
+
+    private
+
+    def lxc_version_exists?: () -> untyped
+
+    def docker_exists?: () -> untyped
+
+    def nova_exists?: () -> untyped
+
+    # Detect Xen
+    # /proc/xen is an empty dir for EL6 + Linode Guests + Paravirt EC2 instances
+    # Notes:
+    # - cpuid of guests, if we could get it, would also be a clue
+    # - may be able to determine if under paravirt from /dev/xen/evtchn (See OHAI-253)
+    # - Additional edge cases likely should not change the above assumptions
+    #   but rather be additive - btm
+    def detect_xen: () -> (false | true)
+
+    # Detect Virtualbox from kernel module
+    def detect_virtualbox: () -> (false | true)
+
+    # if nova binary is present we're on an openstack host
+    def detect_openstack: () -> (false | true)
+
+    # Detect paravirt KVM/QEMU from cpuinfo, report as KVM
+    def detect_kvm_from_cpuinfo: () -> (false | true)
+
+    # Detect KVM systems via /sys
+    # guests will have the hypervisor cpu feature that hosts don't have
+    def detect_kvm_from_sys: () -> (false | true)
+
+    # Detect OpenVZ / Virtuozzo.
+    # http://wiki.openvz.org/BC_proc_entries
+    def detect_openvz: () -> (false | true)
+
+    # Detect Parallels virtual machine from pci devices
+    def detect_parallels: () -> (false | true)
+
+    # Detect Linux-VServer
+    def detect_linux_vserver: () -> (false | true)
+
+    # Detect LXC/Docker/k8s/podman
+    #
+    # /proc/self/cgroup will look like this inside a docker container:
+    # <index #>:<subsystem>:/lxc/<hexadecimal container id>
+    #
+    # /proc/self/cgroup could have a name including alpha/digit/dashes
+    # <index #>:<subsystem>:/lxc/<named container id>
+    #
+    # /proc/self/cgroup could have a non-lxc cgroup name indicating other uses
+    # of cgroups.  This is probably not LXC/Docker.
+    # <index #>:<subsystem>:/Charlie
+    #
+    # A host which supports cgroups, and has capacity to host lxc containers,
+    # will show the subsystems and root (/) namespace.
+    # <index #>:<subsystem>:/
+    #
+    # Full notes, https://tickets.opscode.com/browse/OHAI-551
+    # Kernel docs, https://www.kernel.org/doc/Documentation/cgroups
+    def detect_container: () -> (false | true)
+
+    def detect_docker: () -> (false | true)
+
+    # Detect LXD
+    # See https://github.com/lxc/lxd/blob/master/doc/dev-lxd.md
+    def detect_lxd: () -> (false | true)
+
+    # Detect VMware
+    def detect_vmware: () -> (false | true)
+
+    # Detect Hyper-V
+    # @see https://gallery.technet.microsoft.com/scriptcenter/Get-MachineType-VM-or-ff43f3a9
+    def detect_hyperv: () -> (false | true)
+
+    def collect_data_linux: () -> (nil | untyped)
+
+    def windows_computer_system: () -> untyped
+
+    def collect_data_windows: () -> (nil | untyped)
+  end
+end

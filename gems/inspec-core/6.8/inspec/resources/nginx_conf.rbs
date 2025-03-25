@@ -1,0 +1,126 @@
+# STABILITY: Experimental
+# This resouce needs a proper interace to the underlying data, which is currently missing.
+# Until it is added, we will keep it experimental.
+#
+# TODO: Support it on Windows. To do so, we need to recognize the base os and how
+# it combines the file path. Calling `File.join` or similar methods may lead to errors
+# when running remotely.
+module Inspec::Resources
+  class NginxConf
+    extend Forwardable
+
+    include FindFiles
+
+    include FileReader
+
+    attr_reader contents: untyped
+
+    def initialize: (?untyped? conf_path) -> void
+
+    def params: () -> untyped
+
+    def http: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def method_missing: (untyped name) -> (untyped | nil)
+
+    def respond_to_missing?: (untyped name, ?bool include_all) -> (untyped | true)
+
+    private
+
+    def read_content: (untyped path) -> untyped
+
+    def parse_nginx: (untyped path) -> untyped
+
+    # Cycle through the complete parsed data structure and try to find any
+    # calls to `include`. In NginX, this is used to embed data from other
+    # files into the current data structure.
+    #
+    # The method steps through the object structure that is passed in to
+    # find any calls to 'include' and returns the object structure with the
+    # included data merged in.
+    #
+    # @param data [Hash] data structure from NginxConfig.parse
+    # @param rel_path [String] the relative path from which this config is read
+    # @return [Hash] data structure with references included
+    def resolve_references: (untyped data, untyped rel_path) -> untyped
+
+    # Deep merge fields from NginxConfig.parse.
+    # A regular merge would overwrite values so a deep merge is needed.
+    # @param data [Hash] data structure from NginxConfig.parse
+    # @param conf [Hash] data structure to be deep merged into data
+    # @return [Hash] data structure with conf and data deep merged
+    def merge_config!: (untyped data, untyped conf) -> (nil | untyped)
+  end
+
+  class NginxConfHttp
+    attr_reader entries: untyped
+
+    def initialize: (untyped params, untyped parent) -> void
+
+    def servers: () -> untyped
+
+    def locations: () -> untyped
+
+    def to_s: () -> untyped
+
+    alias inspect to_s
+  end
+
+  class NginxConfHttpEntry
+    attr_reader params: untyped
+
+    attr_reader parent: untyped
+
+    def initialize: (untyped params, untyped parent) -> void
+
+    def locations: () -> untyped
+
+    def to_s: () -> untyped
+
+    alias inspect to_s
+
+    def method_missing: (untyped name) -> untyped
+
+    def respond_to_missing?: (untyped name, ?bool include_all) -> (untyped | true)
+
+    private
+
+    def server_table: () -> untyped
+  end
+
+  class NginxConfServer
+    attr_reader params: untyped
+
+    attr_reader parent: untyped
+
+    def initialize: (untyped params, untyped parent) -> void
+
+    def to_s: () -> untyped
+
+    alias inspect to_s
+
+    def method_missing: (untyped name) -> untyped
+
+    def respond_to_missing?: (untyped name, ?bool include_all) -> (untyped | true)
+
+    private
+
+    def location_table: () -> untyped
+  end
+
+  class NginxConfLocation
+    attr_reader params: untyped
+
+    attr_reader parent: untyped
+
+    def initialize: (untyped params, untyped parent) -> void
+
+    def to_s: () -> untyped
+
+    alias inspect to_s
+  end
+end

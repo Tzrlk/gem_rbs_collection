@@ -1,0 +1,20 @@
+module Inspec::Resources
+  class GemPackage
+    attr_reader gem_binary: untyped
+
+    def initialize: (untyped package_name, ?untyped? gem_binary) -> void
+
+    def info: () -> (untyped | ::Hash[untyped, untyped])
+
+    def installed?: () -> untyped
+
+    def version: () -> untyped
+
+    # this returns an array of strings
+    def versions: () -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> ::String
+  end
+end

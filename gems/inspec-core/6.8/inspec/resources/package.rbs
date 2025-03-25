@@ -1,0 +1,125 @@
+# Resource to determine package information
+#
+# Usage:
+# describe package('nginx') do
+#   it { should be_installed }
+# end
+module Inspec::Resources
+  class Package
+    def initialize: (untyped package_name, ?::Hash[untyped, untyped] opts) -> void
+
+    # returns true if the package is installed
+    def installed?: (?untyped? _provider, ?untyped? _version) -> untyped
+
+    def latest?: (?untyped? _provider, ?untyped? _version) -> untyped
+
+    # returns true it the package is held (if the OS supports it)
+    def held?: (?untyped? _provider, ?untyped? _version) -> untyped
+
+    # returns the package description
+    def info: () -> (untyped | ::Hash[untyped, untyped])
+
+    # return the package version
+    def version: () -> untyped
+
+    def latest_version: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def evaluate_missing_requirements: () -> (nil | untyped)
+  end
+
+  class PkgManagement
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    def missing_requirements: () -> ::Array[untyped]
+
+    private
+
+    def fetch_latest_version: (untyped cmd_string) -> untyped
+
+    def fetch_version_no: (untyped output) -> (untyped | nil)
+  end
+
+  # Debian / Ubuntu
+  class Deb < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: untyped, held: untyped, version: untyped, type: "deb", only_version_no: untyped })
+
+    def latest_version: (untyped package_name) -> untyped
+  end
+
+  # RHEL family
+  class Rpm < PkgManagement
+    def initialize: (untyped inspec, untyped opts) -> void
+
+    def missing_requirements: () -> untyped
+
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: ::String, type: "rpm", only_version_no: ::String })
+
+    def latest_version: (untyped package_name) -> untyped
+
+    private
+
+    def rpm_command: (untyped package_name) -> untyped
+  end
+
+  # MacOS / Darwin implementation
+  class Brew < PkgManagement
+    def info: (untyped package_name) -> untyped
+
+    def latest_version: (untyped package_name) -> nil
+  end
+
+  # Arch Linux
+  class Pacman < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "pacman", only_version_no: untyped })
+
+    def latest_version: (untyped package_name) -> untyped
+  end
+
+  class HpuxPkg < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "pkg" })
+  end
+
+  class AlpinePkg < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "pkg", only_version_no: untyped })
+
+    def latest_version: (untyped package_name) -> untyped
+  end
+
+  class FreebsdPkg < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "pkg", only_version_no: untyped })
+
+    def latest_version: (untyped package_name) -> untyped
+  end
+
+  # Determines the installed packages on Windows using the Windows package registry entries.
+  # @see: http://blogs.technet.com/b/heyscriptingguy/archive/2013/11/15/use-powershell-to-find-installed-software.aspx
+  class WindowsPkg < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "windows", only_version_no: untyped })
+
+    def latest_version: (untyped package_name) -> untyped
+  end
+
+  # AIX
+  class BffPkg < PkgManagement
+    def info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "bff" })
+  end
+
+  # Solaris
+  class SolarisPkg < PkgManagement
+    def info: (untyped package_name) -> untyped
+
+    # solaris 10
+    def solaris10_info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: untyped, type: "pkg" })
+
+    # solaris 11
+    def solaris11_info: (untyped package_name) -> (::Hash[untyped, untyped] | { name: untyped, installed: true, version: ::String, type: "pkg" })
+  end
+end

@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class PodmanPod
+    include Inspec::Utils::Podman
+
+    attr_reader pod_info: untyped
+
+    attr_reader pod_id: untyped
+
+    def initialize: (untyped pod_id) -> void
+
+    LABELS: ::Hash[::String, "ID" | "Name" | "Created" | "CreateCommand" | "State" | "Hostname" | "CreateCgroup" | "CgroupParent" | "CgroupPath" | "CreateInfra" | "InfraContainerID" | "InfraConfig" | "SharedNamespaces" | "NumContainers" | "Containers"]
+
+    def exist?: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def get_pod_info: () -> untyped
+  end
+end

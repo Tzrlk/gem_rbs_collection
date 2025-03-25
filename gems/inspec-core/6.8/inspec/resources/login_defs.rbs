@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class LoginDefs
+    include FileReader
+
+    def initialize: (?untyped? path) -> void
+
+    def method_missing: (untyped name) -> untyped
+
+    def read_params: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "login.defs"
+  end
+end

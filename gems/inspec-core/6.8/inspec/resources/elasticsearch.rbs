@@ -1,0 +1,30 @@
+module Inspec::Resources
+  class Elasticsearch
+    attr_reader nodes: untyped
+
+    attr_reader url: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def parse_cluster: (untyped content) -> (::Array[untyped] | untyped)
+
+    #
+    # Hashie::Mash will throw warnings if the Mash contains a key that is the same as a built-in
+    # method on a Hashie::Mash instance. This is a crude way of avoiding those warnings without
+    # hard-coding a bunch of key renames.
+    #
+    # Any key that is in conflict will be renamed "es_ORIGINALKEY"
+    #
+    def fix_mash_key_collision: (untyped data) -> untyped
+
+    def curl_command_string: (untyped username, untyped password, untyped ssl_verify) -> untyped
+
+    def verify_curl_success!: (untyped cmd) -> untyped
+
+    def verify_json_payload!: (untyped content) -> untyped
+  end
+end

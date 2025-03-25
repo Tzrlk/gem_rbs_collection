@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class PConfig
+    include FileReader
+
+    attr_reader content: untyped
+
+    def initialize: (?untyped? content, ?untyped? useropts) -> void
+
+    def method_missing: (*untyped name) -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def parse_file: (untyped conf_path) -> untyped
+
+    def read_file: (untyped path) -> untyped
+
+    def read_params: () -> untyped
+  end
+
+  class PConfigFile < PConfig
+    def initialize: (untyped path, ?untyped? opts) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

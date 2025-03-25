@@ -1,0 +1,14 @@
+module Inspec
+  class Telemetry
+    class HTTP < Base
+      TELEMETRY_JOBS_PATH: "v1/job"
+
+      # Allow dev/CI to override the telemetry URL to a staging service
+      TELEMETRY_URL: untyped
+
+      def run_ending: (untyped opts) -> untyped
+
+      def connection: () -> untyped
+    end
+  end
+end

@@ -1,0 +1,39 @@
+module Inspec::Resources
+  class Shadow
+    include FileReader
+
+    attr_reader params: untyped
+
+    def initialize: (?::String path, ?::Hash[untyped, untyped] opts) -> void
+
+    def filter: (?::Hash[untyped, untyped] query) -> (self | untyped)
+
+    # Next 4 are deprecated methods.  We define them here so we can emit a deprecation message.
+    # They are also defined on the Table, above.
+    def user: (?untyped? query) -> untyped
+
+    def password: (?untyped? query) -> untyped
+
+    def last_change: (?untyped? query) -> untyped
+
+    def expiry_date: (?untyped? query) -> untyped
+
+    def lines: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def shadow_content: () -> untyped
+
+    def set_params: () -> untyped
+
+    def map_data: (untyped id) -> untyped
+
+    # Parse a line of /etc/shadow
+    #
+    # @param [String] line a line of /etc/shadow
+    # @return [Hash] Map of entries in this line
+    def parse_shadow_line: (untyped line) -> ::Hash[::String, untyped]
+  end
+end

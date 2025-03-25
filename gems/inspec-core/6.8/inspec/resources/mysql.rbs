@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class Mysql
+    attr_reader package: untyped
+
+    attr_reader service: untyped
+
+    attr_reader conf_dir: untyped
+
+    attr_reader conf_path: untyped
+
+    attr_reader data_dir: untyped
+
+    attr_reader log_dir: untyped
+
+    attr_reader log_path: untyped
+
+    attr_reader log_group: untyped
+
+    attr_reader log_dir_group: untyped
+
+    def initialize: () -> void
+
+    def init_ubuntu: () -> untyped
+
+    def init_redhat: () -> untyped
+
+    def init_arch: () -> untyped
+
+    def init_default: () -> untyped
+
+    def to_s: () -> "MySQL"
+  end
+end

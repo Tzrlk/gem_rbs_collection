@@ -1,0 +1,91 @@
+module Inspec::Resources
+  # This file contains two resources, the `group` and `groups` resource.
+  # The `group` resource is optimized for requests that verify specific groups
+  # that you know upfront for testing. If you need to query all groups or search
+  # specific groups with certain properties, use the `groups` resource.
+  module GroupManagementSelector
+    # select group provider based on the operating system
+    # returns nil, if no group manager was found for the operating system
+    def select_group_manager: (untyped os) -> untyped
+  end
+
+  # Class defined to check for members without case-sensitivity
+  class Members < Array
+    def initialize: (untyped group_members) -> void
+
+    def include?: (untyped user) -> untyped
+  end
+
+  class Groups
+    include GroupManagementSelector
+
+    def initialize: () -> void
+
+    def to_s: () -> "Groups"
+
+    private
+
+    # collects information about every group
+    def collect_group_details: () -> (untyped | ::Array[untyped])
+  end
+
+  class Group
+    include GroupManagementSelector
+
+    def initialize: (untyped groupname) -> void
+
+    # verifies if a group exists
+    def exists?: () -> untyped
+
+    def gid: () -> untyped
+
+    def members: () -> untyped
+
+    def members_array: () -> untyped
+
+    def local: () -> true
+
+    # matcher equivalent to gid property.
+    def has_gid?: (untyped gid_value) -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> (::String | "")
+
+    private
+
+    def flatten_entry: (untyped group_info, untyped prop) -> untyped
+
+    def group_info: () -> untyped
+
+    def empty_value_for_members: () -> (::Array[untyped] | "")
+  end
+
+  class GroupInfo
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    def groups: () -> untyped
+  end
+
+  # implements generic unix groups via /etc/group
+  class UnixGroup < GroupInfo
+    def groups: () -> untyped
+  end
+
+  # OSX uses opendirectory for groups, so `/etc/group` may not be fully accurate
+  # This uses `dscacheutil` to get the group info instead of `etc_group`
+  class DarwinGroup < GroupInfo
+    def runmap: (untyped cmd) ?{ () -> untyped } -> untyped
+
+    def hashmap: (untyped enum) ?{ () -> untyped } -> untyped
+
+    def groups: () -> untyped
+  end
+
+  class WindowsGroup < GroupInfo
+    # returns all local groups
+    def groups: () -> (::Array[untyped] | untyped)
+  end
+end

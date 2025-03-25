@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class IpFilter
+    def initialize: () -> void
+
+    def has_rule?: (?untyped? rule) -> untyped
+
+    def retrieve_rules: () -> (untyped | ::Array[untyped])
+
+    def resource_id: () -> "Ipfilter"
+
+    def to_s: () -> "Ipfilter"
+
+    private
+
+    def find_ipfstat_or_error: () -> untyped
+  end
+end

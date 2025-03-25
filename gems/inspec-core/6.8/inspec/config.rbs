@@ -1,0 +1,124 @@
+module Inspec
+  class Config
+    include Inspec::Plugin::V2::FilterPredicates
+
+    # These are options that apply to any transport
+    GENERIC_CREDENTIALS: ::Array["backend" | "logger" | "sudo" | "sudo_password" | "sudo_command" | "sudo_options" | "shell" | "shell_options" | "shell_command"]
+
+    AUDIT_LOG_OPTIONS: ::Array["audit_log_location" | "enable_audit_log" | "audit_log_app_name"]
+
+    KNOWN_VERSIONS: ::Array["1.1" | "1.2"]
+
+    extend Forwardable
+
+    attr_reader final_options: untyped
+
+    # This makes it easy to make a config with a mock backend.
+    def self.mock: (?::Hash[untyped, untyped] opts) -> untyped
+
+    # Use this to get a cached version of the config.  This prevents you from
+    # being required to pass it around everywhere.
+    def self.cached: () -> untyped
+
+    def self.cached=: (untyped cfg) -> untyped
+
+    # This gets called when the first config is created.
+    def initialize: (?::Hash[untyped, untyped] cli_opts, ?untyped? cfg_io, ?untyped? command_name) -> void
+
+    def diagnose: () -> (nil | untyped)
+
+    def allow_unsigned_profiles?: () -> untyped
+
+    # return all telemetry options from config
+    # @return [Hash]
+    def telemetry_options: () -> untyped
+
+    def unpack_train_credentials: () -> untyped
+
+    # ----------------------------------------------------------------------#
+    #                      Handling Plugin Data
+    # ----------------------------------------------------------------------#
+    def fetch_plugin_config: (untyped plugin_name) -> untyped
+
+    def set_plugin_config: (untyped plugin_name, untyped plugin_config) -> untyped
+
+    def merge_plugin_config: (untyped plugin_name, untyped additional_plugin_config) -> untyped
+
+    # clear the cached config
+    def self.__reset: () -> untyped
+
+    private
+
+    def _utc_merge_audit_log_options: () -> untyped
+
+    def _utc_merge_transport_options: (untyped credentials, untyped transport_name) -> untyped
+
+    # fetch any info that applies to all transports (like sudo information)
+    def _utc_generic_credentials: () -> untyped
+
+    def _utc_determine_backend: (untyped credentials) -> (nil | untyped)
+
+    def _utc_merge_credset: (untyped credentials, untyped transport_name) -> untyped
+
+    def _utc_find_credset_name: (untyped _credentials, untyped transport_name) -> (nil | untyped)
+
+    # Regardless of our situation, end up with a readable IO object
+    def resolve_cfg_io: (untyped cli_opts, untyped cfg_io) -> untyped
+
+    def check_for_piped_config: (untyped cli_opts) -> (nil | untyped)
+
+    def determine_cfg_path: (untyped cli_opts) -> untyped
+
+    # When reading STDIN, read it once into a class variable and cache it.
+    # Don't cache other IO objects though, as we use several different StringIOs
+    # during unit testing. Refs #3792
+    def self.stdin_contents: () -> untyped
+
+    def read_cfg_file_io: (untyped cfg_io) -> untyped
+
+    def file_version: () -> untyped
+
+    def legacy_file?: () -> untyped
+
+    def config_file_cli_options: () -> untyped
+
+    def config_file_reporter_options: () -> (::Hash[::String, untyped] | ::Hash[untyped, untyped])
+
+    # ----------------------------------------------------------------------#
+    #                            Validation
+    # ----------------------------------------------------------------------#
+    def validate_config_file_contents!: () -> (nil | untyped)
+
+    def validate_reporters!: (untyped reporters) -> (nil | untyped)
+
+    def validate_plugins!: () -> (nil | untyped)
+
+    def validate_sort_results_by!: (untyped option_value) -> (nil | untyped)
+
+    # ----------------------------------------------------------------------#
+    #                         Merging Options
+    # ----------------------------------------------------------------------#
+    def merge_options: () -> untyped
+
+    # ----------------------------------------------------------------------#
+    #                          Finalization
+    # ----------------------------------------------------------------------#
+    def finalize_options: () -> untyped
+
+    def finalize_set_top_level_command: (untyped options) -> untyped
+
+    def finalize_parse_reporters: (untyped options) -> untyped
+
+    def finalize_handle_sudo: (untyped options) -> untyped
+
+    def finalize_compliance_login: (untyped options) -> (untyped | nil)
+
+    def finalize_sort_results: (untyped options) -> (untyped | nil)
+
+    class Defaults
+      DEFAULTS: { exec: ::Hash[::String, false | true], shell: ::Hash[untyped, untyped] }
+
+      def self.for_command: (untyped command_name) -> untyped
+    end
+  end
+end

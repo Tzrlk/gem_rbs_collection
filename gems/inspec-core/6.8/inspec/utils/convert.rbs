@@ -1,0 +1,7 @@
+module Converter
+  # convert the value to an integer if we have numbers only
+  # otherwise we return the string
+  def convert_to_i: (untyped val) -> untyped
+
+  def self.to_boolean: (untyped value) -> (true | false | nil)
+end

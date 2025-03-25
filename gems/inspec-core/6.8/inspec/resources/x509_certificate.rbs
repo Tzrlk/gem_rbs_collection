@@ -1,0 +1,52 @@
+module Inspec::Resources
+  class X509CertificateResource
+    include FileReader
+
+    # @see https://tools.ietf.org/html/rfc5280#page-23
+    def initialize: (untyped opts) -> void
+
+    def certificate?: () -> untyped
+
+    def fingerprint: () -> (nil | untyped)
+
+    def serial: () -> (nil | untyped)
+
+    def subject_dn: () -> (nil | untyped)
+
+    def subject: () -> (nil | untyped)
+
+    # This property is equivalent to subject.emailAddress
+    def email: () -> untyped
+
+    def issuer_dn: () -> (nil | untyped)
+
+    def issuer: () -> (nil | untyped)
+
+    def key_length: () -> (nil | untyped)
+
+    alias keylength key_length
+
+    def validity_in_days: () -> untyped
+
+    def valid?: () -> untyped
+
+    def extensions: () -> untyped
+
+    # check purpose of the certificate
+    def has_purpose?: (untyped purpose) -> untyped
+
+    def fetch_purpose: (untyped cert_file_or_path) -> untyped
+
+    def subject_alt_names: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def options: (untyped opts) -> ({ filepath: untyped } | untyped)
+
+    def check_openssl_or_error: () -> untyped
+  end
+end

@@ -1,0 +1,59 @@
+module Inspec::Resources
+  class FirewallD
+    attr_reader params: untyped
+
+    def initialize: () -> void
+
+    def installed?: () -> untyped
+
+    def has_zone?: (untyped query_zone) -> (false | untyped)
+
+    def running?: () -> (false | untyped)
+
+    def default_zone: () -> untyped
+
+    def has_service_enabled_in_zone?: (untyped query_service, ?untyped query_zone) -> untyped
+
+    def service_ports_enabled_in_zone: (untyped query_service, ?untyped query_zone) -> untyped
+
+    def service_protocols_enabled_in_zone: (untyped query_service, ?untyped query_zone) -> untyped
+
+    def has_port_enabled_in_zone?: (untyped query_port, ?untyped query_zone) -> untyped
+
+    def has_rule_enabled?: (untyped rule, ?untyped query_zone) -> untyped
+
+    def to_s: () -> "Firewall Rules"
+
+    private
+
+    def active_zones: () -> untyped
+
+    def parse_active_zones: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> ::Hash[::String, untyped]
+
+    def target_bound: (untyped query_zone) -> untyped
+
+    def icmp_block_inversion_bound?: (untyped query_zone) -> untyped
+
+    def ports_bound: (untyped query_zone) -> untyped
+
+    def protocols_bound: (untyped query_zone) -> untyped
+
+    def masquerade_bound?: (untyped query_zone) -> untyped
+
+    def forward_ports_bound: (untyped query_zone) -> untyped
+
+    def source_ports_bound: (untyped query_zone) -> untyped
+
+    def icmp_blocks_bound: (untyped query_zone) -> untyped
+
+    def rich_rules_bound: (untyped query_zone) -> untyped
+
+    def sources_bound: (untyped query_zone) -> untyped
+
+    def services_bound: (untyped query_zone) -> untyped
+
+    def firewalld_command: (untyped command) -> (::String | untyped)
+  end
+end

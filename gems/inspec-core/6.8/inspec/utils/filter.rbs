@@ -1,0 +1,144 @@
+module FilterTable
+  # This is used as a sentinel value in custom property filtering
+  module NoCriteriaProvided
+  end
+
+  class ExceptionCatcher
+    def initialize: (untyped original_resource, untyped original_exception) -> void
+
+    # This method is called via the runner and signals RSpec to output a block
+    # showing why the resource was skipped. This prevents the resource from
+    # being added to the test collection and being evaluated.
+    def resource_skipped?: () -> untyped
+
+    # This method is called via the runner and signals RSpec to output a block
+    # showing why the resource failed. This prevents the resource from
+    # being added to the test collection and being evaluated.
+    def resource_failed?: () -> untyped
+
+    def resource_exception_message: () -> untyped
+
+    # Capture message chains and return `ExceptionCatcher` objects
+    def method_missing: (*untyped) -> self
+
+    # RSpec will check the object returned to see if it responds to a method
+    # before calling it. We need to fake it out and tell it that it does. This
+    # allows it to skip past that check and fall through to #method_missing
+    def respond_to?: (untyped _method, ?bool include_all) -> true
+
+    def to_s: () -> ::String
+
+    alias inspect to_s
+
+    # Rspec is not able to convert FilterTable::ExceptionCatcher issue https://github.com/inspec/inspec/issues/5369
+    # which result into not showing actual exception message this allows to convert it properly.
+    def to_ary: () -> ::Array[untyped]
+  end
+
+  class Trace
+    def initialize: () -> void
+
+    def method_missing: (*untyped args) -> untyped
+
+    def self.to_ruby: (untyped trace) -> ("" | untyped)
+  end
+
+  class Table
+    attr_reader raw_data: untyped
+
+    attr_reader resource_instance: untyped
+
+    attr_reader criteria_string: untyped
+
+    def initialize: (untyped resource_instance, untyped raw_data, untyped criteria_string) -> void
+
+    # Filter the raw data based on criteria (as method params) or by evaling a
+    # block; then construct a new Table of the same class as ourselves,
+    # wrapping the filtered data, and return it.
+    def where: (?::Hash[untyped, untyped] conditions) ?{ () -> untyped } -> (self | untyped)
+
+    def create_eval_context_for_row: (*untyped _) -> untyped
+
+    def resource: () -> untyped
+
+    def params: () -> untyped
+
+    def entries: () -> untyped
+
+    def get_column_values: (untyped field) -> untyped
+
+    def list_fields: () -> untyped
+
+    def field?: (untyped proposed_field) -> (true | untyped)
+
+    def to_s: () -> untyped
+
+    alias inspect to_s
+
+    def populate_lazy_field: (untyped field_name, untyped criterion) -> (nil | untyped)
+
+    def populate_lazy_instance_field: (untyped field_name, untyped criterion) -> (nil | untyped)
+
+    def is_field_lazy?: (untyped sought_field_name) -> untyped
+
+    def is_field_lazy_instance?: (untyped sought_field_name) -> untyped
+
+    def callback_for_lazy_field: (untyped field_name) -> (nil | untyped)
+
+    def callback_for_lazy_instance_field: (untyped field_name) -> (nil | untyped)
+
+    def field_populated?: (untyped field_name) -> untyped
+
+    def mark_lazy_field_populated: (untyped field_name) -> untyped
+
+    private
+
+    def matches_float: (untyped x, untyped y) -> (false | untyped)
+
+    def matches_int: (untyped x, untyped y) -> (false | untyped)
+
+    def matches_regex: (untyped x, untyped y) -> untyped
+
+    def matches: (untyped x, untyped y) -> untyped
+
+    def filter_raw_data: (untyped current_raw_data, untyped field, untyped desired_value) -> (::Array[untyped] | untyped)
+
+    def decorate_symbols: (untyped thing) -> untyped
+  end
+
+  class Factory
+    CustomPropertyType: untyped
+
+    def initialize: () -> void
+
+    def install_filter_methods_on_resource: (untyped resource_class, untyped raw_data_fetcher_method_name) -> untyped
+
+    alias connect install_filter_methods_on_resource
+
+    # TODO: This should almost certainly be privatized.  Every FilterTable client should get :entries and :where;
+    # InSpec core resources do not define anything else, other than azure_generic_resource, which is likely a mis-use.
+    def register_filter_method: (untyped method_name) -> self
+
+    alias add_accessor register_filter_method
+
+    def register_custom_property: (untyped property_name, ?::Hash[untyped, untyped] opts) ?{ () -> untyped } -> self
+
+    alias add register_custom_property
+
+    alias register_column register_custom_property
+
+    alias register_custom_matcher register_custom_property
+
+    private
+
+    # This provides the implementation for methods requested using
+    # register_custom_property(:some_method_name, opts, &block)
+    # Some usage in the wild involves people passing a desired value to the generated method, like:
+    #  things.ids(23)
+    # I'm calling this the 'filter_criterion_value'. I speculate that a default value is
+    # provided here so that users can meaningfully query for nil.
+    def create_custom_property_body: (untyped custom_property_struct) -> untyped
+  end
+
+  def self.create: () -> untyped
+end

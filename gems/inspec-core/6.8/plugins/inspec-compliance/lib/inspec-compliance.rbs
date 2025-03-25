@@ -1,0 +1,6 @@
+module InspecPlugins
+  module Compliance
+    class Plugin
+    end
+  end
+end

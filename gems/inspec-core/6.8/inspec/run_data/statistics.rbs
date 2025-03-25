@@ -1,0 +1,14 @@
+module Inspec
+  class RunData
+    # {:duration=>0.018407, :controls=>{:total=>3, :passed=>{:total=>3}, :skipped=>{:total=>0}, :failed=>{:total=>0}}}
+    Statistics: untyped
+
+    class Statistics
+      Controls: untyped
+
+      class Controls
+        Total: untyped
+      end
+    end
+  end
+end

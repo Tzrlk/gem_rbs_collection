@@ -1,0 +1,14 @@
+module Inspec::Resources
+  class CassandradbConf < JsonConfig
+    def initialize: (?untyped? conf_path) -> void
+
+    # if system unables to determine the cassandra conf path the @conf_path can be nil so in that case sending "" string as resource_id
+    def resource_id: () -> untyped
+
+    private
+
+    def parse: (untyped content) -> untyped
+
+    def resource_base_name: () -> "Cassandra Configuration"
+  end
+end

@@ -1,0 +1,17 @@
+module Inspec
+  class Value
+    include ::Inspec::RubyHelper
+
+    attr_accessor qualifier: untyped
+
+    attr_accessor skip: untyped
+
+    attr_accessor variable: untyped
+
+    def initialize: (?untyped qualifiers) -> void
+
+    def to_ruby: () -> untyped
+
+    def name_variable: (?untyped cache) -> untyped
+  end
+end

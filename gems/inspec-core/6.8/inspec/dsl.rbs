@@ -1,0 +1,24 @@
+module Inspec::DSL
+  attr_accessor backend: untyped
+
+  def require_controls: (untyped id, ?untyped? version) ?{ () -> untyped } -> untyped
+
+  def include_controls: (untyped id, ?untyped? version) ?{ () -> untyped } -> untyped
+
+  alias require_rules require_controls
+
+  alias include_rules include_controls
+
+  def require_resource: (?::Hash[untyped, untyped] options) -> untyped
+
+  def self.method_missing_resource: (untyped backend, untyped id, *untyped arguments) -> (nil | untyped)
+
+  # Support for Outer Profile DSL plugins
+  # This is called when an unknown method is encountered
+  # "bare" in a control file - outside of a control or describe block.
+  def method_missing: (untyped method_name, *untyped arguments) ?{ () -> untyped } -> untyped
+
+  def self.load_spec_files_for_profile: (untyped bind_context, untyped opts) ?{ () -> untyped } -> (nil | untyped)
+
+  def self.filter_included_controls: (untyped context, untyped profile, untyped opts) ?{ () -> untyped } -> untyped
+end

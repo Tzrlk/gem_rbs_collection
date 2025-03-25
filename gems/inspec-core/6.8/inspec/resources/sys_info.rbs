@@ -1,0 +1,21 @@
+module Inspec::Resources
+  # this resource returns additional system informatio
+  class System
+    # returns the hostname of the local system
+    def hostname: (?untyped? opt) -> untyped
+
+    def linux_hostname: (?untyped? opt) -> untyped
+
+    def mac_hostname: (?untyped? opt) -> untyped
+
+    # returns the Manufacturer of the local system
+    def manufacturer: () -> untyped
+
+    # returns the ServerModel of the local system
+    def model: () -> untyped
+
+    def resource_id: () -> "sys_info"
+
+    def to_s: () -> "System Information"
+  end
+end

@@ -1,0 +1,6 @@
+module InspecPlugins
+  module Parallelism
+    class Plugin
+    end
+  end
+end

@@ -1,0 +1,34 @@
+class SimpleConfig
+  include Inspec::Utils::CommentParser
+
+  attr_reader params: untyped
+
+  attr_reader groups: untyped
+
+  def initialize: (untyped raw_data, ?::Hash[untyped, untyped] opts) -> void
+
+  # Parse some data
+  # quotes: quoting characters, which are parsed, so everything inside
+  # it will be part of a string
+  # multiline: allow quoted text to span multiple lines
+  # comment_char: char which identifies comments
+  # standalone_comments: comments must appear alone in a line; if set to true,
+  # no comments can be added to the end of an assignment/statement line
+  def parse: (untyped raw_data, ?untyped? opts) -> (nil | untyped)
+
+  private
+
+  def parse_values: (untyped match, untyped values) -> untyped
+
+  def parse_params_line: (untyped line, untyped opts) -> (nil | untyped)
+
+  def parse_group_line: (untyped line, untyped opts) -> (nil | untyped)
+
+  def parse_implicit_assignment_line: (untyped line, untyped opts) -> (nil | untyped)
+
+  def parse_rest: (untyped rest, untyped opts) -> untyped
+
+  def is_empty_line: (untyped l) -> untyped
+
+  def default_options: () -> { quotes: "", multiline: false, comment_char: "#", line_separator: nil, assignment_regex: ::Regexp, group_re: ::Regexp, key_values: 1, standalone_comments: false, multiple_values: false, multiple_value_regex: nil }
+end

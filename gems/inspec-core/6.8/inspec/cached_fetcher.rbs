@@ -1,0 +1,23 @@
+module Inspec
+  class CachedFetcher
+    extend Forwardable
+
+    attr_reader cache: untyped
+
+    attr_reader target: untyped
+
+    attr_reader fetcher: untyped
+
+    def initialize: (untyped target, untyped cache, ?::Hash[untyped, untyped] opts) -> void
+
+    def resolved_source: () -> untyped
+
+    def update_from_opts: (untyped _opts) -> false
+
+    def cache_key: () -> untyped
+
+    def fetch: () -> (untyped | ::Array[untyped | false] | ::Array[untyped])
+
+    def assert_cache_sanity!: () -> (nil | untyped)
+  end
+end

@@ -1,0 +1,48 @@
+module Inspec
+  #
+  # ShellDetector attempts to detect the shell the invoking user is
+  # running by checking:
+  #
+  #  - The command of our parent
+  #  - The SHELL environment variable
+  #  - The shell returned by getpwuid for our process UID
+  #
+  # Since none of these methods is fullproof, the detected shell is
+  # verified against a list of known shells before being returned to
+  # the caller.
+  #
+  class ShellDetector
+    NOT_DETECTED: untyped
+
+    KNOWN_SHELLS: ::Array["bash" | "zsh" | "ksh" | "csh" | "sh" | "fish"]
+
+    def initialize: () -> void
+
+    def shell: () -> untyped
+
+    def shell!: () -> untyped
+
+    private
+
+    def detect: () -> (nil | untyped)
+
+    def detected?: (untyped arg) -> untyped
+
+    def detect_by_ppid: () -> untyped
+
+    def detect_by_env: () -> untyped
+
+    def detect_by_getpwuid: () -> untyped
+
+    #
+    # Strip any leading path elements
+    #
+    def shellname: (untyped shellpath) -> untyped
+
+    #
+    # Only return shells that we know about, just to be sure we never
+    # do anything very silly.
+    #
+    def known_shell?: (untyped shell) -> untyped
+  end
+end

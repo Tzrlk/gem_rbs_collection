@@ -1,0 +1,27 @@
+module InspecPlugins
+  module Init
+    class CLI
+      def plugin: (untyped plugin_name) -> untyped
+
+      private
+
+      def determine_plugin_type: (untyped plugin_name) -> untyped
+
+      def make_rename_map: (untyped _plugin_type, untyped plugin_name, untyped snake_case) -> ::Hash[::String | untyped, untyped]
+
+      def plugin_vars_from_opts: () -> untyped
+
+      def vars_from_defaults: () -> untyped
+
+      def vars_from_prompts: () -> untyped
+
+      def prompt_for_options: (untyped option_order) -> untyped
+
+      def parse_activator_option: (untyped raw_option) -> untyped
+
+      def fetch_license_text: (untyped license_name) -> untyped
+
+      def make_skip_list: (untyped requested_activators) -> untyped
+    end
+  end
+end

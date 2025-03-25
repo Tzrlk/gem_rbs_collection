@@ -1,0 +1,5 @@
+module Inspec
+  module EnhancedOutcomes
+    def self.determine_status: (untyped results, untyped impact) -> ("error" | "not_applicable" | "not_reviewed" | "failed" | "passed")
+  end
+end

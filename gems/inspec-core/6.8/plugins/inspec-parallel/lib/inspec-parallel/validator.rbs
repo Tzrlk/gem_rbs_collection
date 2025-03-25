@@ -1,0 +1,44 @@
+module InspecPlugins
+  module Parallelism
+    class Validator
+      # TODO: make this list dynamic so plugins can self-declare
+      PARALLEL_SAFE_REPORTERS: ::Array["automate" | "child-status"]
+
+      attr_accessor invocations: untyped
+
+      attr_accessor sub_cmd: untyped
+
+      attr_accessor thor_options_for_sub_cmd: untyped
+
+      attr_accessor aliases_mapping: untyped
+
+      attr_accessor cli_options: untyped
+
+      attr_accessor config_content: untyped
+
+      attr_accessor stdin_config: untyped
+
+      def initialize: (untyped invocations, untyped cli_options, ?::String sub_cmd) -> void
+
+      def validate: () -> untyped
+
+      def validate_log_path: () -> (::Array[untyped] | untyped)
+
+      private
+
+      def create_aliases_mapping: () -> untyped
+
+      def check_for_spurious_options: (untyped invocation_data) -> untyped
+
+      def check_for_required_fields: (untyped invocation_data) -> untyped
+
+      def check_for_reporter_options: (untyped invocation_data) -> (nil | untyped)
+
+      def check_reporter_options_in_config: (untyped invocation_data) -> (nil | untyped)
+
+      def check_for_piped_config_from_stdin: (untyped config_opts) -> (nil | untyped)
+
+      def convert_cli_to_thor_options: (untyped invocation_data) -> untyped
+    end
+  end
+end

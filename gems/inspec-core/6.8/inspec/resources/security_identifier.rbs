@@ -1,0 +1,19 @@
+module Inspec::Resources
+  class SecurityIdentifier
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def sid: () -> untyped
+
+    def exist?: () -> untyped
+
+    def to_s: () -> "Security Identifier"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def fetch_sids: () -> untyped
+
+    def cim_results: (untyped `type`) -> untyped
+  end
+end

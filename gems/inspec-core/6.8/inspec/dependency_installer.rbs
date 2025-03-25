@@ -1,0 +1,21 @@
+module Inspec
+  class DependencyInstaller
+    extend Forwardable
+
+    attr_reader gem_path: untyped
+
+    attr_reader requested_gems: untyped
+
+    attr_reader dependency_loader: untyped
+
+    def initialize: (?untyped? gem_path, ?untyped requested_gems) -> void
+
+    def install: () -> untyped
+
+    private
+
+    def install_from_remote_gems: (untyped requested_gem_name, untyped opts) -> untyped
+
+    def install_gem_to_gems_dir: (untyped gem_dependency, ?untyped extra_request_sets, ?bool update_mode) -> untyped
+  end
+end

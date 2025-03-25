@@ -1,0 +1,34 @@
+module Inspec::Resources
+  class GrubConfig
+    include FileReader
+
+    class UnknownGrubConfig < StandardError
+    end
+
+    def initialize: (?untyped? path, ?untyped? kernel) -> void
+
+    def config_for_platform: (untyped path) -> untyped
+
+    def config_for_redhatish: (untyped path) -> untyped
+
+    def method_missing: (untyped name) -> untyped
+
+    def to_s: () -> "Grub Config"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def grub2_parse_kernel_lines: (untyped content, untyped conf) -> (::Hash[untyped, untyped] | untyped)
+
+    def extract_menu_entries: (untyped content) -> untyped
+
+    def default_menu_entry: (untyped menu_entries, untyped default) -> untyped
+
+    def parse_kernel_lines: (untyped content, untyped conf) -> untyped
+
+    def read_file: (untyped config_file) -> untyped
+
+    def read_params: () -> untyped
+  end
+end

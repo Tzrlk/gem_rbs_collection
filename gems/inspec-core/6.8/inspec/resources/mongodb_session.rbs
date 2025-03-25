@@ -1,0 +1,31 @@
+module Inspec::Resources
+  class Lines
+    attr_reader params: untyped
+
+    def initialize: (untyped raw, untyped desc, ?untyped? exit_status) -> void
+
+    def to_s: () -> untyped
+  end
+
+  class MongodbSession
+    attr_reader user: untyped
+
+    attr_reader host: untyped
+
+    attr_reader port: untyped
+
+    attr_reader database: untyped
+
+    attr_reader params: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def query: (untyped command) -> untyped
+
+    def resource_id: () -> ::String
+
+    private
+
+    def create_session: () -> untyped
+  end
+end

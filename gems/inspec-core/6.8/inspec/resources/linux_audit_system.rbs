@@ -1,0 +1,28 @@
+module Inspec::Resources
+  class LinuxAuditSystem
+    attr_reader auditctl_utility: untyped
+
+    # Resource initialization.
+    def initialize: () -> void
+
+    # Resource appearance in test reports.
+    def to_s: () -> "linux_audit_system"
+
+    # The be_enabled matcher checks if the auditing is enabled.
+    # The enabled flag 1 indicates that the auditing is enabled.
+    def enabled?: () -> untyped
+
+    # The be_running matcher checks if the audit daemon is running.
+    # A pid of 0 indicates that the audit daemon is not running.
+    def running?: () -> untyped
+
+    # The rules property returns the array of audit rules obtained on auditctl -l.
+    # The auditctl -l list all rules, 1 per line.
+    def rules: () -> untyped
+
+    private
+
+    # Check if auditctl is available on the system.
+    def find_auditctl_or_error: () -> untyped
+  end
+end

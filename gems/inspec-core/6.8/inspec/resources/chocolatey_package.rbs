@@ -1,0 +1,26 @@
+# Check for Chocolatey packages to be installed
+module Inspec::Resources
+  class ChocoPkg
+    attr_reader package_name: untyped
+
+    def initialize: (untyped package_name, ?::Hash[untyped, untyped] _opts) -> void
+
+    def installed?: () -> untyped
+
+    def info: () -> untyped
+
+    def respond_to_missing?: (untyped method_name, *untyped) -> untyped
+
+    def method_missing: (untyped method_name, *untyped args) ?{ () -> untyped } -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def base_data: () -> { name: untyped, version: nil, installed: false, type: "chocolatey" }
+
+    def generate_cache: () -> untyped
+  end
+end

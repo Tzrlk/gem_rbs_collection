@@ -1,0 +1,47 @@
+module InspecPlugins
+  module Habitat
+    class Profile
+      include Inspec::Dist
+
+      attr_reader logger: untyped
+
+      attr_reader options: untyped
+
+      def initialize: (untyped path, ?::Hash[untyped, untyped] options) -> void
+
+      def create: () -> untyped
+
+      def setup: (?untyped profile) -> untyped
+
+      def upload: () -> untyped
+
+      private
+
+      def create_working_dir: () -> untyped
+
+      def duplicate_profile: (untyped path, untyped working_dir) -> untyped
+
+      def prepare_profile!: (untyped profile) -> untyped
+
+      def profile_from_path: (untyped path) -> untyped
+
+      def copy_profile_to_working_dir: (untyped profile, untyped working_dir) -> untyped
+
+      def verify_profile: (untyped profile) -> untyped
+
+      def vendor_profile_dependencies!: (untyped profile) -> untyped
+
+      def verify_habitat_setup: (untyped habitat_config) -> untyped
+
+      def create_file_from_template: (untyped file, untyped template, ?::Hash[untyped, untyped] vars) -> untyped
+
+      def build_hart: (untyped working_dir, untyped habitat_config) -> untyped
+
+      def upload_hart: (untyped hart_file, untyped habitat_config) -> untyped
+
+      def read_habitat_config: () -> untyped
+
+      def exit_with_error: (*untyped errors) -> untyped
+    end
+  end
+end

@@ -1,0 +1,43 @@
+module Inspec::Plugin::V2::PluginType
+  class StreamingReporter < Inspec::Plugin::V2::PluginBase
+    def initialize_streaming_reporter: () -> untyped
+
+    private
+
+    # method to identify when the control started running
+    # this will be useful in executing operations on control's level start
+    def control_started?: (untyped control_id) -> (false | true)
+
+    # method to identify when the control ended running
+    # this will be useful in executing operations on control's level end
+    def control_ended?: (untyped notification, untyped control_id) -> untyped
+
+    def run_control_operations: (untyped notification, untyped control_id) -> untyped
+
+    def check_for_enhanced_outcomes: (untyped notification, untyped control_id) -> (untyped | nil)
+
+    def format_message: (untyped indicator, untyped control_id, untyped title, untyped full_description) -> untyped
+
+    def control_outcome: (untyped control_id) -> untyped
+
+    # method to identify total no. of controls
+    def controls_count: () -> untyped
+
+    # this method is used in the logic of determining end of control
+    def set_control_checks_count_map_value: () -> (untyped | nil)
+
+    def enhanced_outcomes: () -> untyped
+
+    def add_enhanced_outcomes: (untyped control_id) -> ("error" | "not_applicable" | "not_reviewed" | "failed" | "passed")
+
+    def control_has_error: (untyped notifications) -> untyped
+
+    def control_has_all_tests_skipped: (untyped notifications) -> untyped
+
+    def control_has_any_tests_failed: (untyped notifications) -> untyped
+
+    def control_has_impact_zero: (untyped notifications) -> untyped
+
+    def collect_notifications: (untyped notification, untyped control_id, untyped status) -> untyped
+  end
+end

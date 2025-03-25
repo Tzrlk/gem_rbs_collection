@@ -1,0 +1,17 @@
+module Inspec
+  class WaiverFileReader
+    def self.fetch_waivers_by_profile: (untyped profile_id, untyped files) -> untyped
+
+    def self.read_waivers_from_file: (untyped profile_id, untyped files) -> untyped
+
+    def self.read_from_file: (untyped file_path) -> untyped
+
+    def self.all_fields: () -> ::Array["control_id" | "justification" | "expiration_date" | "run"]
+
+    def self.validate_csv_headers: (untyped headers) -> untyped
+
+    def self.fetch_invalid_headers_info: (untyped headers, ?bool json_yaml) -> untyped
+
+    def self.validate_json_yaml: (untyped data) -> untyped
+  end
+end

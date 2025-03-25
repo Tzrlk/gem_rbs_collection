@@ -1,0 +1,112 @@
+module Inspec
+  class FileProvider
+    def self.for_path: (untyped path) -> untyped
+
+    def initialize: (untyped _path) -> void
+
+    # List all files that are offered.
+    #
+    # @return [Array[String]] list of file paths that are included
+    def files: () -> untyped
+
+    # Read the contents of a file. This will typically refer to a text
+    # file reading a string.
+    #
+    # @param _file [String] path of the file to be read
+    # @return [String] contents of the file described
+    def read: (untyped _file) -> untyped
+
+    # Provide a method for reading binary contents from a file.
+    # It will default to #read if not defined. For most streams that implement
+    # it, it will be the same. For some special cases, it will add change the
+    # way in which encoding of the returned data structure is handled.
+    # Does not work with alias nor alias_method.
+    def binread: (untyped file) -> untyped
+
+    def relative_provider: () -> untyped
+  end
+
+  class MockProvider < FileProvider
+    attr_reader files: untyped
+
+    def initialize: (untyped path) -> void
+
+    def read: (untyped file) -> untyped
+  end
+
+  class DirProvider < FileProvider
+    attr_reader files: untyped
+
+    attr_reader path: untyped
+
+    def initialize: (untyped path) -> void
+
+    def read: (untyped file) -> (nil | untyped)
+
+    def binread: (untyped file) -> (nil | untyped)
+  end
+
+  class ZipProvider < FileProvider
+    attr_reader files: untyped
+
+    def initialize: (untyped path) -> void
+
+    def extract: (?::String destination_path) -> untyped
+
+    def read: (untyped file) -> untyped
+
+    private
+
+    def walk_zip: (untyped path) ?{ () -> untyped } -> untyped
+
+    def read_from_zip: (untyped file) -> (nil | untyped)
+  end
+
+  class TarProvider < FileProvider
+    attr_reader files: untyped
+
+    def initialize: (untyped path) -> void
+
+    def extract: (?::String destination_path) -> untyped
+
+    def read: (untyped file) -> untyped
+
+    private
+
+    def walk_tar: (untyped path) ?{ () -> untyped } -> untyped
+  end
+
+  class IafProvider < TarProvider
+    attr_reader files: untyped
+
+    def initialize: (untyped path) -> void
+  end
+
+  class RelativeFileProvider
+    BLACKLIST_FILES: ::Array["/pax_global_header" | "pax_global_header"]
+
+    attr_reader files: untyped
+
+    attr_reader prefix: untyped
+
+    attr_reader parent: untyped
+
+    def initialize: (untyped parent_provider) -> void
+
+    def abs_path: (untyped file) -> (nil | untyped)
+
+    def read: (untyped file) -> untyped
+
+    def binread: (untyped file) -> untyped
+
+    private
+
+    def get_prefix: (untyped fs) -> ("" | untyped)
+
+    def prefix_candidate_for: (untyped file) -> untyped
+
+    def get_folder_prefix: (untyped fs) -> untyped
+
+    def get_files_prefix: (untyped fs) -> ("" | untyped)
+  end
+end

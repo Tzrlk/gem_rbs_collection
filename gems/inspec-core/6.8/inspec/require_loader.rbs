@@ -1,0 +1,15 @@
+module Inspec
+  class RequireLoader
+    Item: untyped
+
+    def initialize: () -> void
+
+    def add: (untyped path, untyped content, untyped ref, untyped line) -> untyped
+
+    def load: (untyped path) { (untyped) -> untyped } -> untyped
+
+    def exists?: (untyped path) -> untyped
+
+    def loaded?: (untyped path) -> untyped
+  end
+end

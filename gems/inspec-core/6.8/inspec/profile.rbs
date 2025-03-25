@@ -1,0 +1,193 @@
+module Inspec
+  class Profile
+    extend Forwardable
+
+    def self.resolve_target: (untyped target, untyped cache, ?::Hash[untyped, untyped] opts) -> untyped
+
+    # Check if the profile contains a vendored cache, move content into global cache
+    # TODO: use relative file provider
+    # TODO: use source reader for Cache as well
+    def self.copy_deps_into_cache: (untyped file_provider, untyped opts) -> untyped
+
+    def self.for_path: (untyped path, untyped opts) -> untyped
+
+    def self.for_fetcher: (untyped fetcher, untyped config) -> untyped
+
+    def self.for_target: (untyped target, ?::Hash[untyped, untyped] opts) -> untyped
+
+    attr_reader source_reader: untyped
+
+    attr_reader backend: untyped
+
+    attr_reader runner_context: untyped
+
+    attr_reader check_mode: untyped
+
+    attr_accessor parent_profile: untyped
+
+    attr_accessor profile_id: untyped
+
+    attr_accessor profile_name: untyped
+
+    attr_accessor target: untyped
+
+    # rubocop:disable Metrics/AbcSize
+    def initialize: (untyped source_reader, ?::Hash[untyped, untyped] options) -> void
+
+    def name: () -> untyped
+
+    def version: () -> untyped
+
+    def writable?: () -> untyped
+
+    def failed?: () -> untyped
+
+    def verify_if_signed: () -> (true | false)
+
+    def signed?: () -> untyped
+
+    def verify_signed_profile: () -> untyped
+
+    #
+    # Is this profile is supported on the current platform of the
+    # backend machine and the current inspec version.
+    #
+    # @returns [TrueClass, FalseClass]
+    #
+    def supported?: () -> untyped
+
+    # We need to check if we're using a Mock'd backend for tests to function.
+    # @returns [TrueClass, FalseClass]
+    def supports_platform?: () -> untyped
+
+    def supports_runtime?: () -> untyped
+
+    def params: () -> untyped
+
+    def virtual_profile?: () -> untyped
+
+    def collect_tests: () -> (nil | untyped)
+
+    # Wipe out waived controls
+    def filter_waived_controls: () -> untyped
+
+    # This creates the list of controls provided in the --controls options which need to be include
+    # for evaluation.
+    def include_controls_list: () -> (::Array[untyped] | untyped)
+
+    # This creates the list of controls to be filtered by tag values provided in the --tags options
+    def include_tags_list: () -> (::Array[untyped] | untyped)
+
+    def load_libraries: () -> untyped
+
+    # This collects the gem dependencies data from parent and its dependent profiles
+    def collect_gem_dependencies: () -> untyped
+
+    # Loads the required gems specified in the Profile's metadata file from default inspec gems path i.e. ~/.inspec/gems
+    # else installs and loads them.
+    def load_gem_dependencies: () -> untyped
+
+    # Requires gem_data as argument.
+    # gem_dta example: { name: "gem_name", version: "0.0.1"}
+    def load_gem_dependency: (untyped gem_data) -> untyped
+
+    # Requires gem_data as argument.
+    # gem_dta example: { name: "gem_name", version: "0.0.1"}
+    def install_gem_dependency: (untyped gem_data) -> untyped
+
+    def to_s: () -> ::String
+
+    # return info using uncached params
+    def info!: () -> untyped
+
+    def info: (?untyped res) -> untyped
+
+    # Return data like profile.info(params), but try to do so without evaluating the profile.
+    def info_from_parse: (?include_tests: bool) -> untyped
+
+    def filter_controls_by_id_and_tags: (untyped controls) -> untyped
+
+    def get_all_tags_list: (untyped control_tags) -> untyped
+
+    def include_group_data?: (untyped group_data) -> (untyped | true)
+
+    def update_groups_from: (untyped control_filename, untyped src) -> untyped
+
+    def cookstyle_linting_check: () -> untyped
+
+    # Cookstyle linting rake run output
+    def cookstyle_rake_output: () -> untyped
+
+    def legacy_check: () -> untyped
+
+    # Check if the profile is internally well-structured. The logger will be
+    # used to print information on errors and warnings which are found.
+    #
+    # @return [Boolean] true if no errors were found, false otherwise
+    def check: () -> untyped
+
+    def validity_check: () -> ::Array[untyped]
+
+    def set_status_message: (untyped msg) -> untyped
+
+    # generates a archive of a folder profile
+    def archive: (untyped opts) -> (false | true)
+
+    def locked_dependencies: () -> untyped
+
+    def lockfile_exists?: () -> untyped
+
+    def lockfile_path: () -> untyped
+
+    def root_path: () -> untyped
+
+    def files: () -> untyped
+
+    def readme: () -> untyped
+
+    def metadata_src: () -> untyped
+
+    #
+    # TODO(ssd): Relative path handling really needs to be carefully
+    # thought through, especially with respect to relative paths in
+    # tarballs.
+    #
+    def cwd: () -> (untyped | "./")
+
+    def lockfile: () -> untyped
+
+    #
+    # Generate an in-memory lockfile. This won't render the lock file
+    # to disk, it must be explicitly written to disk by the caller.
+    #
+    # @param vendor_path [String] Path to the on-disk vendor dir
+    # @return [Inspec::Lockfile]
+    #
+    def generate_lockfile: () -> untyped
+
+    def load_dependencies: () -> untyped
+
+    # Calculate this profile's SHA256 checksum. Includes metadata, dependencies,
+    # libraries, data files, and controls.
+    #
+    # @return [Type] description of returned object
+    def sha256: () -> untyped
+
+    private
+
+    # Create an archive name for this profile and an additional options
+    # configuration. Either use :output or generate the name from metadata.
+    #
+    # @param [Hash] configuration options
+    # @return [Pathname] path for the archive
+    def archive_name: (untyped opts) -> untyped
+
+    def load_params: () -> untyped
+
+    def load_checks_params: (untyped params) -> untyped
+
+    def load_rule_filepath: (untyped prefix, untyped rule) -> untyped
+
+    def load_rule: (untyped rule, untyped file, untyped controls, untyped groups) -> untyped
+  end
+end

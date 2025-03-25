@@ -1,0 +1,28 @@
+module Inspec
+  class Feature
+    class Config
+      VERIFICATION_KEY_NAME: "progress-2022-05-04"
+
+      attr_reader cfg_data: untyped
+
+      attr_reader valid: untyped
+
+      def initialize: (?untyped? conf_path) -> void
+
+      def with_each_feature: () { (untyped) -> untyped } -> untyped
+
+      def []: (untyped feature_name) -> (nil | untyped)
+
+      def feature_name?: (untyped query) -> untyped
+
+      def features: () -> untyped
+
+      private
+
+      def load_features: () -> untyped
+
+      # Default data for when the config is in an error state.
+      def load_error_data: () -> { features: ::Hash[untyped, untyped] }
+    end
+  end
+end

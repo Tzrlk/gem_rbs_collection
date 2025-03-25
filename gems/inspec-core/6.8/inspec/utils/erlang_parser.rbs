@@ -1,0 +1,38 @@
+class ErlangParser < Parslet::Parser
+end
+
+class ErlangBitstream
+  def initialize: () -> void
+
+  TYPES: ::Hash[::String, 8 | untyped]
+
+  def bit_size: (untyped size, untyped `type`) -> untyped
+
+  def add: (untyped i) -> untyped
+
+  def str2int: (untyped s, untyped `type`) -> untyped
+
+  def int2bits: (untyped i, untyped len) -> untyped
+
+  def add_int: (untyped v, untyped size) -> untyped
+
+  def add_bits: (untyped s) -> untyped
+
+  def value: (?::String encoding) -> untyped
+end
+
+class ErlangTransform < Parslet::Transform
+  class Tuple < Array
+  end
+
+  class Identifier < String
+  end
+
+  def self.assemble_binary: (untyped seq) -> untyped
+end
+
+class ErlangConfigFile
+  def self.parse: (untyped content) -> untyped
+
+  def self.turn_to_hash: (untyped t) -> untyped
+end

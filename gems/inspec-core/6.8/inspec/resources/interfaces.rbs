@@ -1,0 +1,31 @@
+module Inspec::Resources
+  class Interfaces
+    attr_reader iface_data: untyped
+
+    def to_s: () -> "Interfaces"
+
+    def ipv4_address: () -> untyped
+
+    private
+
+    def scan_interfaces: () -> untyped
+
+    class InterfaceLister
+      attr_reader inspec: untyped
+
+      def initialize: (untyped inspec) -> void
+    end
+
+    class BsdInterfaceLister < InterfaceLister
+      def scan_interfaces: () -> untyped
+    end
+
+    class LinuxInterfaceLister < InterfaceLister
+      def scan_interfaces: () -> untyped
+    end
+
+    class WindowsInterfaceLister < InterfaceLister
+      def scan_interfaces: () -> (nil | untyped)
+    end
+  end
+end

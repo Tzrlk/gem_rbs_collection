@@ -1,0 +1,28 @@
+module Inspec::Resources
+  class Processes
+    def initialize: (?untyped grep) -> void
+
+    def exists?: () -> untyped
+
+    def to_s: () -> ::String
+
+    def list: () -> untyped
+
+    # Matcher to check if the process is running
+    def running?: () -> untyped
+
+    private
+
+    def filtered_processes: () -> untyped
+
+    def ps_axo: () -> untyped
+
+    def ps_configuration_for_linux: () -> ::Array[untyped]
+
+    def busybox_ps?: () -> untyped
+
+    def convert_to_kilobytes: (untyped param) -> untyped
+
+    def build_process_list: (untyped command, untyped regex, untyped field_map) -> (::Array[untyped] | untyped)
+  end
+end

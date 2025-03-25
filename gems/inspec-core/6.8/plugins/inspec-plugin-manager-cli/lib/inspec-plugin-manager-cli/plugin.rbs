@@ -1,0 +1,6 @@
+module InspecPlugins
+  module PluginManager
+    class Plugin
+    end
+  end
+end

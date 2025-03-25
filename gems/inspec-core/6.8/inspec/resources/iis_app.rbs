@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+# check for web applications in IIS
+# Note: this is only supported in windows 2012 and later
+module Inspec::Resources
+  class IisApp
+    def initialize: (untyped path, untyped site_name) -> void
+
+    def application_pool: () -> untyped
+
+    def protocols: () -> untyped
+
+    def site_name: () -> untyped
+
+    def path: () -> untyped
+
+    def physical_path: () -> untyped
+
+    def exists?: () -> untyped
+
+    def has_site_name?: (untyped site_name) -> untyped
+
+    def has_application_pool?: (untyped application_pool) -> untyped
+
+    def has_path?: (untyped path) -> untyped
+
+    def has_physical_path?: (untyped physical_path) -> untyped
+
+    def has_protocol?: (untyped protocol) -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def iis_app: () -> (untyped | ::Hash[untyped, untyped])
+  end
+end

@@ -1,0 +1,77 @@
+module Inspec::Fetcher
+  class Url
+    MIME_TYPES: ::Hash[::String, ".zip" | ".tar.gz"]
+
+    def self.resolve: (untyped target, ?::Hash[untyped, untyped] opts) -> (untyped | untyped | untyped | nil)
+
+    def self.resolve_from_string: (untyped target, untyped opts, ?untyped? username, ?untyped? password) -> untyped
+
+    GITHUB_URL_REGEX: ::Regexp
+
+    GITHUB_URL_WITH_TREE_REGEX: ::Regexp
+
+    BITBUCKET_URL_REGEX: ::Regexp
+
+    BITBUCKET_URL_BRANCH_REGEX: ::Regexp
+
+    BITBUCKET_URL_COMMIT_REGEX: ::Regexp
+
+    GITHUB_URL: "https://github.com"
+
+    BITBUCKET_URL: "https://bitbucket.org"
+
+    def self.transform: (untyped target) -> untyped
+
+    attr_reader files: untyped
+
+    attr_reader archive_path: untyped
+
+    def initialize: (untyped url, untyped opts) -> void
+
+    def fetch: (untyped path) -> untyped
+
+    def resolved_source: () -> untyped
+
+    def cache_key: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def self.default_ref: (untyped match_data, untyped repo_url) -> untyped
+
+    def self.shellout: (untyped cmd, ?::Hash[untyped, untyped] opts) -> untyped
+
+    def parse_uri: (untyped target) -> untyped
+
+    def sha256: () -> untyped
+
+    def file_type_from_remote: (untyped remote) -> untyped
+
+    def temp_archive_path: () -> untyped
+
+    def download_automate2_archive_to_temp: () -> untyped
+
+    # Downloads archive to temporary file with side effect :( of setting @archive_type
+    def download_archive_to_temp: () -> untyped
+
+    # Opens a URI or local file specified by `target` with options `opts`.
+    # If `target` is a valid URI (http://, https://, ftp://), opens it using URI.open.
+    # If `target` is a local file path, opens it using File.open.
+    # Raises ArgumentError for invalid `target` that is neither a valid URI nor a local file path.
+    # Logs or handles exceptions gracefully using `pretty_handle_exception`.
+    def open: (untyped target, untyped opts) -> untyped
+
+    # Checks if the given `target` string is a valid URI by attempting to parse it.
+    # Returns true if `target` is a valid HTTP, HTTPS, or FTP URI; false otherwise.
+    def valid_uri?: (untyped target) -> untyped
+
+    def open_via_uri: (untyped target) -> untyped
+
+    def download_archive: (untyped path) -> untyped
+
+    def http_opts: () -> untyped
+
+    def check_for_missing_values!: (untyped opts) -> untyped
+  end
+end

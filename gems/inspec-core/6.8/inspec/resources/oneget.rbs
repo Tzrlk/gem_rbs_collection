@@ -1,0 +1,22 @@
+# This resource talks with OneGet (https://github.com/OneGet/oneget)
+# Its part of Windows Management Framework 5.0 and part of Windows 10
+#
+# Usage:
+# describe oneget('zoomit') do
+#   it { should be_installed }
+# end
+module Inspec::Resources
+  class OneGetPackage
+    def initialize: (untyped package_name) -> void
+
+    def info: () -> untyped
+
+    def installed?: () -> untyped
+
+    def version: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

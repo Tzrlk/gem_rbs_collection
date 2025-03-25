@@ -1,0 +1,21 @@
+module Inspec::Resources
+  class MssqlSysConf
+    attr_reader mssql_session: untyped
+
+    attr_reader sql_query: untyped
+
+    def initialize: (untyped conf_param_name, ?::Hash[untyped, untyped] opts) -> void
+
+    def value_in_use: () -> untyped
+
+    def value_configured: () -> untyped
+
+    def to_s: () -> "MsSql DB Configuration"
+
+    def resource_id: () -> ::String
+
+    private
+
+    def determine_system_configurations: (untyped setting) -> untyped
+  end
+end

@@ -1,0 +1,10 @@
+module Inspec
+  module Plugins
+    # stores all CLI plugin, we expect those to the `Thor` subclasses
+    class CLI
+      def self.subcommands: () -> untyped
+
+      def self.add_subcommand: (untyped klass, untyped subcommand_name, untyped usage, untyped description, ?::Hash[untyped, untyped] options) -> untyped
+    end
+  end
+end

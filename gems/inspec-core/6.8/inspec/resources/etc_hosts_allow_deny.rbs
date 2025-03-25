@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class EtcHostsAllow
+    attr_reader params: untyped
+
+    include Inspec::Utils::CommentParser
+
+    include FileReader
+
+    def initialize: (?untyped? hosts_allow_path) -> void
+
+    def to_s: () -> "hosts.allow Configuration"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def read_content: () -> untyped
+
+    def split_daemons: (untyped content) -> untyped
+
+    def parse_conf: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> ::Hash[::String, untyped]
+
+    def read_file: (?untyped conf_path) -> untyped
+  end
+
+  class EtcHostsDeny < EtcHostsAllow
+    def initialize: (?untyped? path) -> void
+
+    def to_s: () -> "hosts.deny Configuration"
+  end
+end

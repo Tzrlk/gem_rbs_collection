@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class OpaApi < Opa
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def allow: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "OPA api"
+
+    private
+
+    def load_result: () -> untyped
+  end
+end

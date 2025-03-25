@@ -1,0 +1,36 @@
+module Inspec
+  module Deprecation
+    class Deprecator
+      attr_reader config: untyped
+
+      attr_reader groups: untyped
+
+      def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+      def handle_deprecation: (untyped group_name, untyped message, ?::Hash[untyped, untyped] opts) -> untyped
+
+      private
+
+      def create_group_entry_for_unknown_group: (untyped group_name) -> untyped
+
+      def annotate_stack_information: (untyped opts) -> untyped
+
+      def assemble_message: (untyped message, untyped group, untyped opts) -> untyped
+
+      def called_from_control?: () -> (true | false)
+
+      # Unused args needed for unit test deprecation harness
+      def handle_ignore_action: (untyped _group_name, untyped message, untyped _group) -> untyped
+
+      def handle_log_action: (untyped message, untyped level) -> untyped
+
+      def handle_warn_action: (untyped _group_name, untyped message, untyped _group) -> untyped
+
+      def handle_error_action: (untyped _group_name, untyped message, untyped _group) -> untyped
+
+      def handle_fail_control_action: (untyped group_name, untyped message, untyped group) -> untyped
+
+      def handle_exit_action: (untyped group_name, untyped message, untyped group) -> untyped
+    end
+  end
+end

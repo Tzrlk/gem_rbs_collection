@@ -1,0 +1,43 @@
+module Inspec::Resources
+  class SelinuxModuleFilter
+    attr_reader modules: untyped
+
+    def initialize: (untyped modules) -> void
+
+    def to_s: () -> "SELinux modules"
+  end
+
+  class SelinuxBooleanFilter
+    attr_reader booleans: untyped
+
+    def initialize: (untyped booleans) -> void
+
+    def to_s: () -> "SELinux booleans"
+  end
+
+  class Selinux
+    def initialize: (?::String selinux_path) -> void
+
+    def installed?: () -> untyped
+
+    def disabled?: () -> untyped
+
+    def enforcing?: () -> untyped
+
+    def permissive?: () -> untyped
+
+    def policy: () -> untyped
+
+    def modules: () -> untyped
+
+    def booleans: () -> untyped
+
+    def to_s: () -> "SELinux"
+
+    private
+
+    def parse_modules: () -> untyped
+
+    def parse_booleans: () -> untyped
+  end
+end

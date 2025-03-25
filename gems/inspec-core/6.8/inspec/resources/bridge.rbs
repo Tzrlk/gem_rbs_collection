@@ -1,0 +1,43 @@
+module Inspec::Resources
+  class Bridge
+    def initialize: (untyped bridge_name) -> void
+
+    def exists?: () -> untyped
+
+    def has_interface?: (untyped `interface`) -> untyped
+
+    def interfaces: () -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def bridge_info: () -> untyped
+  end
+
+  class BridgeDetection
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+  end
+
+  # Linux Bridge
+  # If /sys/class/net/{interface}/bridge exists then it must be a bridge
+  # /sys/class/net/{interface}/brif contains the network interfaces
+  # @see http://www.tldp.org/HOWTO/BRIDGE-STP-HOWTO/set-up-the-bridge.html
+  # @see http://unix.stackexchange.com/questions/40560/how-to-know-if-a-network-interface-is-tap-tun-bridge-or-physical
+  class LinuxBridge < BridgeDetection
+    def bridge_info: (untyped bridge_name) -> (nil | { name: untyped, interfaces: untyped })
+  end
+
+  # Windows Bridge
+  # select netadapter by adapter binding for windows
+  # Get-NetAdapterBinding -ComponentID ms_bridge | Get-NetAdapter
+  # @see https://technet.microsoft.com/en-us/library/jj130921(v=wps.630).aspx
+  # RegKeys: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}
+  class WindowsBridge < BridgeDetection
+    def bridge_info: (untyped bridge_name) -> (nil | untyped)
+  end
+end

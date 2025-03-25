@@ -1,0 +1,13 @@
+module Inspec
+  module Utils
+    #
+    # Inspec::Utils::YamlProfileSummary takes in certain information to identify a
+    # profile and then produces a YAML-formatted summary of that profile. It can
+    # return the results to STDOUT or a file.
+    #
+    #
+    module YamlProfileSummary
+      def self.produce_yaml: (info: untyped, ?write_path: ::String, ?suppress_output: bool) -> untyped
+    end
+  end
+end

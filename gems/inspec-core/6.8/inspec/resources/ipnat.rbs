@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class IpNat
+    def initialize: () -> void
+
+    def has_rule?: (?untyped? rule) -> untyped
+
+    def retrieve_rules: () -> (untyped | ::Array[untyped])
+
+    def resource_id: () -> "Ipnat"
+
+    def to_s: () -> "Ipnat"
+
+    private
+
+    def find_ipnat_or_error: () -> untyped
+  end
+end

@@ -1,0 +1,7 @@
+module InspecPlugins::Html2Reporter
+  class Reporter
+    def render: () -> untyped
+
+    def self.run_data_schema_constraints: () -> "~> 0.0"
+  end
+end

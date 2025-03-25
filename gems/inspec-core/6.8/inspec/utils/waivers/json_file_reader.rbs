@@ -1,0 +1,7 @@
+module Waivers
+  class JSONFileReader
+    def self.resolve: (untyped path) -> (nil | untyped)
+
+    def self.fetch_data: (untyped path) -> untyped
+  end
+end

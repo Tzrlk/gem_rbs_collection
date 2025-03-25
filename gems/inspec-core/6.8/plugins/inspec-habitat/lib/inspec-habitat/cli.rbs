@@ -1,0 +1,19 @@
+module InspecPlugins
+  module Habitat
+    class ProfileCLI
+      # Override banner method to correct missing subcommand.
+      # @see https://github.com/erikhuda/thor/issues/261
+      def self.banner: (untyped command, ?untyped? _namespace, ?bool _subcommand) -> ::String
+
+      def create: (?::String path) -> untyped
+
+      def setup: (?::String path) -> untyped
+
+      def upload: (?::String path) -> untyped
+    end
+
+    class CLI
+      include Inspec::Dist
+    end
+  end
+end

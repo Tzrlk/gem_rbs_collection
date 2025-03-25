@@ -1,0 +1,62 @@
+module Inspec::Resources
+  class DockerContainerFilter
+    attr_reader containers: untyped
+
+    def initialize: (untyped containers) -> void
+  end
+
+  class DockerImageFilter
+    attr_reader images: untyped
+
+    def initialize: (untyped images) -> void
+  end
+
+  class DockerPluginFilter
+    attr_reader plugins: untyped
+
+    def initialize: (untyped plugins) -> void
+  end
+
+  class DockerServiceFilter
+    attr_reader services: untyped
+
+    def initialize: (untyped services) -> void
+  end
+
+  # This resource helps to parse information from the docker host
+  # For compatability with Serverspec we also offer the following resouses:
+  # - docker_container
+  # - docker_image
+  class Docker
+    def containers: () -> untyped
+
+    def images: () -> untyped
+
+    def plugins: () -> untyped
+
+    def services: () -> untyped
+
+    def version: () -> untyped
+
+    def info: () -> untyped
+
+    # returns information about docker objects
+    def object: (untyped id) -> untyped
+
+    def to_s: () -> "Docker Host"
+
+    private
+
+    def parse_json_command: (untyped labels, untyped subcommand) -> untyped
+
+    def parse_containers: () -> untyped
+
+    def parse_services: () -> untyped
+
+    def ensure_keys: (untyped entry, untyped labels) -> untyped
+
+    def parse_images: () -> untyped
+
+    def parse_plugins: () -> untyped
+  end
+end

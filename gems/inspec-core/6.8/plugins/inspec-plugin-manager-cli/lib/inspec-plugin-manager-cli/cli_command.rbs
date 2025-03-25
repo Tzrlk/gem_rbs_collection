@@ -1,0 +1,58 @@
+module InspecPlugins
+  module PluginManager
+    class CliCommand
+      INSTALL_TYPE_LABELS: { bundle: "core", core: "core", path: "path", user_gem: "gem (user)", system_gem: "gem (system)" }
+
+      include Inspec::Dist
+
+      def list: () -> untyped
+
+      # Justification for disabling ABC: currently at 33.51/33
+      def search: (untyped search_term) -> untyped
+
+      def install: (untyped plugin_id_arg) -> untyped
+
+      def update: (untyped plugin_name) -> untyped
+
+      def uninstall: (untyped plugin_name) -> untyped
+
+      private
+
+      def install_from_gemfile: (untyped gem_file) -> untyped
+
+      def install_from_path: (untyped path) -> untyped
+
+      # Rationale for rubocop variances: It's a heuristics method, and will be full of
+      # conditionals.  The code is well-commented; refactoring into sub-methods would
+      # reduce clarity.
+      def install_from_path__apply_entry_point_heuristics: (untyped path) -> untyped
+
+      def install_from_path__probe_load: (untyped entry_point, untyped plugin_name) -> untyped
+
+      def install_from_remote_gem: (untyped plugin_name) -> untyped
+
+      def install_from_remote_gem_verson_preflight_check: (untyped plugin_name, untyped requested_version, untyped pre_installed_versions) -> (nil | untyped)
+
+      # Rationale for RuboCop variance: This is a one-line method with heavy UX-focused error handling.
+      def install_attempt_install: (untyped plugin_name) -> untyped
+
+      # =================================================================#
+      #                          update breakdown
+      # =================================================================#
+      def update_preflight_check: (untyped plugin_name, untyped pre_update_versions) -> untyped
+
+      # =================================================================#
+      #                            utilities
+      # =================================================================#
+      def installer: () -> untyped
+
+      def registry: () -> untyped
+
+      def check_plugin_name: (untyped plugin_name, untyped action) -> (untyped | nil)
+
+      def make_pretty_version: (untyped status) -> untyped
+
+      def make_pretty_install_type: (untyped status) -> untyped
+    end
+  end
+end

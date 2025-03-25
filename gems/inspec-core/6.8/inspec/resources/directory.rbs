@@ -1,0 +1,7 @@
+module Inspec::Resources
+  class Directory < FileResource
+    def exist?: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

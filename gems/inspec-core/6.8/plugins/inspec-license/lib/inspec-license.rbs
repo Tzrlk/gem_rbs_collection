@@ -1,0 +1,6 @@
+module InspecPlugins
+  module License
+    class Plugin
+    end
+  end
+end

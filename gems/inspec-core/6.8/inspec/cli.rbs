@@ -1,0 +1,40 @@
+module Inspec
+end
+
+class Inspec::InspecCLI < Inspec::BaseCLI
+  include LicenseAcceptance::CLIFlags::Thor
+
+  include ChefLicensing::CLIFlags::Thor
+
+  def json: (untyped target) -> untyped
+
+  def export: (untyped target, ?bool as_json) -> untyped
+
+  def check: (untyped path) -> untyped
+
+  def vendor: (?untyped? path) -> untyped
+
+  def archive: (untyped path, ?untyped? log_level) -> untyped
+
+  def exec: (*untyped targets) -> untyped
+
+  def detect: () -> untyped
+
+  def shell_func: () -> untyped
+
+  def env: (?untyped? shell) -> untyped
+
+  def schema: (untyped name) -> untyped
+
+  def run_context: () -> untyped
+
+  def version: () -> untyped
+
+  def clear_cache: () -> untyped
+
+  private
+
+  def deprecate_target_id: (untyped config) -> (untyped | nil)
+
+  def run_command: (untyped opts) -> untyped
+end

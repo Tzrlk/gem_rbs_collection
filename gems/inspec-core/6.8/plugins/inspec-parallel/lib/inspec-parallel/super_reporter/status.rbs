@@ -1,0 +1,32 @@
+module InspecPlugins::Parallelism
+  class SuperReporter
+    class Status < InspecPlugins::Parallelism::SuperReporter::Base
+      attr_reader status_by_pid: untyped
+
+      attr_reader slots: untyped
+
+      def initialize: (untyped job_count, untyped invocations) -> void
+
+      # --------
+      # SuperReporter API
+      # --------
+      def child_spawned: (untyped pid, untyped invocation) -> untyped
+
+      def child_forked: (untyped pid, untyped invocation) -> untyped
+
+      def child_exited: (untyped pid) -> untyped
+
+      def child_status_update_line: (untyped pid, untyped update_line) -> untyped
+
+      private
+
+      def new_child: (untyped how, untyped pid, untyped invocation) -> untyped
+
+      def terminal_width: () -> untyped
+
+      def paint: () -> untyped
+
+      def paint_header: (untyped jobs, untyped invocations) -> untyped
+    end
+  end
+end

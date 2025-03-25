@@ -1,0 +1,21 @@
+module Inspec::Resources
+  class WindowsFeature
+    def initialize: (untyped feature, ?untyped? method) -> void
+
+    # returns true if the package is installed
+    def installed?: () -> untyped
+
+    # returns the package description
+    def info: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def info_via_dism: (untyped feature) -> untyped
+
+    def info_via_powershell: (untyped feature) -> untyped
+  end
+end

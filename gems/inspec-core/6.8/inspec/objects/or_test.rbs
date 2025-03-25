@@ -1,0 +1,15 @@
+module Inspec
+  class OrTest
+    attr_reader tests: untyped
+
+    def initialize: (untyped tests) -> void
+
+    def skip: () -> nil
+
+    def negate!: () -> untyped
+
+    def to_ruby: () -> untyped
+
+    def to_hash: () -> { describe_one: untyped }
+  end
+end

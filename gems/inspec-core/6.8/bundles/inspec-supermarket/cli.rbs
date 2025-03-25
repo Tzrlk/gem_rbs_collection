@@ -1,0 +1,14 @@
+module Supermarket
+  class SupermarketCLI < Inspec::BaseCLI
+    # TODO: find another solution, once https://github.com/erikhuda/thor/issues/261 is fixed.
+    def self.banner: (untyped command, ?untyped? _namespace, ?bool _subcommand) -> ::String
+
+    def self.subcommand_prefix: () -> untyped
+
+    def profiles: () -> untyped
+
+    def exec: (*untyped tests) -> untyped
+
+    def info: (untyped profile) -> (nil | untyped)
+  end
+end

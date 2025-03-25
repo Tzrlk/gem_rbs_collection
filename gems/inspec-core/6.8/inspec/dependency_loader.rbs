@@ -1,0 +1,30 @@
+module Inspec
+  class DependencyLoader
+    attr_accessor gem_path: untyped
+
+    attr_accessor gem_list: untyped
+
+    # initializes the dependency_loader
+    def initialize: (?untyped? gem_path, ?untyped gem_list) -> void
+
+    def load: () -> untyped
+
+    def inspec_gem_path: () -> untyped
+
+    def self.inspec_gem_path: () -> untyped
+
+    # Lists all gems found in the inspec_gem_path.
+    # @return [Array[Gem::Specification]] Specs of all gems found.
+    def list_managed_gems: () -> untyped
+
+    def list_installed_gems: () -> untyped
+
+    def gem_installed?: (untyped name) -> untyped
+
+    def gem_version_installed?: (untyped name, untyped version) -> untyped
+
+    private
+
+    def activate_gem_dependency: (untyped name, ?::String version_constraint) -> untyped
+  end
+end

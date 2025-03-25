@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class SybaseConf
+    attr_reader conf_param: untyped
+
+    attr_reader sql_query: untyped
+
+    def initialize: (untyped conf_param_name, ?::Hash[untyped, untyped] opts) -> void
+
+    def run_value: () -> untyped
+
+    def config_value: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

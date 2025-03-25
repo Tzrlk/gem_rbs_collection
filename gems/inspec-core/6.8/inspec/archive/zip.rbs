@@ -1,0 +1,5 @@
+module Inspec::Archive
+  class ZipArchiveGenerator
+    def archive: (untyped base_dir, untyped files, untyped archive) -> untyped
+  end
+end

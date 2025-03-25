@@ -1,0 +1,29 @@
+module Inspec::Resources
+  class EtcHosts
+    attr_reader params: untyped
+
+    include Inspec::Utils::CommentParser
+
+    include FileReader
+
+    DEFAULT_UNIX_PATH: "/etc/hosts"
+
+    DEFAULT_WINDOWS_PATH: "C:\\windows\\system32\\drivers\\etc\\hosts"
+
+    def initialize: (?untyped? hosts_path) -> void
+
+    def to_s: () -> "Hosts File"
+
+    private
+
+    def default_hosts_file_path: () -> untyped
+
+    def parse_conf: (untyped lines) -> untyped
+
+    def comment?: () -> untyped
+
+    def parse_data: () -> untyped
+
+    def format_data: () -> untyped
+  end
+end

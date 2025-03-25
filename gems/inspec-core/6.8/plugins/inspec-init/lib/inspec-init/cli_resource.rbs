@@ -1,0 +1,15 @@
+module InspecPlugins
+  module Init
+    class CLI
+      def resource: (untyped resource_name) -> untyped
+
+      private
+
+      def make_rename_map_resource: (untyped vars) -> (::Hash[untyped, untyped] | ::Hash[untyped, untyped] | untyped)
+
+      def resource_vars_from_opts_resource: () -> (untyped | nil | untyped)
+
+      def prompt_for_options_resource: () -> untyped
+    end
+  end
+end

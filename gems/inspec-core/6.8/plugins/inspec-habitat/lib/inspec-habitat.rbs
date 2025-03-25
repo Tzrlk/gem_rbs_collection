@@ -1,0 +1,6 @@
+module InspecPlugins
+  module Habitat
+    class Plugin
+    end
+  end
+end

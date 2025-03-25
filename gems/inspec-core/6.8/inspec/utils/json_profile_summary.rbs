@@ -1,0 +1,14 @@
+module Inspec
+  module Utils
+    #
+    # Inspec::Utils::JsonProfileSummary takes in certain information to identify a
+    # profile and then produces a JSON-formatted summary of that profile. It can
+    # return the results to STDOUT or a file. It is currently used in several
+    # places in the CLI such as `json`, `archive` and `artifact`.
+    #
+    #
+    module JsonProfileSummary
+      def self.produce_json: (info: untyped, ?write_path: ::String, ?suppress_output: bool) -> untyped
+    end
+  end
+end

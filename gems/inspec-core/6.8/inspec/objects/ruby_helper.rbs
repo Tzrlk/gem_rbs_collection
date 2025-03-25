@@ -1,0 +1,5 @@
+module Inspec
+  module RubyHelper
+    def ruby_qualifier: (untyped q) -> untyped
+  end
+end

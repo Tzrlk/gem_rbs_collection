@@ -1,0 +1,8 @@
+module FindFiles
+  TYPES: { block: "b", character: "c", directory: "d", pipe: "p", file: "f", link: "l", socket: "s", door: "D" }
+
+  # ignores errors
+  def find_files: (untyped path, ?::Hash[untyped, untyped] opts) -> untyped
+
+  def find_files_or_warn: (untyped path, ?::Hash[untyped, untyped] opts) -> (nil | untyped)
+end

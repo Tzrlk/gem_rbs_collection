@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class Defaultgateway < Routingtable
+    def initialize: () -> void
+
+    # resource appearance in test reports.
+    def to_s: () -> "default_gateway"
+
+    # fetches the ipaddress assigned to the default gateway
+    # default gateway's destination is either `default` or `0.0.0.0`
+    def ipaddress: () -> untyped
+
+    # fetches the interface assigned to the default gateway
+    def interface: () -> untyped
+  end
+end

@@ -1,0 +1,25 @@
+module Inspec::Fetcher
+  class Local
+    def self.resolve: (untyped target) -> (untyped | untyped | nil)
+
+    def self.resolve_from_hash: (untyped target) -> (nil | untyped)
+
+    def self.resolve_from_string: (untyped target) -> untyped
+
+    def initialize: (untyped target, ?::Hash[untyped, untyped] opts) -> void
+
+    def fetch: (untyped path) -> untyped
+
+    def archive_path: () -> untyped
+
+    def writable?: () -> untyped
+
+    def cache_key: () -> untyped
+
+    def sha256: () -> (untyped | nil | untyped)
+
+    def perform_shasum: (untyped target) -> untyped
+
+    def resolved_source: () -> untyped
+  end
+end

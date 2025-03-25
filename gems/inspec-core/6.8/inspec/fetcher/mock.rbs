@@ -1,0 +1,15 @@
+module Inspec::Fetcher
+  class Mock
+    def self.resolve: (untyped target) -> (untyped | nil)
+
+    def initialize: (untyped data) -> void
+
+    def fetch: (untyped _path) -> untyped
+
+    def archive_path: () -> { mock: untyped }
+
+    def resolved_source: () -> { mock_fetcher: true }
+
+    def cache_key: () -> ""
+  end
+end

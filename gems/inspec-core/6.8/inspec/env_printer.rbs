@@ -1,0 +1,57 @@
+module Inspec
+  class EnvPrinter
+    attr_reader shell: untyped
+
+    EVAL_COMMANDS: ::Hash[::String, "eval \\\"$(inspec env bash)\\\"" | "inspec env fish > ~/.config/fish/completions/inspec.fish" | "eval \\\"$(inspec env zsh)\\\""]
+
+    def initialize: (untyped command_class, ?untyped? shell) -> void
+
+    def print_and_exit!: () -> untyped
+
+    private
+
+    def print_completion_for_shell: () -> untyped
+
+    def have_shell?: () -> untyped
+
+    def have_shell_completion?: () -> untyped
+
+    def completion_dir: () -> untyped
+
+    def completion_template_path: () -> untyped
+
+    def shells_with_completions: () -> untyped
+
+    def print_usage_guidance: () -> untyped
+
+    def print_detection_warning: (untyped device) -> untyped
+
+    def exit_no_completion: () -> untyped
+
+    def exit_no_shell: () -> untyped
+
+    class TemplateContext
+      def initialize: (untyped command_class) -> void
+
+      def get_bindings: () -> untyped
+
+      #
+      # The following functions all assume that @command_class
+      # is something that provides a Thor-like API
+      #
+      def top_level_commands: () -> untyped
+
+      def top_level_commands_with_descriptions: () -> untyped
+
+      def subcommands_with_commands: () -> untyped
+
+      def subcommands_with_commands_and_descriptions: () -> untyped
+
+      def commands_for_thor_class: (untyped thor_class) -> untyped
+
+      def descript_lines_for_class: (untyped thor_class) -> untyped
+
+      def descript_line_for_command: (untyped c) -> ::String
+    end
+  end
+end

@@ -1,0 +1,13 @@
+class FilterArray
+  attr_accessor rules: untyped
+
+  alias content rules
+
+  def initialize: (untyped rules) -> void
+
+  # allows for chaining
+  # .field('arch', 'b32').field('key', 'access').rules
+  def field: (untyped key, ?untyped? value) -> untyped
+
+  def method_missing: (untyped meth, *untyped args) -> untyped
+end

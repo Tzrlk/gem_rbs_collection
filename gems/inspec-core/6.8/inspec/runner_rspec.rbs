@@ -1,0 +1,87 @@
+module Inspec
+  class RunnerRspec
+    attr_accessor formatter: untyped
+
+    def initialize: (untyped conf) -> void
+
+    # Create a new RSpec example group from arguments and block.
+    #
+    # @param [Type] *args list of arguments for this example
+    # @param [Type] &block the block associated with this example group
+    # @return [RSpecExampleGroup]
+    def example_group: (*untyped args) ?{ () -> untyped } -> untyped
+
+    def formatters: () -> untyped
+
+    # Add a full profile to the runner. Only pulls in metadata
+    #
+    # @param [Inspec::Profile] profile
+    # @return [nil]
+    def add_profile: (untyped profile) -> untyped
+
+    # These control count related methods are called from load logic of runner library of inspec
+    # ####### Start of control count related methods
+    def set_controls_count: (untyped controls_count) -> untyped
+
+    def set_control_checks_count_map: (untyped mapping) -> untyped
+
+    def backend: () -> untyped
+
+    # Configure the backend of the runner.
+    #
+    # @param [Inspec::Backend] backend
+    # @return [nil]
+    def backend=: (untyped backend) -> untyped
+
+    # Add an example group to the list of registered tests.
+    #
+    # @param [RSpecExampleGroup] example test
+    # @param [String] rule_id the ID associated with this check
+    # @return [nil]
+    def add_test: (untyped example, untyped rule) -> untyped
+
+    # Retrieve the list of tests that have been added.
+    #
+    # @return [Array] full list of tests
+    def tests: () -> untyped
+
+    # Run all registered tests with an optional test runner.
+    #
+    # @param [RSpecRunner] with is an optional RSpecRunner
+    # @return [int] 0 if all went well; otherwise nonzero
+    def run: (?untyped? with) -> untyped
+
+    # Return a proper exit code to the runner
+    #
+    # @return [int] exit code
+    def exit_code: () -> untyped
+
+    # Empty the list of registered tests.
+    #
+    # @return [nil]
+    def reset: () -> untyped
+
+    private
+
+    # Set optional formatters and output
+    #
+    #
+    def set_optional_formatters: () -> (nil | untyped)
+
+    # Configure the output formatter and stream to be used with RSpec.
+    #
+    # @return [nil]
+    def configure_output: () -> untyped
+
+    # Make sure that all RSpec example groups use the provided ID.
+    # At the time of creation, we didn't yet have full ID support in RSpec,
+    # which is why they were added to metadata directly. This is evaluated
+    # by the InSpec adjusted json formatter (rspec_json_formatter).
+    #
+    # @param [RSpecExampleGroup] example object which contains a check
+    # @return [Type] description of returned object
+    def set_rspec_ids: (untyped example, untyped rule) -> untyped
+
+    def assign_rspec_ids: (untyped metadata, untyped rule) -> untyped
+  end
+end

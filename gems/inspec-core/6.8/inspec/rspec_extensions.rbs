@@ -1,0 +1,37 @@
+module Inspec
+  # This module exists to intercept the method_missing *class* method on RSpec::Core::ExampleGroup
+  # and is part of support for DSL plugintypes
+  module DescribeDslLazyLoader
+    # Support for Describe DSL plugins
+    def method_missing: (untyped method_name, *untyped arguments) ?{ () -> untyped } -> untyped
+  end
+
+  # This module exists to intercept the method_missing *instance* method on RSpec::Core::ExampleGroup
+  # and is part of support for DSL plugintypes
+  module TestDslLazyLoader
+    # Support for test DSL plugins
+    def method_missing: (untyped method_name, *untyped arguments) ?{ () -> untyped } -> untyped
+  end
+end
+
+class RSpec::Core::ExampleGroup
+  include Inspec::InputDslHelpers
+
+  # This DSL method allows us to access the values of inputs within InSpec tests
+  def input: (untyped input_name, ?::Hash[untyped, untyped] options) -> untyped
+
+  def input_object: (untyped name) -> untyped
+
+  def attribute: (untyped name, ?::Hash[untyped, untyped] options) -> untyped
+
+  # Here, we have to ensure our method_missing gets called prior
+  # to RSpec::Core::ExampleGroup#method_missing (the instance method).
+  # So, we use prepend.
+  prepend Inspec::TestDslLazyLoader
+end
+
+class ResourceInspector < RSpec::Support::ObjectFormatter::BaseInspector
+  def self.can_inspect?: (untyped object) -> untyped
+
+  def inspect: () -> untyped
+end

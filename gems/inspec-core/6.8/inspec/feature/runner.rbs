@@ -1,0 +1,7 @@
+module Inspec
+  class Feature
+    class Runner
+      def self.with_feature: (untyped feature_name, ?::Hash[untyped, untyped] opts) { (untyped) -> untyped } -> untyped
+    end
+  end
+end

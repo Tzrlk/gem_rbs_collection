@@ -1,0 +1,9 @@
+module Waivers
+  class ExcelFileReader
+    def self.resolve: (untyped path) -> (nil | untyped)
+
+    def self.fetch_data: (untyped path) -> untyped
+
+    def self.headers: () -> untyped
+  end
+end

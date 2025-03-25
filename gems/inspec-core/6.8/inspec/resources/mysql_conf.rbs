@@ -1,0 +1,35 @@
+module Inspec::Resources
+  class MysqlConfEntry
+    def initialize: (untyped path, untyped params) -> void
+
+    def method_missing: (untyped name, *untyped _) -> (true | untyped)
+
+    def to_s: () -> ::String
+  end
+
+  class MysqlConf
+    include FindFiles
+
+    include FileReader
+
+    def initialize: (?untyped? conf_path) -> void
+
+    def content: () -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def method_missing: (untyped name) -> untyped
+
+    def read_content: () -> untyped
+
+    def include_files: (untyped reldir, untyped conf) -> untyped
+
+    def abs_path: (untyped dir, untyped f) -> untyped
+
+    def read_file: (untyped path) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "MySQL Configuration"
+  end
+end

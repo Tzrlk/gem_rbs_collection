@@ -1,0 +1,56 @@
+module Inspec
+  #
+  # Inspec::Cache manages an on-disk cache of inspec profiles.  The
+  # cache can contain:
+  #
+  #  - .tar.gz profile archives
+  #  - .zip profile archives
+  #  - unpacked profiles
+  #
+  # Cache entries names include a hash of their source to prevent
+  # conflicts between depenedencies with the same name from different
+  # sources.
+  #
+  #
+  class Cache
+    attr_reader path: untyped
+
+    def initialize: (?untyped? path) -> void
+
+    def prefered_entry_for: (untyped key) -> untyped
+
+    def archive_entry_for: (untyped key) -> untyped
+
+    #
+    # For a given name and source_url, return true if the
+    # profile exists in the Cache.
+    #
+    # @param [String] name
+    # @param [String] source_url
+    # @return [Boolean]
+    #
+    def exists?: (untyped key) -> (false | untyped)
+
+    #
+    # Return the path to given profile in the cache.
+    #
+    # The `source_url` parameter should be a URI-like string that
+    # fully specifies the source of the exact version we want to pull
+    # down.
+    #
+    # @param [String] name
+    # @param [String] source_url
+    # @return [String]
+    #
+    def base_path_for: (untyped cache_key) -> untyped
+
+    #
+    # For given cache key, return true if the
+    # cache path is locked
+    def locked?: (untyped key) -> untyped
+
+    def lock: (untyped cache_path) -> untyped
+
+    def unlock: (untyped cache_path) -> untyped
+  end
+end

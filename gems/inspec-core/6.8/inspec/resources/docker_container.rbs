@@ -1,0 +1,37 @@
+module Inspec::Resources
+  class DockerContainer
+    include Inspec::Resources::DockerObject
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def running?: () -> (untyped | nil)
+
+    # has_volume? matcher checks if the volume specified in source path of host is mounted in destination path of docker
+    def has_volume?: (untyped destination, untyped source) -> untyped
+
+    def status: () -> (untyped | nil)
+
+    def labels: () -> untyped
+
+    def ports: () -> (untyped | nil)
+
+    def command: () -> (nil | untyped)
+
+    def image: () -> (untyped | nil)
+
+    def repo: () -> (untyped | nil)
+
+    def tag: () -> (untyped | nil)
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def object_info: () -> untyped
+
+    # volume_info returns the low-level information obtained on docker inspect [container_name/id]
+    def volume_info: () -> untyped
+  end
+end

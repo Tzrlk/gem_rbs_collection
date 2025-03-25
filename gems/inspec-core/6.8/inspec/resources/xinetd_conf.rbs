@@ -1,0 +1,24 @@
+module Inspec::Resources
+  class XinetdConf
+    include Inspec::Utils::XinetdParser
+
+    include FileReader
+
+    def initialize: (?::String conf_path) -> void
+
+    def to_s: () -> ::String
+
+    def params: () -> untyped
+
+    private
+
+    def read_content: (?untyped path) -> untyped
+
+    def read_params: () -> (::Hash[untyped, untyped] | untyped)
+
+    # Method used to derive the default protocol used from the socket_type
+    def default_protocol: (untyped `type`) -> untyped
+
+    def service_lines: () -> untyped
+  end
+end

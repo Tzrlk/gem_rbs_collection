@@ -1,0 +1,167 @@
+# For backwards compatibility during the rename (see #3802),
+# maintain the Inspec::Attribute namespace for people checking for
+# Inspec::Attribute::DEFAULT_ATTRIBUTE
+module Inspec
+  class Attribute
+    # This only exists to create the Inspec::Attribute::DEFAULT_ATTRIBUTE symbol with a class
+    class DEFAULT_ATTRIBUTE
+    end
+  end
+end
+
+module Inspec
+  class Input
+    class Error < Inspec::Error
+    end
+
+    class ValidationError < Error
+      attr_accessor input_name: untyped
+
+      attr_accessor input_value: untyped
+
+      attr_accessor input_type: untyped
+
+      attr_accessor input_pattern: untyped
+    end
+
+    class TypeError < Error
+      attr_accessor input_type: untyped
+    end
+
+    class PatternError < Error
+      attr_accessor input_pattern: untyped
+    end
+
+    class RequiredError < Error
+      attr_accessor input_name: untyped
+    end
+
+    # TODO: break this out to its own file under inspec/input?
+    # Information about how the input obtained its value.
+    # Each time it changes, an Input::Event is added to the #events array.
+    class Event
+      EVENT_PROPERTIES: ::Array[:action | :provider | :priority | :value | :file | :line | :hit]
+
+      attr_reader value: untyped
+
+      def initialize: (?::Hash[untyped, untyped] properties) -> void
+
+      def value=: (untyped the_val) -> untyped
+
+      def value_has_been_set?: () -> untyped
+
+      def diagnostic_string: () -> untyped
+
+      def to_h: () -> untyped
+
+      def self.probe_stack: () -> untyped
+    end
+
+    # ==========================================================================#
+    #                    Class NO_VALUE_SET
+    # ==========================================================================#
+    # This special class is used to represent the value when an input has
+    # not been assigned a value. This allows a user to explicitly assign nil
+    # to an input.
+    class NO_VALUE_SET
+      def initialize: (untyped name, ?bool warn_on_create) -> void
+
+      def method_missing: (*untyped _) -> self
+
+      def respond_to_missing?: (untyped _, untyped _) -> true
+
+      def to_s: () -> ::String
+
+      def is_a?: (untyped klass) -> (true | untyped)
+
+      def kind_of?: (untyped klass) -> (true | untyped)
+    end
+
+    # Validation types for input values
+    VALID_TYPES: ::Array["String" | "Numeric" | "Regexp" | "Array" | "Hash" | "Boolean" | "Any"]
+
+    # TODO: this is not used anywhere?
+    # If you call `input` in a control file, the input will receive this priority.
+    # You can override that with a :priority option.
+    DEFAULT_PRIORITY_FOR_DSL_ATTRIBUTES: 20
+
+    # If you somehow manage to initialize an Input outside of the DSL,
+    # AND you don't provide an Input::Event, this is the priority you get.
+    DEFAULT_PRIORITY_FOR_UNKNOWN_CALLER: 10
+
+    # If you directly call value=, this is the priority assigned.
+    # This is the highest priority within InSpec core; though plugins
+    # are free to go higher.
+    DEFAULT_PRIORITY_FOR_VALUE_SET: 60
+
+    attr_reader description: untyped
+
+    attr_reader events: untyped
+
+    attr_reader identifier: untyped
+
+    attr_reader name: untyped
+
+    attr_reader required: untyped
+
+    attr_reader sensitive: untyped
+
+    attr_reader title: untyped
+
+    attr_reader type: untyped
+
+    attr_reader pattern: untyped
+
+    def initialize: (untyped name, ?::Hash[untyped, untyped] options) -> void
+
+    # TODO: is this here just for testing?
+    def set_events: () -> untyped
+
+    def diagnostic_string: () -> untyped
+
+    def update: (untyped options) -> untyped
+
+    # We can determine a value:
+    # 1. By event.value (preferred)
+    # 2. By options[:value]
+    # 3. By options[:default] (deprecated)
+    def self.infer_event: (untyped options) -> untyped
+
+    private
+
+    def _update_set_metadata: (untyped options) -> untyped
+
+    def make_creation_event: (untyped options) -> untyped
+
+    # Determine the current winning value, but don't validate it
+    def current_value: (?bool warn_on_missing) -> untyped
+
+    public
+
+    def value=: (untyped new_value, ?untyped priority) -> untyped
+
+    def value: () -> untyped
+
+    def has_value?: () -> untyped
+
+    def to_hash: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def enforce_required_validation!: () -> (nil | untyped)
+
+    def enforce_type_restriction!: () -> (nil | untyped)
+
+    def normalize_type_restriction!: () -> (nil | untyped)
+
+    def enforce_pattern_restriction!: () -> (nil | untyped)
+
+    def normalize_pattern_restriction!: () -> (nil | untyped)
+
+    def valid_numeric?: (untyped value) -> untyped
+
+    def valid_regexp?: (untyped value) -> untyped
+  end
+end

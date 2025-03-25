@@ -1,0 +1,9 @@
+module Inspec
+  class Telemetry
+    class Null < Base
+      def run_starting: (untyped _opts) -> nil
+
+      def run_ending: (untyped _opts) -> nil
+    end
+  end
+end

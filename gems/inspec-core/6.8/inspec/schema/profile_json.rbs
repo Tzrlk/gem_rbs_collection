@@ -1,0 +1,20 @@
+module Inspec
+  module Schema
+    module ProfileJson
+      # Represents descriptions. Can have any string => string pairing
+      CONTROL_DESCRIPTIONS: untyped
+
+      # Represents a control that hasn't been run
+      # Differs slightly from a normal control, in that it lacks results, and its descriptions are different
+      CONTROL: untyped
+
+      # Represents a control with enhanced outcomes status information
+      ENHANCED_OUTCOME_CONTROL: untyped
+
+      # A profile that has not been run.
+      PROFILE: untyped
+
+      ENHANCED_OUTCOME_PROFILE: untyped
+    end
+  end
+end

@@ -1,0 +1,52 @@
+module InspecPlugins
+  module Parallelism
+    class OptionFileNotReadable < RuntimeError
+    end
+
+    class Command
+      attr_accessor cli_options_to_parallel_cmd: untyped
+
+      attr_accessor default_profile: untyped
+
+      attr_accessor sub_cmd: untyped
+
+      attr_accessor invocations: untyped
+
+      attr_accessor run_in_background: untyped
+
+      def initialize: (untyped cli_options_to_parallel_cmd, untyped default_profile, ?::String sub_cmd) -> void
+
+      def run: () -> untyped
+
+      def dry_run: () -> untyped
+
+      private
+
+      def catch_ctl_c_and_exit: (untyped runner) -> untyped
+
+      def validate_thor_options: () -> untyped
+
+      def validate_log_path: () -> untyped
+
+      def validate_invocations!: () -> untyped
+
+      def dry_run_commands: () -> untyped
+
+      def read_options_file: () -> untyped
+
+      def content_from_file: (untyped option_file) -> untyped
+
+      # this must return empty string or default option string which are not part of option file
+      def fetch_default_options: (untyped option_line) -> untyped
+
+      # returns array of default options of the subcommand
+      def parallel_cmd_default_cli_options: () -> untyped
+
+      def append_default_value: (untyped default_opts, untyped command_name) -> untyped
+
+      def options_prefix: (untyped option_name) -> ("--no-" | "--" | "-")
+
+      def fetch_sub_cmd_default_options: (untyped sub_cmd_opts) -> untyped
+    end
+  end
+end

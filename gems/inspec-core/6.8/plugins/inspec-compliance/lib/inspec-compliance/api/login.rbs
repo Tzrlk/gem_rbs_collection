@@ -1,0 +1,26 @@
+module InspecPlugins
+  module Compliance
+    class API
+      module Login
+        include Inspec::Dist
+
+        class CannotDetermineServerType < StandardError
+        end
+
+        def login: (untyped options) -> untyped
+
+        module Automate2Server
+          def self.login: (untyped options) -> untyped
+
+          def self.store_access_token: (untyped options, untyped token) -> untyped
+
+          def self.verify_thor_options: (untyped o) -> untyped
+        end
+
+        def self.authenticate_login: (untyped options) -> untyped
+
+        def self.configuration_stored_message: (untyped config) -> ::String
+      end
+    end
+  end
+end

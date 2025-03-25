@@ -1,0 +1,12 @@
+module Inspec::Resources
+  class Zfs < ZfsPool
+    # Unique identity for the resource.
+    def resource_id: () -> untyped
+
+    # Resource appearance in test reports.
+    def to_s: () -> ::String
+
+    # The below matcher checks if the given properties are valid properties of the zfs pool.
+    def has_property?: (untyped properties_hash) -> untyped
+  end
+end

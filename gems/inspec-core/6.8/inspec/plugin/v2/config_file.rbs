@@ -1,0 +1,44 @@
+module Inspec::Plugin::V2
+  # Represents the plugin config file on disk.
+  class ConfigFile
+    include Enumerable
+
+    attr_reader path: untyped
+
+    def initialize: (?untyped? path) -> void
+
+    # Returns the defaut path for a config file.
+    # This respects ENV['INSPEC_CONFIG_DIR'].
+    def self.default_path: () -> untyped
+
+    # Implement Enumerable. All Enumerable methds act
+    # on the plugins list, and yield Hashes that represent
+    # an entry.
+    def each: () ?{ () -> untyped } -> untyped
+
+    # Look for a plugin by name.
+    def plugin_by_name: (untyped name) -> untyped
+
+    # Check for a plugin
+    def existing_entry?: (untyped name) -> untyped
+
+    # Add an entry with full validation.
+    def add_entry: (untyped proposed_entry) -> untyped
+
+    # Removes an entry specified by plugin name.
+    def remove_entry: (untyped name) -> untyped
+
+    # Save the file to disk as a JSON structure at the path.
+    def save: () -> untyped
+
+    private
+
+    def blank_structure: () -> { plugins_config_version: "1.0.0", plugins: ::Array[untyped] }
+
+    def read_and_validate_file: () -> untyped
+
+    def validate_file: () -> untyped
+
+    def validate_entry: (untyped plugin_entry) -> untyped
+  end
+end

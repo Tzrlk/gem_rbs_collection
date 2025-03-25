@@ -1,0 +1,43 @@
+module Inspec
+  class Describe
+    # Internal helper to structure test objects.
+    # Should not be exposed to the user as it is hidden behind
+    # `add_test`, `to_hash`, and `to_ruby` in Inspec::Describe
+    Test: untyped
+
+    # A qualifier describing the resource that will be tested. It may consist
+    # of the resource identification and multiple accessors to pinpoint the data
+    # the user wants to test.
+    attr_accessor qualifier: untyped
+
+    # An array of individual tests for the qualifier. Every entry will be
+    # translated into an `it` or `its` clause.
+    attr_accessor tests: untyped
+
+    # Optional variables which are used by tests.
+    attr_accessor variables: untyped
+
+    # Optional method to skip this describe block altogether. If `skip` is
+    # defined it takes precendence and will print the skip statement instead
+    # of adding other tests.
+    attr_accessor skip: untyped
+
+    include RubyHelper
+
+    def initialize: () -> void
+
+    def add_test: (untyped its, untyped matcher, untyped expectation, ?::Hash[untyped, untyped] opts) -> untyped
+
+    def to_ruby: () -> untyped
+
+    def to_hash: () -> { qualifier: untyped, tests: untyped, variables: untyped, skip: untyped }
+
+    def resource: () -> (nil | untyped)
+
+    private
+
+    def rb_describe: () -> untyped
+
+    def rb_skip: () -> untyped
+  end
+end

@@ -1,0 +1,20 @@
+module Inspec
+  module Schema
+    module OutputSchema
+      # Build our definitions
+      def self.build_definitions: (untyped schema_type) -> ::Hash[::String, untyped]
+
+      # Helper function to automatically bundle a type with its dependencies
+      def self.finalize: (untyped schema_type) -> untyped
+
+      # using a proc here so we can lazy load it when we need
+      PLATFORMS: untyped
+
+      LIST: ::Hash[::String, untyped]
+
+      def self.names: () -> untyped
+
+      def self.json: (untyped name, untyped opts) -> untyped
+    end
+  end
+end

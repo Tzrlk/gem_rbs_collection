@@ -1,0 +1,32 @@
+module Inspec
+  module HashLikeStruct
+    # Only list keys whose value are non-nil
+    def keys: () -> untyped
+
+    # Only list non-nil members for backwards compatibility
+    def key?: (untyped item) -> untyped
+
+    # This is provided for clarity - many locations make this test
+    def non_nil?: (untyped item) -> untyped
+  end
+
+  RunData: untyped
+
+  class RunData
+    # This is the data layout version of RunData.
+    # We plan to follow a data-oriented version of semver:
+    #  patch: fixing a bug in the provenance or description of a data element, no key changes
+    #  minor: adding new data elements
+    #  major: deleting or renaming data elements
+    # Less than major version 1.0.0, the API is considered unstable.
+    # The current plan is to bump the major version to 1.0.0 when all of the existing
+    # core reporters have been migrated to plugins. It is probable that new data elements
+    # and new Hash compatibility behavior will be added during the core reporter plugin
+    # conversion process.
+    SCHEMA_VERSION: "0.3.0"
+
+    def self.compatible_schema?: (untyped constraints) -> untyped
+
+    Platform: untyped
+  end
+end

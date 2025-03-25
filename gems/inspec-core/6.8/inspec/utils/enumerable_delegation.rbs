@@ -1,0 +1,5 @@
+module EnumerableDelegation
+  include Enumerable
+
+  def each: () ?{ () -> untyped } -> untyped
+end

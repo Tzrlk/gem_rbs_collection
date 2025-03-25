@@ -1,0 +1,7 @@
+module Inspec
+  class UI
+    class TableHelper < TTY::Table
+      def header=: (untyped ary) -> untyped
+    end
+  end
+end

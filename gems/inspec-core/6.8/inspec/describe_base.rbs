@@ -1,0 +1,29 @@
+module Inspec
+  class DescribeBase
+    include Inspec::InputDslHelpers
+
+    def initialize: (untyped action) -> void
+
+    # Evaluate the given block and collect all checks. These will be registered
+    # with the callback function under the 'describe.one' name.
+    #
+    # @param [Proc] ruby block containing checks (e.g. via describe)
+    # @return [nil]
+    def one: () ?{ () -> untyped } -> (nil | untyped)
+
+    def input: (untyped input_name, ?::Hash[untyped, untyped] options) -> untyped
+
+    def input_object: (untyped name) -> untyped
+
+    def method_missing: (untyped method_name, *untyped arguments) -> untyped
+
+    def describe: (*untyped args) ?{ () -> untyped } -> untyped
+
+    private
+
+    # While this is marked private, it gets consumed during an instance_eval,
+    # so it is fully visible. The double underscore is there to discourage
+    # use - this is a private API.
+    def __profile_id: () -> untyped
+  end
+end

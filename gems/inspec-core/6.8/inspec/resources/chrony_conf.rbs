@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class ChronyConf
+    include FileReader
+
+    def initialize: (?untyped? path) -> void
+
+    def method_missing: (untyped name) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "chrony.conf"
+
+    private
+
+    def read_params: () -> untyped
+  end
+end

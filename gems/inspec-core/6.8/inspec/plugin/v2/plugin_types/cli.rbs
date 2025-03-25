@@ -1,0 +1,19 @@
+# The InSpec load order has this file being loaded before `inspec/base_cli` can
+# finish being loaded. So, we must define Inspec::BaseCLI here first to avoid
+# a NameError below.
+class Inspec::BaseCLI < Thor
+end
+
+module Inspec::Plugin::V2::PluginType
+  class CliCommand < Inspec::BaseCLI
+    # initialize log options for plugins
+    def initialize: (untyped args, untyped options, untyped config) -> void
+
+    # Provide a description for the command group.
+    def self.subcommand_desc: (untyped usage_msg, untyped desc_msg) -> untyped
+
+    # Register the command group with Thor.  This must be called on the implementation class AFTER
+    # the the cli_command activator has been called
+    def self.register_with_thor: () -> untyped
+  end
+end

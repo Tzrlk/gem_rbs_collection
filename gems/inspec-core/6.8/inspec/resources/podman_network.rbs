@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class PodmanNetwork
+    include Inspec::Utils::Podman
+
+    LABELS: { id: "ID", name: "Name", driver: "Driver", labels: "Labels", options: "Options", ipam_options: "IPAMOptions", internal: "Internal", created: "Created", :ipv6_enabled => "IPv6Enabled", dns_enabled: "DNSEnabled", network_interface: "NetworkInterface", subnets: "Subnets" }
+
+    attr_reader param: untyped
+
+    attr_reader network_info: untyped
+
+    def initialize: (untyped param) -> void
+
+    def exist?: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def get_network_info: () -> untyped
+  end
+end

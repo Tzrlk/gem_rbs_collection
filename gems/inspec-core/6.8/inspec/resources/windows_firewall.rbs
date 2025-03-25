@@ -1,0 +1,32 @@
+module Inspec::Resources
+  class WindowsFirewall
+    def initialize: (?::String profile) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def exist?: () -> untyped
+
+    def enabled?: () -> untyped
+
+    def default_inbound_allowed?: () -> untyped
+
+    def default_outbound_allowed?: () -> untyped
+
+    # Access to return values from Powershell via `its("PROPERTY")` and `have_PROPERTY "VALUE"`
+    def method_missing: (untyped method_name, *untyped arguments) ?{ () -> untyped } -> untyped
+
+    def respond_to_missing?: (untyped method_name, ?bool _include_private) -> untyped
+
+    private
+
+    def normalize_for_have_access: (untyped property) -> untyped
+
+    def access_property: (untyped property) -> untyped
+
+    def respond_to_have: (untyped property, untyped value) -> untyped
+
+    def load_firewall_profile: (untyped profile_name) -> ::String
+  end
+end

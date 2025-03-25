@@ -1,0 +1,37 @@
+module Inspec::Resources
+  class PlatformResource
+    def initialize: () -> void
+
+    def family: () -> untyped
+
+    def release: () -> untyped
+
+    def arch: () -> untyped
+
+    def families: () -> untyped
+
+    def name: () -> untyped
+
+    def []: (untyped key) -> untyped
+
+    def platform?: (untyped name) -> untyped
+
+    def in_family?: (untyped family) -> untyped
+
+    def params: () -> untyped
+
+    def supported?: (untyped supports) -> untyped
+
+    def normalize: (untyped key) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Platform Detection"
+
+    private
+
+    def check_name: (untyped value) -> untyped
+
+    def check_release: (untyped value) -> untyped
+  end
+end

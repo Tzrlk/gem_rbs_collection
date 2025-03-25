@@ -1,0 +1,34 @@
+module Inspec
+  class Telemetry
+    class Base
+      VERSION: ::Float
+
+      TYPE: "job"
+
+      JOB_TYPE: "InSpec"
+
+      attr_accessor scratch: untyped
+
+      def fetch_license_ids: () -> untyped
+
+      def create_wrapper: () -> { version: untyped, createdTimeUTC: untyped, environment: untyped, licenseIds: untyped, source: ::String, type: untyped }
+
+      def note_feature_usage: (untyped feature_name) -> untyped
+
+      def run_starting: (?::Hash[untyped, untyped] _opts) -> untyped
+
+      def run_ending: (untyped opts) -> untyped
+
+      def format_control_tags: (untyped tags) -> untyped
+
+      # Hash text if non-nil
+      def obscure: (untyped cleartext) -> (nil | untyped)
+
+      def note_per_run_features: (untyped opts) -> untyped
+
+      def note_all_invoked_features: () -> untyped
+
+      def note_gem_dependency_usage: (untyped opts) -> (untyped | nil)
+    end
+  end
+end

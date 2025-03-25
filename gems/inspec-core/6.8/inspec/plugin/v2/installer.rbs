@@ -1,0 +1,130 @@
+module Inspec::Plugin::V2
+  # Handles all actions modifying the user's plugin set:
+  # * Modifying the plugins.json file
+  # * Installing, updating, and removing gem-based plugins
+  # Loading plugins is handled by Loader.
+  # Listing plugins is handled by Loader.
+  # Searching for plugins is handled by ???
+  class Installer
+    include Singleton
+
+    extend Forwardable
+
+    attr_reader conf_file: untyped
+
+    attr_reader loader: untyped
+
+    attr_reader registry: untyped
+
+    def initialize: () -> void
+
+    def plugin_installed?: (untyped name) -> untyped
+
+    def plugin_version_installed?: (untyped name, untyped version) -> untyped
+
+    # Installs a plugin. Defaults to assuming the plugin provided is a gem, and will try to install
+    # from whatever gemsources `rubygems` thinks it should use.
+    # If it's a gem, installs it and its dependencies to the `gem_path`. The gem is not activated.
+    # If it's a path, leaves it in place.
+    # Finally, updates the plugins.json file with the new information.
+    # No attempt is made to load the plugin.
+    #
+    # @param [String] plugin_name
+    # @param [Hash] opts The installation options
+    # @option opts [String] :gem_file Path to a local gem file to install from
+    # @option opts [String] :path Path to a file to be used as the entry point for a path-based plugin
+    # @option opts [String] :version Version constraint for remote gem installs
+    # @option opts [String] :source Alternate URL to use instead of rubygems.org
+    def install: (untyped plugin_name, ?::Hash[untyped, untyped] opts) -> untyped
+
+    # Updates a plugin. Most options same as install, but will not handle path installs.
+    # If no :version is provided, updates to the latest.
+    # If a version is provided, the plugin becomes pinned at that specified version.
+    #
+    # @param [String] plugin_name
+    # @param [Hash] opts The installation options
+    # @option opts [String] :gem_file Reserved for future use.  No effect.
+    # @option opts [String] :version Version constraint for remote gem updates
+    def update: (untyped plugin_name, ?::Hash[untyped, untyped] opts) -> untyped
+
+    # Uninstalls (removes) a plugin. Refers to plugin.json to determine if it
+    # was a gem-based or path-based install.
+    # If it's a gem, uninstalls it, and all other unused plugins.
+    # If it's a path, removes the reference from the plugins.json, but does not
+    # tamper with the plugin source tree.
+    # Either way, the plugins.json file is updated with the new information.
+    #
+    # @param [String] plugin_name
+    # @param [Hash] opts The uninstallation options. Currently unused.
+    def uninstall: (untyped plugin_name, ?::Hash[untyped, untyped] opts) -> untyped
+
+    # Search rubygems.org for a plugin gem.
+    #
+    # @param [String] plugin_seach_term
+    # @param [Hash] opts Search options
+    # @option opts [TrueClass, FalseClass] :exact If true, use plugin_search_term exactly.  If false (default), append a wildcard.
+    # @option opts [Symbol] :scope Which versions to search for.  :released (default) - all released versions.  :prerelease - Also include versioned marked prerelease. :latest - only return one version, the latest one.
+    # @return [Hash of Arrays] - Keys are String names of gems, arrays contain String versions.
+    def search: (untyped plugin_query, ?::Hash[untyped, untyped] opts) -> untyped
+
+    def fetch_plugin_specs: (untyped fetcher, untyped gem_name) -> untyped
+
+    # Testing API.  Performs a hard reset on the installer and registry, and reloads the loader.
+    # Not for public use.
+    # TODO: bad timing coupling in tests
+    def __reset: () -> untyped
+
+    def __reset_loader: () -> untyped
+
+    private
+
+    # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+    # rationale for rubocop exemption: While there are many conditionals, they are all of the same form;
+    # its goal is to check for several subtle combinations of params, and raise an error if needed. It's
+    # straightforward to understand, but has to handle many cases.
+    def validate_installation_opts: (untyped plugin_name, untyped opts) -> untyped
+
+    def validate_update_opts: (untyped plugin_name, untyped opts) -> untyped
+
+    def validate_uninstall_opts: (untyped plugin_name, untyped _opts) -> untyped
+
+    def validate_search_opts: (untyped search_term, untyped opts) -> untyped
+
+    def install_from_path: (untyped requested_plugin_name, untyped opts) -> nil
+
+    def install_from_gem_file: (untyped requested_plugin_name, untyped opts) -> untyped
+
+    def install_from_remote_gems: (untyped requested_plugin_name, untyped opts) -> untyped
+
+    def install_gem_to_plugins_dir: (untyped new_plugin_dependency, ?untyped extra_request_sets, ?bool update_mode) -> untyped
+
+    def uninstall_via_path: (untyped requested_plugin_name, untyped opts) -> nil
+
+    def uninstall_via_gem: (untyped plugin_name_to_be_removed, untyped _opts) -> untyped
+
+    # This class allows us to build a Resolver set with the gems that are
+    # already included either with Ruby or with the InSpec install
+    #
+    # This code is heavily based on:
+    # https://github.com/hashicorp/vagrant/blob/32237377/lib/vagrant/bundler.rb#L400
+    # https://github.com/hashicorp/vagrant/blob/32237377/lib/vagrant/bundler.rb#L565
+    class InstalledVendorSet < Gem::Resolver::Set
+      def initialize: () -> void
+
+      def find_all: (untyped req) -> untyped
+    end
+
+    # Provides a RequestSet (a set of gems representing the gems that are available to
+    # solve a dependency request) that represents a combination of:
+    # * the gems included in the system
+    # * the gems included in the inspec install
+    # * the currently installed gems in the ~/.inspec/gems directory
+    # * any other sets you provide
+    def build_gem_request_universe: (?untyped extra_request_sets, ?untyped? gem_to_force_update) -> untyped
+
+    # ==================================================================#
+    #                 plugins.json Maintenance Methods                  #
+    # ==================================================================#
+    def update_plugin_config_file: (untyped plugin_name, untyped opts) -> untyped
+  end
+end

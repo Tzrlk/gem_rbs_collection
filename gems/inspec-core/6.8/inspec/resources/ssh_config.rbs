@@ -1,0 +1,51 @@
+module Inspec::Resources
+  class SshConfig
+    include FileReader
+
+    def initialize: (?untyped? conf_path, ?untyped? `type`) -> void
+
+    def content: () -> untyped
+
+    def params: (*untyped opts) -> untyped
+
+    def convert_hash: (untyped hash) -> untyped
+
+    def method_missing: (untyped name) -> (nil | untyped)
+
+    def to_s: () -> "SSH Configuration"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def read_content: () -> untyped
+
+    def read_params: () -> untyped
+
+    def ssh_config_file: (untyped `type`) -> ::String
+  end
+
+  class SshdConfig < SshConfig
+    def initialize: (?untyped? path) -> void
+
+    def to_s: () -> "SSHD Configuration"
+
+    private
+
+    def ssh_config_file: (untyped `type`) -> ::String
+  end
+
+  class SshdActiveConfig < SshdConfig
+    attr_reader active_path: untyped
+
+    def initialize: () -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def ssh_config_file: (untyped `type`) -> ::String
+
+    def dynamic_sshd_config_path: () -> (nil | untyped)
+  end
+end

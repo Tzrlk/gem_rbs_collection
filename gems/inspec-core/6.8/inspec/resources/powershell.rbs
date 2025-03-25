@@ -1,0 +1,24 @@
+module Inspec::Resources
+  class Powershell < Cmd
+    def initialize: (untyped script) -> void
+
+    # we cannot determine if a command exists, because that does not work for scripts
+    def exist?: () -> nil
+
+    # Removes leading and trailing whitespace from stdout
+    def strip: () -> untyped
+
+    def to_s: () -> "Powershell"
+
+    def resource_id: () -> "Powershell"
+  end
+
+  PowershellScript: untyped
+
+  # this is deprecated syntax and will be removed in future versions
+  class LegacyPowershell < Powershell
+    def initialize: (untyped script) -> void
+  end
+
+  LegacyPowershellScript: untyped
+end

@@ -1,0 +1,7 @@
+module InspecPlugins::Parallelism
+  class CLI
+    include Inspec::Dist
+
+    def exec: (?untyped? default_profile) -> untyped
+  end
+end

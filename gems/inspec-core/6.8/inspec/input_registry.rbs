@@ -1,0 +1,82 @@
+module Inspec
+  # The InputRegistry's responsibilities include:
+  #   - maintaining a list of Input objects that are bound to profiles
+  #   - assisting in the lookup and creation of Inputs
+  class InputRegistry
+    include Singleton
+
+    extend Forwardable
+
+    class Error < Inspec::Error
+    end
+
+    class ProfileLookupError < Error
+      attr_accessor profile_name: untyped
+    end
+
+    class InputLookupError < Error
+      attr_accessor profile_name: untyped
+
+      attr_accessor input_name: untyped
+    end
+
+    attr_reader inputs_by_profile: untyped
+
+    attr_reader profile_aliases: untyped
+
+    attr_reader plugins: untyped
+
+    attr_accessor cache_inputs: untyped
+
+    def initialize: () -> void
+
+    def register_profile_alias: (untyped name, untyped alias_name) -> untyped
+
+    # Returns an Hash, name => Input that have actually been mentioned
+    def list_inputs_for_profile: (untyped profile) -> untyped
+
+    # Returns an Array of input names. This includes input names
+    # that plugins may be able to fetch, but have not actually been
+    # mentioned in the control code.
+    def list_potential_input_names_for_profile: (untyped profile_name) -> untyped
+
+    def find_or_register_input: (untyped input_name, untyped profile_name, ?::Hash[untyped, untyped] options) -> untyped
+
+    def poll_plugins_for_update: (untyped profile_name, untyped input_name) -> untyped
+
+    # It is possible for a wrapper profile to create an input in metadata,
+    # referring to the child profile by an alias that has not yet been registered.
+    # The registry will then store the inputs under the alias, as if the alias
+    # were a true profile.
+    # If that happens and the child profile also mentions the input, we will
+    # need to move some things - all inputs should be stored under the true
+    # profile name, and no inputs should be stored under the alias.
+    def handle_late_arriving_alias: (untyped alias_name, untyped profile_name) -> untyped
+
+    # This method is called by the Profile as soon as it has
+    # enough context to allow binding inputs to it.
+    def bind_profile_inputs: (untyped profile_name, ?::Hash[untyped, untyped] sources) -> untyped
+
+    private
+
+    def bind_inputs_from_cli_args: (untyped profile_name, untyped input_list) -> (nil | untyped)
+
+    # Remove trailing commas, resolve type.
+    def parse_cli_input_value: (untyped input_name, untyped given_value) -> untyped
+
+    def bind_inputs_from_runner_api: (untyped profile_name, untyped input_hash) -> (nil | untyped)
+
+    def bind_inputs_from_input_files: (untyped profile_name, untyped file_list) -> (nil | untyped)
+
+    def validate_inputs_file_readability!: (untyped path) -> true
+
+    def bind_inputs_from_metadata: (untyped profile_name, untyped profile_metadata_obj) -> (nil | untyped)
+
+    def handle_raw_input_from_metadata: (untyped input_orig, untyped profile_name) -> untyped
+
+    public
+
+    # Used in testing
+    def __reset: () -> untyped
+  end
+end

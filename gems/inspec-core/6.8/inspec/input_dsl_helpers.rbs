@@ -1,0 +1,12 @@
+module Inspec
+  # A mixin to provide implementations for the input() DSL methods
+  module InputDslHelpers
+    # Find or create an input, explicitly named by a profile ID and
+    #  input name. Evaluate the input and return the value.
+    # @param [String] Profile ID
+    # @param [String] Input Name
+    # @param [Hash] Input options - see input docs on website
+    # @returns [Object] Input value
+    def input_with_profile_id: (untyped profile_id, untyped input_name, untyped options) -> untyped
+  end
+end

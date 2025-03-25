@@ -1,0 +1,21 @@
+module InspecPlugins::Parallelism
+  class StreamingReporter
+    def initialize: (untyped output) -> void
+
+    def example_passed: (untyped notification) -> untyped
+
+    def example_failed: (untyped notification) -> untyped
+
+    def example_pending: (untyped notification) -> untyped
+
+    def close: (untyped notification) -> untyped
+
+    private
+
+    def set_example: (untyped notification, untyped status) -> untyped
+
+    def output_status: (untyped control_id, untyped title) -> untyped
+
+    def set_status_mapping: (untyped control_id, untyped status) -> untyped
+  end
+end

@@ -1,0 +1,53 @@
+module InspecPlugins
+  module Compliance
+    class ServerConfigurationMissing < StandardError
+    end
+
+    # API Implementation does not hold any state by itself,
+    # everything will be stored in local Configuration store
+    class API
+      include Inspec::Dist
+
+      extend InspecPlugins::Compliance::API::Login
+
+      # return all compliance profiles available for the user
+      # the user is either specified in the options hash or by default
+      # the username of the account is used that is logged in
+      def self.profiles: (untyped config, ?untyped? profile_filter) -> untyped
+
+      # return the server api version
+      # NB this method does not use Compliance::Configuration to allow for using
+      # it before we know the version (e.g. oidc or not)
+      def self.version: (untyped config) -> (::Hash[untyped, untyped] | untyped)
+
+      # verifies that a profile exists
+      def self.exist?: (untyped config, untyped profile) -> untyped
+
+      def self.upload: (untyped config, untyped owner, untyped profile_name, untyped archive_path) -> ::Array[untyped]
+
+      # Use username and refresh_token to get an API access token
+      def self.get_token_via_refresh_token: (untyped url, untyped refresh_token, untyped insecure) -> ::Array[untyped]
+
+      # Use API access token to validate login using version API
+      def self.authenticate_login_using_version_api: (untyped url, untyped api_token, untyped insecure) -> ::Array[untyped]
+
+      # Use username and password to get an API access token
+      def self.get_token_via_password: (untyped url, untyped username, untyped password, untyped insecure) -> ::Array[untyped]
+
+      def self.get_headers: (untyped config) -> untyped
+
+      def self.get_token: (untyped config) -> untyped
+
+      def self.target_url: (untyped config, untyped profile) -> ::String
+
+      def self.profile_split: (untyped profile) -> ::Array[untyped]
+
+      # returns a parsed url for `admin/profile` or `compliance://admin/profile`
+      def self.sanitize_profile_name: (untyped profile) -> untyped
+
+      def self.server_version_from_config: (untyped config) -> (nil | untyped)
+
+      def self.is_automate2_server?: (untyped config) -> untyped
+    end
+  end
+end

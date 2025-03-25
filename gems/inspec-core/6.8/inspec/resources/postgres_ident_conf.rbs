@@ -1,0 +1,25 @@
+module Inspec::Resources
+  class PostgresIdentConf
+    include FileReader
+
+    attr_reader params: untyped
+
+    attr_reader conf_file: untyped
+
+    def initialize: (?untyped? ident_conf_path) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def filter_comments: (untyped data) -> untyped
+
+    def read_content: () -> untyped
+
+    def parse_conf: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> ::Hash[::String, untyped]
+
+    def read_file: (?untyped conf_file) -> untyped
+  end
+end

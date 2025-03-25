@@ -1,0 +1,50 @@
+module Inspec::Resources
+  class EtcGroup
+    include Converter
+
+    include Inspec::Utils::CommentParser
+
+    include FileReader
+
+    attr_accessor gid: untyped
+
+    attr_accessor entries: untyped
+
+    def initialize: (?untyped? path) -> void
+
+    def groups: (?untyped? filter) -> untyped
+
+    def gids: (?untyped? filter) -> untyped
+
+    def users: (?untyped? filter) -> (nil | untyped)
+
+    def where: (?::Hash[untyped, untyped] conditions) -> (nil | untyped)
+
+    def to_s: () -> "/etc/group"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def parse_group: (untyped path) -> untyped
+
+    def parse_group_line: (untyped line) -> (nil | ::Hash[::String, untyped])
+  end
+
+  # object that hold a specifc view on etc group
+  class EtcGroupView
+    def initialize: (untyped parent, untyped filter) -> void
+
+    # returns the group object
+    def entries: () -> untyped
+
+    # only returns group name
+    def groups: () -> untyped
+
+    # only return gids
+    def gids: () -> untyped
+
+    # only returns users
+    def users: () -> untyped
+  end
+end

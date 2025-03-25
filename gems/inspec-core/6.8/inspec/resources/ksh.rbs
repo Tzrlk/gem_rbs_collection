@@ -1,0 +1,9 @@
+module Inspec::Resources
+  class Ksh < Cmd
+    def initialize: (untyped command, ?::Hash[untyped, untyped] options) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

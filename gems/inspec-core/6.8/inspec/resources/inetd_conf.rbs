@@ -1,0 +1,19 @@
+module Inspec::Resources
+  class InetdConf
+    include FileReader
+
+    def initialize: (?untyped? path) -> void
+
+    # overwrite exec to ensure it works with its
+    # TODO: this needs to be fixed in RSpec
+    def exec: () -> untyped
+
+    def method_missing: (untyped name) -> untyped
+
+    def read_params: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "inetd.conf"
+  end
+end

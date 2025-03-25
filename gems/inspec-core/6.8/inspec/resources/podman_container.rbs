@@ -1,0 +1,28 @@
+# Change module if required
+module Inspec::Resources
+  class PodmanContainer
+    include Inspec::Resources::DockerObject
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def running?: () -> (untyped | nil)
+
+    def status: () -> (untyped | nil)
+
+    def labels: () -> untyped
+
+    def ports: () -> (untyped | nil)
+
+    def command: () -> (nil | untyped)
+
+    def image: () -> (untyped | nil)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def object_info: () -> untyped
+  end
+end

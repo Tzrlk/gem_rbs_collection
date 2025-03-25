@@ -1,0 +1,39 @@
+module InspecPlugins
+  module Sign
+    class Base
+      include Inspec::Dist
+
+      KEY_BITS: 2048
+
+      KEY_ALG: untyped
+
+      INSPEC_PROFILE_VERSION_1: "INSPEC-PROFILE-1"
+
+      INSPEC_REPORT_VERSION_1: "INSPEC-REPORT-1"
+
+      INSPEC_PROFILE_VERSION_2: "INSPEC-PROFILE-2"
+
+      ARTIFACT_DIGEST: untyped
+
+      ARTIFACT_DIGEST_NAME: "SHA512"
+
+      VALID_PROFILE_VERSIONS: untyped
+
+      VALID_PROFILE_DIGESTS: untyped
+
+      SIGNED_PROFILE_SUFFIX: "iaf"
+
+      SIGNED_REPORT_SUFFIX: "iar"
+
+      def self.keygen: (untyped options) -> untyped
+
+      def self.profile_sign: (untyped profile_path, untyped options) -> untyped
+
+      def self.profile_verify: (untyped signed_profile_path, ?bool silent) -> untyped
+
+      def read_profile_metadata: (untyped profile_path) -> untyped
+
+      def write_profile_content_id: (untyped profile_path, untyped profile_content_id) -> untyped
+    end
+  end
+end

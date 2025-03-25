@@ -1,0 +1,18 @@
+module Inspec::Resources
+  class Routingtable
+    def initialize: () -> void
+
+    # resource appearance in test reports.
+    def to_s: () -> "routing_table"
+
+    def has_entry?: (untyped input_route) -> (untyped | false | untyped)
+
+    private
+
+    # fetches the routing information for the system
+    def fetch_routing_information: () -> untyped
+
+    # check if netstat is available on the system
+    def find_netstat_or_error: () -> untyped
+  end
+end

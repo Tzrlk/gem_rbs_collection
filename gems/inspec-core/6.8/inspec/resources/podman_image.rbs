@@ -1,0 +1,27 @@
+module Inspec::Resources
+  class PodmanImage
+    include Inspec::Resources::DockerObject
+
+    include Inspec::Utils::Podman
+
+    attr_reader opts: untyped
+
+    attr_reader image_info: untyped
+
+    def initialize: (untyped opts) -> void
+
+    LABELS: ::Hash[::String, "ID" | "RepoTags" | "Size" | "Digest" | "Created" | "Version" | "NamesHistory" | "RepoDigests" | "Architecture" | "Os" | "VirtualSize"]
+
+    def exist?: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def sanitize_options: (untyped opts) -> untyped
+
+    def get_image_info: () -> untyped
+  end
+end

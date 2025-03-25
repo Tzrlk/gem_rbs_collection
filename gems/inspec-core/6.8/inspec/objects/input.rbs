@@ -1,0 +1,9 @@
+module Inspec
+  class Input
+    def to_hash: () -> untyped
+
+    def ruby_var_identifier: () -> untyped
+
+    def to_ruby: () -> untyped
+  end
+end

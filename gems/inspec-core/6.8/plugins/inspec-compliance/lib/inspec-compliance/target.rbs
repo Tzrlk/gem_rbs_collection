@@ -1,0 +1,33 @@
+# InSpec Target Helper for Chef Compliance
+# reuses UrlHelper, but it knows the target server and the access token already
+# similar to `inspec exec http://localhost:2134/owners/%base%/compliance/%ssh%/tar --user %token%`
+module InspecPlugins
+  module Compliance
+    class Fetcher < Inspec::Fetcher::Url
+      include Inspec::Dist
+
+      attr_reader upstream_sha256: untyped
+
+      def initialize: (untyped target, untyped opts) -> void
+
+      def sha256: () -> untyped
+
+      def self.check_compliance_token: (untyped uri, untyped config) -> (untyped | nil)
+
+      def self.get_target_uri: (untyped target) -> (untyped | untyped | nil)
+
+      def self.resolve: (untyped target) -> untyped
+
+      # We want to save compliance: in the lockfile rather than url: to
+      # make sure we go back through the Compliance API handling.
+      def resolved_source: () -> untyped
+
+      def to_s: () -> ::String
+
+      private
+
+      # determine the owner_id and the profile name from the url
+      def compliance_profile_name: () -> ::String
+    end
+  end
+end

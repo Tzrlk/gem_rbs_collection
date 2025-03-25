@@ -1,0 +1,21 @@
+module Inspec::Resources
+  class DockerPlugin
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def exist?: () -> untyped
+
+    def enabled?: () -> untyped
+
+    def id: () -> (untyped | nil)
+
+    def version: () -> (untyped | nil)
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def object_info: () -> untyped
+  end
+end

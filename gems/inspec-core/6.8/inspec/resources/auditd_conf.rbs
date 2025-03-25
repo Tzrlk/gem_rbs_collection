@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class AuditDaemonConf
+    include FileReader
+
+    attr_reader conf_path: untyped
+
+    attr_reader content: untyped
+
+    attr_reader params: untyped
+
+    def initialize: (?untyped? path) -> void
+
+    def method_missing: (untyped name) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Audit Daemon Config"
+
+    private
+
+    def read_params: () -> untyped
+  end
+end

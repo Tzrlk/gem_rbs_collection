@@ -1,0 +1,24 @@
+module Inspec
+  # Heuristics to determine how InSpec was installed.
+  module InstallContextHelpers
+    def guess_install_context: () -> ("chef-workstation" | "omnibus" | "chefdk" | "habitat" | "docker" | "rubygem" | "source" | "unknown")
+
+    private
+
+    def chef_workstation_install?: () -> untyped
+
+    def chefdk_install?: () -> untyped
+
+    def docker_install?: () -> untyped
+
+    def habitat_install?: () -> untyped
+
+    def omnibus_install?: () -> untyped
+
+    def rubygem_install?: () -> untyped
+
+    def source_install?: () -> untyped
+
+    def path_exist?: (untyped path) -> untyped
+  end
+end

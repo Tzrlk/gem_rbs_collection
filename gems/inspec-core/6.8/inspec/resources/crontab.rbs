@@ -1,0 +1,47 @@
+module Inspec::Resources
+  class Crontab
+    attr_reader params: untyped
+
+    include Inspec::Utils::CommentParser
+
+    def initialize: (?untyped? opts) -> void
+
+    def read_crontab: () -> untyped
+
+    def parse_crontab_line: (untyped l) -> (nil | untyped)
+
+    def crontab_cmd: () -> ("crontab -l" | ::String)
+
+    def to_s: () -> (::String | ::String | "crontab for current user")
+
+    private
+
+    def is_system_crontab?: () -> untyped
+
+    def is_user_crontab?: () -> untyped
+
+    DEFAULT_TIMES: ::Hash[::String, "*"]
+
+    SYSTEM_COLUMNS: ::Array["minute" | "hour" | "day" | "month" | "weekday" | "user" | "command"]
+
+    USER_COLUMNS: ::Array["minute" | "hour" | "day" | "month" | "weekday" | "command"]
+
+    HOURLY: ::Hash[::String, "0"]
+
+    DAILY: untyped
+
+    WEEKLY: untyped
+
+    MONTHLY: untyped
+
+    YEARLY: untyped
+
+    REBOOT: ::Hash[::String, "-1"]
+
+    def merge_crontab: (untyped data, untyped default) -> untyped
+
+    def parse_system_crontab: (untyped data) -> untyped
+
+    def parse_user_crontab: (untyped data) -> untyped
+  end
+end

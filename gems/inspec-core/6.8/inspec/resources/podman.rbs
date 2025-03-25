@@ -1,0 +1,108 @@
+module Inspec::Resources
+  class Podman
+    def containers: () -> untyped
+
+    def images: () -> untyped
+
+    def networks: () -> untyped
+
+    def pods: () -> untyped
+
+    def volumes: () -> untyped
+
+    def version: () -> untyped
+
+    def info: () -> untyped
+
+    # returns information about podman objects
+    def object: (untyped id) -> untyped
+
+    def to_s: () -> "Podman"
+
+    private
+
+    # Calls the run_command method to get all podman containers and parse the command output.
+    # Returns the parsed command output.
+    def parse_containers: () -> untyped
+
+    # Calls the run_command method to get all podman images and parse the command output.
+    # Returns the parsed command output.
+    def parse_images: () -> untyped
+
+    # Calls the run_command method to get all podman network list and parse the command output.
+    # Returns the parsed command output.
+    def parse_networks: () -> untyped
+
+    # Calls the run_command method to get all podman pod list and parse the command output.
+    # Returns the parsed command output.
+    def parse_pods: () -> untyped
+
+    # Calls the run_command method to get all podman volume list and parse the command output.
+    # Returns the parsed command output.
+    def parse_volumes: () -> untyped
+
+    # Runs the given podman command on the host machine on which podman is installed
+    # Returns the command output or raises the command execution error.
+    def run_command: (untyped subcommand) -> untyped
+
+    def parse_json_command: (untyped labels, untyped subcommand) -> untyped
+
+    def ensure_keys: (untyped entry, untyped labels) -> untyped
+
+    # Method to parse JDON content.
+    # Returns: Parsed data.
+    def parse: (untyped content) -> untyped
+  end
+
+  # class for podman.containers plural resource
+  class PodmanContainerFilter
+    attr_reader containers: untyped
+
+    def initialize: (untyped containers) -> void
+
+    def to_s: () -> "Podman Containers"
+
+    def resource_id: () -> "Podman Containers"
+  end
+
+  # class for podman.images plural resource
+  class PodmanImageFilter
+    attr_reader images: untyped
+
+    def initialize: (untyped images) -> void
+
+    def to_s: () -> "Podman Images"
+
+    def resource_id: () -> "Podman Images"
+  end
+
+  class PodmanNetworkFilter
+    attr_reader networks: untyped
+
+    def initialize: (untyped networks) -> void
+
+    def to_s: () -> "Podman Networks"
+
+    def resource_id: () -> "Podman Networks"
+  end
+
+  class PodmanPodFilter
+    attr_reader pods: untyped
+
+    def initialize: (untyped pods) -> void
+
+    def to_s: () -> "Podman Pods"
+
+    def resource_id: () -> "Podman Pods"
+  end
+
+  class PodmanVolumeFilter
+    attr_reader volumes: untyped
+
+    def initialize: (untyped volumes) -> void
+
+    def to_s: () -> "Podman Volumes"
+
+    def resource_id: () -> "Podman Volumes"
+  end
+end

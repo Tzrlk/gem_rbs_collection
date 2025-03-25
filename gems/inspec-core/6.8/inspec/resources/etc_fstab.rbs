@@ -1,0 +1,27 @@
+module Inspec::Resources
+  class EtcFstab
+    attr_reader params: untyped
+
+    include Inspec::Utils::CommentParser
+
+    include FileReader
+
+    def initialize: (?untyped? fstab_path) -> void
+
+    def nfs_file_systems: () -> untyped
+
+    def home_mount_options: () -> (nil | untyped)
+
+    def to_s: () -> "File System Table File (fstab)"
+
+    private
+
+    def read_content: () -> untyped
+
+    def parse_conf: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> ::Hash[::String, untyped]
+
+    def read_file: (?untyped conf_path) -> untyped
+  end
+end

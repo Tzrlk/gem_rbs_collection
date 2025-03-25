@@ -1,0 +1,10 @@
+# Impact scores based off CVSS 3.0
+module Inspec::Impact
+  IMPACT_SCORES: ::Hash[::String, ::Float]
+
+  def self.impact_from_string: (untyped value) -> untyped
+
+  def self.is_number?: (untyped value) -> untyped
+
+  def self.string_from_impact: (untyped value) -> untyped
+end

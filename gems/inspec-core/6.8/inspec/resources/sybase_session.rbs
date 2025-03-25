@@ -1,0 +1,48 @@
+module Inspec::Resources
+  # STABILITY: Experimental
+  # This resource needs further testing and refinement
+  #
+  class SybaseSession
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader bin: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader col_sep: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader database: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader password: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader server: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader sybase_home: untyped
+
+    # TODO: allow to set -I interfaces file
+    # TODO: allow to customize -s column separator
+    attr_reader username: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def query: (untyped sql) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Sybase Session"
+
+    private
+
+    def parse_csv_result: (untyped stdout) -> untyped
+
+    def upload_sql_file: (untyped sql) -> untyped
+  end
+end

@@ -1,0 +1,17 @@
+module Inspec
+  class FetcherRegistry < PluginRegistry
+    def resolve: (untyped target, ?::Hash[untyped, untyped] opts) -> untyped
+
+    NON_FETCHER_KEYS: ::Array[:name | :version_constraint | :cwd | :backend | :cache | :sha256]
+
+    def fetcher_specified?: (untyped target) -> (true | untyped)
+
+    def with_default_fetcher: (untyped target) -> untyped
+  end
+
+  module Fetcher
+    Registry: untyped
+  end
+
+  def self.fetcher: (untyped version) -> untyped
+end

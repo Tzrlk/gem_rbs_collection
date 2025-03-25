@@ -1,0 +1,12 @@
+module Inspec
+  module Utils
+    module Podman
+      def podman_running?: () -> untyped
+
+      # Generates the template in this format using labels hash: "\"id\": {{json .ID}}, \"name\": {{json .Name}}",
+      def generate_go_template: (untyped labels) -> untyped
+
+      def parse_command_output: (untyped output) -> untyped
+    end
+  end
+end

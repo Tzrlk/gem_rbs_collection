@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class DockerService
+    include Inspec::Resources::DockerObject
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def name: () -> (untyped | nil)
+
+    def image: () -> (untyped | nil)
+
+    def image_name: () -> (untyped | nil)
+
+    def repo: () -> (untyped | nil)
+
+    def tag: () -> (untyped | nil)
+
+    def mode: () -> (untyped | nil)
+
+    def replicas: () -> (untyped | nil)
+
+    def ports: () -> (untyped | nil)
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def sanitize_options: (untyped opts) -> untyped
+
+    def object_info: () -> untyped
+  end
+end

@@ -1,0 +1,6 @@
+module InspecPlugins
+  module Html2Reporter
+    class Plugin
+    end
+  end
+end

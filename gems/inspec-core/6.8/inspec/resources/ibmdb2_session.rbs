@@ -1,0 +1,21 @@
+module Inspec::Resources
+  class Lines
+    attr_reader output: untyped
+
+    attr_reader exit_status: untyped
+
+    def initialize: (untyped raw, untyped desc, untyped exit_status) -> void
+
+    def to_s: () -> untyped
+  end
+
+  class Ibmdb2Session
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def query: (untyped q) -> untyped
+
+    def resource_id: () -> ::String
+
+    def to_s: () -> "IBM Db2 Session"
+  end
+end

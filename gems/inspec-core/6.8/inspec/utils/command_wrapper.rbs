@@ -1,0 +1,5 @@
+class CommandWrapper
+  UNIX_SHELLS: ::Array["sh" | "bash" | "zsh" | "ksh"]
+
+  def self.wrap: (untyped cmd, untyped options) -> untyped
+end

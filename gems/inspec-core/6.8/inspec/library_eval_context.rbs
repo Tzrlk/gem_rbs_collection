@@ -1,0 +1,16 @@
+module Inspec
+  #
+  # LibaryEvalContext constructs an instance of an anonymous class
+  # that library files will be instance_exec'd against.
+  #
+  # The anonymous class ensures that `Inspec.resource(1)` will return
+  # an anonymouse class that is suitable as the parent class of an
+  # inspec resource. The class returned will have the resource
+  # registry used by all dsl methods bound to the resource registry
+  # passed into the #create constructor.
+  #
+  #
+  class LibraryEvalContext
+    def self.create: (untyped registry, untyped require_loader) -> untyped
+  end
+end

@@ -1,0 +1,13 @@
+module Inspec
+  extend Inspec::InstallContextHelpers
+
+  def self.config_dir: () -> untyped
+
+  def self.src_root: () -> untyped
+
+  def self.home_path: () -> untyped
+
+  def self.locally_windows?: () -> untyped
+
+  def self.log_dir: () -> untyped
+end

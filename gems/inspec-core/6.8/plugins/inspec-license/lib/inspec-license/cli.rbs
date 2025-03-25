@@ -1,0 +1,9 @@
+module InspecPlugins::License
+  class CLI
+    include Inspec::Dist
+
+    def list: () -> untyped
+
+    def add: () -> untyped
+  end
+end

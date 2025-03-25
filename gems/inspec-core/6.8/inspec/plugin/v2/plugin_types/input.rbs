@@ -1,0 +1,21 @@
+module Inspec::Plugin::V2::PluginType
+  class Input < Inspec::Plugin::V2::PluginBase
+    # When an input is obtained from the plugin, this number determines what
+    # precedence to assign to the input.
+    # @return Integer range 0-100. Higher priority means higher precedence
+    def default_priority: () -> 60
+
+    # Indicates an attempt is being made to read the value for an input.
+    # Return nil if the input is not supplied by the plugin, otherwise
+    # return the value.
+    # @return Object or nil
+    def fetch: (untyped _profile_name, untyped _input_name) -> untyped
+
+    # Given a profile name, list all input names for which the plugin
+    # would offer a response.
+    # @param String profile_name Name of the profile
+    # @return Array[String] List of input names for which the plugin
+    # would offer a response.
+    def list_inputs: (untyped _profile) -> untyped
+  end
+end

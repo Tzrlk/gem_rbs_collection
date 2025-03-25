@@ -1,0 +1,7 @@
+module Inspec::Resources
+  class OSResource < PlatformResource
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Operating System Detection"
+  end
+end

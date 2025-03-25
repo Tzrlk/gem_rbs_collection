@@ -1,0 +1,9 @@
+module Inspec::Resources::DockerObject
+  def exist?: () -> untyped
+
+  def id: () -> (untyped | nil)
+
+  private
+
+  def parse_components_from_image: (untyped image_string) -> (::Hash[untyped, untyped] | { repo: untyped, image_name: untyped, tag: untyped })
+end

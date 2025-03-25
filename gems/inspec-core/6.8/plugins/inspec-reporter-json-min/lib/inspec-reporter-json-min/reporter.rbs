@@ -1,0 +1,9 @@
+module InspecPlugins::JsonMinReporter
+  class Reporter
+    def self.run_data_schema_constraints: () -> "~> 0.0"
+
+    def render: () -> untyped
+
+    def report: () -> untyped
+  end
+end

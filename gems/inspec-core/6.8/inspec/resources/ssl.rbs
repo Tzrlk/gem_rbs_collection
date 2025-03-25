@@ -1,0 +1,22 @@
+# Custom resource based on the InSpec resource DSL
+module Inspec::Resources
+  class SSL
+    VERSIONS: ::Array["ssl2" | "ssl3" | "tls1.0" | "tls1.1" | "tls1.2" | "tls1.3"]
+
+    attr_reader host: untyped
+
+    attr_reader port: untyped
+
+    attr_reader timeout: untyped
+
+    attr_reader retries: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def scan_config: () -> untyped
+  end
+end

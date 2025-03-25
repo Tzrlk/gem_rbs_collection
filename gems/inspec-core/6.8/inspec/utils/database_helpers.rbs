@@ -1,0 +1,39 @@
+module DatabaseHelper
+  class SQLColumn
+    def initialize: (untyped row, untyped name) -> void
+
+    def value: () -> ("" | untyped)
+
+    def to_s: () -> "SQL Column"
+  end
+
+  class SQLRow
+    def initialize: (untyped query, untyped row) -> void
+
+    def column: (untyped column) -> untyped
+
+    def to_s: () -> "SQL Row"
+  end
+
+  class SQLQueryResult
+    attr_reader error: untyped
+
+    def initialize: (untyped cmd, untyped results) -> void
+
+    def empty?: () -> untyped
+
+    def successful?: () -> untyped
+
+    def rows: () -> untyped
+
+    def row: (untyped id) -> untyped
+
+    def column: (untyped column) -> untyped
+
+    def size: () -> untyped
+
+    def inspect: () -> untyped
+
+    def to_s: () -> "SQL ResultSet"
+  end
+end

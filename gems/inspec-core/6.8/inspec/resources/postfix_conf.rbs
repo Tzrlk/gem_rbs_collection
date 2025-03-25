@@ -1,0 +1,16 @@
+module Inspec::Resources
+  class PostfixConf < IniConfig
+    # Allow user to specify a custom configuration path, use default Postfix configuration path if no custom path is provided
+    def initialize: (*untyped opts) -> void
+
+    def parse: (untyped content) -> untyped
+
+    def resource_id: () -> "Postfix Conf"
+
+    def to_s: () -> "Postfix Mail Transfer Agent"
+
+    private
+
+    def resource_base_name: () -> "Postfix Config"
+  end
+end

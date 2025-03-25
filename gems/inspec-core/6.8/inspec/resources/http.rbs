@@ -1,0 +1,92 @@
+module Inspec::Resources
+  class Http
+    def initialize: (untyped url, ?::Hash[untyped, untyped] opts) -> void
+
+    def status: () -> untyped
+
+    def headers: () -> untyped
+
+    def body: () -> untyped
+
+    def http_method: () -> untyped
+
+    def to_s: () -> (::String | "HTTP Resource")
+
+    class Worker
+      class Base
+        attr_reader http_method: untyped
+
+        attr_reader opts: untyped
+
+        attr_reader url: untyped
+
+        def initialize: (untyped http_method, untyped url, untyped opts) -> void
+
+        def resource_id: () -> untyped
+
+        private
+
+        def params: () -> untyped
+
+        def username: () -> untyped
+
+        def password: () -> untyped
+
+        def request_headers: () -> untyped
+
+        def request_body: () -> untyped
+
+        # not supported on Windows
+        def open_timeout: () -> untyped
+
+        def read_timeout: () -> untyped
+
+        def ssl_verify?: () -> untyped
+
+        def max_redirects: () -> untyped
+
+        def proxy: () -> untyped
+      end
+
+      class Local < Base
+        def status: () -> untyped
+
+        def body: () -> untyped
+
+        def response_headers: () -> untyped
+
+        private
+
+        def response: () -> untyped
+      end
+
+      class Remote < Base
+        attr_reader inspec: untyped
+
+        def initialize: (untyped inspec, untyped http_method, untyped url, untyped opts) -> void
+
+        def status: () -> untyped
+
+        def body: () -> untyped
+
+        def response_headers: () -> untyped
+
+        private
+
+        def run_http: () -> (nil | untyped)
+
+        def http_command: () -> untyped
+
+        def load_powershell_command: () -> untyped
+      end
+    end
+
+    class Headers < Hash
+      def self.create: (untyped header_data) -> untyped
+
+      def []: (untyped requested_key) -> untyped
+
+      def method_missing: (untyped requested_key) -> untyped
+    end
+  end
+end

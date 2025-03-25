@@ -1,0 +1,39 @@
+module Inspec::Resources
+  class IisAppPool
+    def initialize: (untyped pool_name) -> void
+
+    def pool_name: () -> untyped
+
+    def runtime_version: () -> untyped
+
+    def enable32bit: () -> untyped
+
+    def pipeline_mode: () -> untyped
+
+    def max_processes: () -> untyped
+
+    def timeout: () -> untyped
+
+    def timeout_days: () -> untyped
+
+    def timeout_hours: () -> untyped
+
+    def timeout_minutes: () -> untyped
+
+    def timeout_seconds: () -> untyped
+
+    def user_identity_type: () -> untyped
+
+    def username: () -> untyped
+
+    def exists?: () -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def iis_app_pool: () -> untyped
+  end
+end

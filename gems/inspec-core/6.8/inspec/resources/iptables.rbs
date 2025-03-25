@@ -1,0 +1,38 @@
+# Usage:
+# describe iptables do
+#   it { should have_rule('-P INPUT ACCEPT') }
+# end
+#
+# The following serverspec sytax is not implemented:
+# describe iptables do
+#   it { should have_rule('-P INPUT ACCEPT').with_table('mangle').with_chain('INPUT') }
+# end
+# Please use the new sytax:
+# describe iptables(table:'mangle', chain: 'input') do
+#   it { should have_rule('-P INPUT ACCEPT') }
+# end
+#
+# Note: Docker containers normally do not have iptables installed
+#
+# @see http://ipset.netfilter.org/iptables.man.html
+# @see http://ipset.netfilter.org/iptables.man.html
+# @see https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html
+module Inspec::Resources
+  class IpTables
+    def initialize: (?::Hash[untyped, untyped] params) -> void
+
+    def has_rule?: (?untyped? rule, ?untyped? _table, ?untyped? _chain) -> untyped
+
+    def retrieve_rules: () -> (untyped | ::Array[untyped])
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def remove_comments_from_rules: (untyped rules) -> untyped
+
+    def find_iptables_or_error: () -> untyped
+  end
+end

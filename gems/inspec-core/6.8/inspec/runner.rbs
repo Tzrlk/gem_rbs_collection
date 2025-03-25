@@ -1,0 +1,106 @@
+module Inspec
+  #
+  # Inspec::Runner coordinates the running of tests and is the main
+  # entry point to the application.
+  #
+  # Users are expected to insantiate a runner, add targets to be run,
+  # and then call the run method:
+  #
+  # ```
+  # r = Inspec::Runner.new()
+  # r.add_target("/path/to/some/profile")
+  # r.add_target("http://url/to/some/profile")
+  # r.run
+  # ```
+  #
+  class Runner
+    extend Forwardable
+
+    attr_reader backend: untyped
+
+    attr_reader rules: untyped
+
+    attr_accessor target_profiles: untyped
+
+    attr_accessor test_collector: untyped
+
+    def attributes: () -> untyped
+
+    def initialize: (?::Hash[untyped, untyped] conf) -> void
+
+    def tests: () -> untyped
+
+    def configure_transport: () -> untyped
+
+    def set_backend: (untyped new_backend) -> untyped
+
+    def reset: () -> untyped
+
+    def load: () -> untyped
+
+    def run: (?untyped? with) -> untyped
+
+    def verify_target_profiles_if_signed: (untyped target_profiles) -> untyped
+
+    def render_output: (untyped run_data) -> (nil | untyped)
+
+    def report: () -> untyped
+
+    def write_lockfile: (untyped profile) -> (false | untyped)
+
+    def run_tests: (?untyped? with) -> untyped
+
+    #
+    # add_target allows the user to add a target whose tests will be
+    # run when the user calls the run method.
+    #
+    # A target is a path or URL that points to a profile. Using this
+    # target we generate a Profile and a ProfileContext. The content
+    # (libraries, tests, and inputs) from the Profile are loaded
+    # into the ProfileContext.
+    #
+    # If the profile depends on other profiles, those profiles will be
+    # loaded on-demand when include_content or required_content are
+    # called using similar code in Inspec::DSL.
+    #
+    # Once the we've loaded all of the tests files in the profile, we
+    # query the profile for the full list of rules. Those rules are
+    # registered with the @test_collector which is ultimately
+    # responsible for actually running the tests.
+    #
+    # TODO: Deduplicate/clarify the loading code that exists in here,
+    # the ProfileContext, the Profile, and Inspec::DSL
+    #
+    # @params target [String] A path or URL to a profile or raw test.
+    # @params _opts [Hash] Unused, but still here to avoid breaking kitchen-inspec
+    #
+    # @eturns [Inspec::ProfileContext]
+    #
+    def add_target: (untyped target, ?untyped _opts) -> untyped
+
+    def supports_profile?: (untyped profile) -> true
+
+    # In some places we read the rules off of the runner, in other
+    # places we read it off of the profile context. To keep the API's
+    # the same, we provide an #all_rules method here as well.
+    def all_rules: () -> untyped
+
+    def register_rules: (untyped ctx) { (untyped, untyped) -> untyped } -> untyped
+
+    def eval_with_virtual_profile: (untyped command) -> untyped
+
+    private
+
+    def block_source_info: (untyped block) -> (::Hash[untyped, untyped] | untyped)
+
+    def get_check_example: (untyped method_name, untyped arg, untyped block) -> (nil | untyped)
+
+    def register_rule: (untyped rule) -> untyped
+
+    def rspec_skipped_block: (untyped arg, untyped opts, untyped message) -> untyped
+
+    def rspec_failed_block: (untyped arg, untyped opts, untyped message) -> untyped
+
+    def add_resource: (untyped method_name, untyped arg, untyped opts, untyped block) -> untyped
+  end
+end

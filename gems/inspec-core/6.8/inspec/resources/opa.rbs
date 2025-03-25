@@ -1,0 +1,11 @@
+module Inspec::Resources
+  class Opa < JsonConfig
+    def initialize: (untyped content) -> void
+
+    def result: () -> (nil | untyped)
+
+    private
+
+    def parse: (untyped content) -> untyped
+  end
+end

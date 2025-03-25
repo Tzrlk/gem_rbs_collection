@@ -1,0 +1,4 @@
+# a simple streaming json logger
+class Logger::JSONFormatter < Logger::Formatter
+  def call: (untyped severity, untyped time, untyped progname, untyped msg) -> untyped
+end

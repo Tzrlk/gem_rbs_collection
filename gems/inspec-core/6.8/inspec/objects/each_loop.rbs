@@ -1,0 +1,17 @@
+module Inspec
+  class EachLoop < List
+    attr_reader variables: untyped
+
+    attr_accessor tests: untyped
+
+    def initialize: () -> void
+
+    def add_test: (?untyped? t) -> untyped
+
+    def negate!: () -> untyped
+
+    def to_hash: () -> { qualifier: untyped, test: untyped }
+
+    def to_ruby: () -> untyped
+  end
+end

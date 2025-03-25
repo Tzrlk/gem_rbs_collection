@@ -1,0 +1,93 @@
+module Inspec
+  class Profile
+    class AstHelper
+      class CollectorBase < Parser::AST::Processor
+        include RuboCop::AST::Traversal
+
+        attr_reader memo: untyped
+
+        def initialize: (untyped memo) -> void
+      end
+
+      class InputCollectorBase < CollectorBase
+        VALID_INPUT_OPTIONS: ::Array[:name | :value | :type | :required | :priority | :pattern | :profile | :sensitive]
+
+        REQUIRED_VALUES_MAP: { true: true, false: false }
+
+        def initialize: (untyped memo) -> void
+
+        def collect_input: (untyped input_children) -> untyped
+
+        def check_and_collect_input: (untyped node) -> untyped
+
+        def input_pattern_match?: (untyped node) -> untyped
+      end
+
+      class ImpactCollector < CollectorBase
+        def on_send: (untyped node) -> (untyped | nil)
+      end
+
+      class DescCollector < CollectorBase
+        def on_send: (untyped node) -> (untyped | nil)
+      end
+
+      class TitleCollector < CollectorBase
+        def on_send: (untyped node) -> (untyped | nil)
+      end
+
+      class TagCollector < CollectorBase
+        ACCPETABLE_TAG_TYPE_TO_VALUES: { false: false, true: true, nil: nil }
+
+        def on_send: (untyped node) -> (untyped | nil)
+
+        private
+
+        def collect_tags: (untyped tag_node) -> (untyped | untyped | nil)
+      end
+
+      class RefCollector < CollectorBase
+        def on_send: (untyped node) -> (nil | untyped | nil)
+
+        private
+
+        def iterate_child_and_collect_ref: (untyped child_node, ?::Hash[untyped, untyped] references) -> untyped
+
+        def iterate_hash_node: (untyped hash_node, ?::Hash[untyped, untyped] references) -> untyped
+      end
+
+      class ControlIDCollector < CollectorBase
+        attr_reader seen_control_ids: untyped
+
+        attr_reader source_location_ref: untyped
+
+        attr_reader include_tests: untyped
+
+        def initialize: (untyped memo, untyped source_location_ref, ?include_tests: bool) -> void
+
+        def on_block: (untyped block_node) -> (nil | untyped | nil)
+      end
+
+      class InputCollectorWithinControlBlock < InputCollectorBase
+        def initialize: (untyped memo) -> void
+
+        def on_send: (untyped node) -> untyped
+      end
+
+      class InputCollectorOutsideControlBlock < InputCollectorBase
+        def initialize: (untyped memo) -> void
+
+        # TODO: There is scope to refactor InputCollectorOutsideControlBlock and InputCollectorWithinControlBlock
+        # 1. We can have a single class for both the collectors
+        # 2. We can have a on_send and on_lvasgn method in the same class
+        # :lvasgn in ast stands for "local variable assignment"
+        def on_lvasgn: (untyped node) -> (untyped | nil)
+
+        def on_send: (untyped node) -> untyped
+      end
+
+      class TestsCollector < CollectorBase
+        def on_block: (untyped node) -> (untyped | nil)
+      end
+    end
+  end
+end

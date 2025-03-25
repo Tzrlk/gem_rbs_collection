@@ -1,0 +1,21 @@
+module Inspec
+  def self.with_feature: (untyped feature_name, ?::Hash[untyped, untyped] opts) ?{ () -> untyped } -> untyped
+
+  class Feature
+    attr_reader name: untyped
+
+    attr_reader description: untyped
+
+    attr_reader env_preview: untyped
+
+    def initialize: (untyped feature_name, untyped feature_yaml_opts) -> void
+
+    def previewable?: () -> untyped
+
+    def no_preview?: () -> untyped
+
+    def env_preview_value: () -> untyped
+
+    def self.list_all_invoked_features: () -> untyped
+  end
+end

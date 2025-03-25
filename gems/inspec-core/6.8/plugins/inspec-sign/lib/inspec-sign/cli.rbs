@@ -1,0 +1,13 @@
+module InspecPlugins
+  module Sign
+    class CLI
+      include Inspec::Dist
+
+      def generate_keys: () -> untyped
+
+      def profile: (untyped profile_path) -> untyped
+
+      def verify: (untyped signed_profile_path) -> untyped
+    end
+  end
+end

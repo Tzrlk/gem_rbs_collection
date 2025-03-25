@@ -1,0 +1,11 @@
+module Inspec
+  module Schema
+    module ExecJsonMin
+      # Represents a subset of the information about a control, designed for conciseness
+      CONTROL: untyped
+
+      # Result of exec jsonmin. Top level value
+      OUTPUT: untyped
+    end
+  end
+end

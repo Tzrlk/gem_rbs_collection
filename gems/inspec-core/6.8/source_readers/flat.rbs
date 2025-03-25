@@ -1,0 +1,19 @@
+module SourceReaders
+  class Flat
+    def self.resolve: (untyped target) -> (nil | untyped)
+
+    attr_reader metadata: untyped
+
+    attr_reader tests: untyped
+
+    attr_reader libraries: untyped
+
+    attr_reader data_files: untyped
+
+    def initialize: (untyped target, untyped files) -> void
+
+    private
+
+    def load_tests: (untyped files) -> untyped
+  end
+end

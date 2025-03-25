@@ -1,0 +1,33 @@
+module Inspec
+  module Schema
+    module ExecJson
+      # Represents a label and description, to provide human-readable info about a control
+      CONTROL_DESCRIPTION: untyped
+
+      # Lists the potential values for a control result
+      CONTROL_RESULT_STATUS: untyped
+
+      # Represents the statistics/result of a control"s execution
+      CONTROL_RESULT: untyped
+
+      # Represents a control produced
+      CONTROL: untyped
+
+      # Represents a control produced with enhanced outcomes option
+      ENHANCED_OUTCOME_CONTROL: untyped
+
+      # Based loosely on https://docs.chef.io/inspec/profiles/ as of July 3, 2019
+      # However, concessions were made to the reality of current reporters, specifically
+      # with how description is omitted and version/inspec_version aren't as advertised online
+      PROFILE: untyped
+
+      ENHANCED_OUTCOME_PROFILE: untyped
+
+      # Result of exec json. Top level value
+      # TODO: Include the format of top level controls. This was omitted for lack of sufficient examples
+      OUTPUT: untyped
+
+      ENHANCED_OUTCOME_OUTPUT: untyped
+    end
+  end
+end

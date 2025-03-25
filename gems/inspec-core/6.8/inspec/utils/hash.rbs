@@ -1,0 +1,15 @@
+class ::Hash
+  # Inspired by: http://stackoverflow.com/a/9381776
+  def deep_merge: (untyped second) -> untyped
+
+  # converts a deep hash into a flat hash
+  # hash = {
+  #   'a' => 1,
+  #   'b' => {'c' => 2},
+  # }
+  # hash.smash # => {"a"=>1, "b-c"=>2}
+  def smash: (?untyped? prefix) -> untyped
+
+  # deep check if all values are contained
+  def contains: (untyped contains) -> (false | true)
+end

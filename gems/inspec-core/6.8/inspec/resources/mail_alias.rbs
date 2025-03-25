@@ -1,0 +1,14 @@
+module Inspec::Resources
+  class Mailalias
+    def initialize: (untyped alias_key) -> void
+
+    # resource_id is used in reporting engines to uniquely identify the individual resource.
+    def resource_id: () -> ::String
+
+    # resource appearance in test reports.
+    def to_s: () -> ::String
+
+    # aliased_to matcher checks if the given alias_value is set to the initialized alias_key
+    def aliased_to?: (untyped alias_value) -> untyped
+  end
+end

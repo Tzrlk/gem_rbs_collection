@@ -1,0 +1,14 @@
+module Inspec
+  #
+  # Contains methods we would like in multiple DSL
+  #
+  module DSL
+    module RequireOverride
+      # Save the toplevel require method to load all ruby dependencies.
+      # It is used whenever the `require 'lib'` is not in libraries.
+      alias __ruby_require require
+
+      def require: (untyped path) -> (untyped | false)
+    end
+  end
+end

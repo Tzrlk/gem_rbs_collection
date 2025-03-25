@@ -1,0 +1,7 @@
+module InspecPlugins
+  module Init
+    class CLI
+      TEMPLATES_PATH: untyped
+    end
+  end
+end

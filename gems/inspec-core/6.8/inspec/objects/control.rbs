@@ -1,0 +1,42 @@
+module Inspec
+  class Control
+    attr_accessor id: untyped
+
+    attr_accessor title: untyped
+
+    attr_accessor descriptions: untyped
+
+    attr_accessor impact: untyped
+
+    attr_accessor tests: untyped
+
+    attr_accessor tags: untyped
+
+    attr_accessor refs: untyped
+
+    attr_accessor only_if: untyped
+
+    def initialize: () -> void
+
+    def add_test: (untyped t) -> untyped
+
+    def add_tag: (untyped t) -> untyped
+
+    def to_hash: () -> { id: untyped, title: untyped, descriptions: untyped, impact: untyped, tests: untyped, tags: untyped }
+
+    def to_ruby: () -> untyped
+
+    private
+
+    def print_ref: (untyped x) -> untyped
+
+    # Pretty-print a text block of InSpec code
+    #
+    # @param s [String] should not be empty
+    # @param depth [Int] indentation length for multiline text blocks
+    # @return [String] pretty-printed textblock
+    def prettyprint_text: (untyped s, untyped depth) -> untyped
+
+    def indent: (untyped txt, untyped d) -> untyped
+  end
+end

@@ -1,0 +1,35 @@
+module Inspec::Resources
+  class DockerImage
+    include Inspec::Resources::DockerObject
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def image: () -> (::String | nil)
+
+    def repo: () -> (untyped | nil)
+
+    def tag: () -> (untyped | nil)
+
+    # method_missing handles when hash_keys are invoked to check information obtained on docker inspect [image_name]
+    def method_missing: (*untyped hash_keys) -> untyped
+
+    # inspection property allows to test any of the hash key-value pairs as part of the image_inspect_info
+    def inspection: () -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def sanitize_options: (untyped opts) -> untyped
+
+    def object_info: () -> untyped
+
+    # image_inspect_info returns the complete inspect hash_values of the image
+    def image_inspect_info: () -> untyped
+
+    # image_hash_inspection formats the input hash_keys and checks if any value exists for such keys in @inspect_info(image_inspect_info)
+    def image_hash_inspection: (untyped hash_keys) -> untyped
+  end
+end

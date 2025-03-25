@@ -1,0 +1,14 @@
+module InspecPlugins
+  module Init
+    class CLI
+      # ------------------------------------------------------------------#
+      #                     inspec init profile
+      # ------------------------------------------------------------------#
+      def self.valid_profile_platforms: () -> untyped
+
+      def valid_profile_platforms: () -> untyped
+
+      def profile: (untyped new_profile_name) -> untyped
+    end
+  end
+end

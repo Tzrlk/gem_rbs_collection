@@ -1,0 +1,39 @@
+module Inspec::Resources
+  class Lines
+    attr_reader output: untyped
+
+    attr_reader stdout: untyped
+
+    attr_reader stderr: untyped
+
+    attr_reader exit_status: untyped
+
+    def initialize: (untyped raw, untyped desc, untyped exit_status) -> void
+
+    def lines: () -> untyped
+
+    def to_s: () -> untyped
+  end
+
+  class MysqlSession
+    def initialize: (?untyped? user, ?untyped? pass, ?::String host, ?untyped? port, ?untyped? socket) -> void
+
+    def query: (untyped q, ?::String db) -> untyped
+
+    def resource_id: () -> ::String
+
+    def to_s: () -> "MySQL Session"
+
+    private
+
+    # Querying on the database to make sure conneciton can be established. If not this will set the resource exception
+    # message which we raise before querying on the database using mysql_session object.
+    def test_connection: () -> untyped
+
+    def escape_string: (untyped query) -> untyped
+
+    def create_mysql_cmd: (untyped q, ?::String db) -> untyped
+
+    def init_fallback: () -> (nil | untyped)
+  end
+end

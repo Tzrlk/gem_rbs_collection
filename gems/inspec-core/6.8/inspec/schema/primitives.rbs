@@ -1,0 +1,95 @@
+module Inspec
+  module Schema
+    module Primitives
+      # ####################### Establish simple helpers for this schema ########################################
+      # Use this function to easily make described types
+      def self.desc: (untyped obj, untyped description) -> untyped
+
+      # Use this function to easily make an array of a type
+      def self.array: (untyped of_type) -> ::Hash[::String, "array" | untyped]
+
+      # This function performs some simple validation on schemas, to catch obvious missed requirements
+      def self.validate_schema: (untyped schema) -> (nil | untyped)
+
+      # Use this class to quickly add/use object types to/in a definition block
+      class SchemaType
+        attr_accessor name: untyped
+
+        attr_accessor depends: untyped
+
+        def initialize: (untyped name, untyped body, untyped dependencies, ?untyped? description) -> void
+
+        # Produce this schema types generated body.
+        # Use to actually define the ref!
+        def body: () -> untyped
+
+        # Formats this to have a JSON pointer compatible title
+        def ref_name: () -> untyped
+
+        # Yields this type as a json schema ref
+        def ref: () -> ::Hash[::String, ::String]
+
+        # Recursively acquire all depends for this schema. Return them sorted by name
+        def all_depends: () -> untyped
+      end
+
+      # ####################### Establish basic type shorthands for this schema ########################################
+      # These three are essentially primitives, used as shorthand
+      OBJECT: ::Hash[::String, "object" | true]
+
+      NUMBER: ::Hash[::String, "number"]
+
+      STRING: ::Hash[::String, "string"]
+
+      NULL: ::Hash[::String, "null"]
+
+      # We might eventually enforce string format stuff on this
+      URL: ::Hash[::String, "string"]
+
+      # A controls tags can have any number of properties, and any sorts of values
+      TAGS: ::Hash[::String, "object" | true | "A set of any number of tags - they can have any sort of value and are usually metadata.  Example: 'nist' => ['AC-10']."]
+
+      # Attributes/Inputs specify the inputs to a profile.
+      INPUT: ::Hash[::String, "object" | true | "An input or attribute used in the run."]
+
+      IMPACT: ::Hash[::String, "number" | ::Float | "\n           Within a control file, impacts can be a decimal number in the range [0,1] or a string that is one of [none,low,medium,high,critical].\n           However, the string will be automatically converted as follows:\n           none      -> 0    to 0.01\n           low       -> 0.01 to 0.4\n           medium    -> 0.4  to 0.7\n           high      -> 0.7  to 0.9\n           critical  -> 0.9  to 1.0\n        "]
+
+      # A status for a control
+      STATUS: ::Hash[::String, "string" | ::Array["passed" | "failed" | "skipped" | "error"]]
+
+      # We use "title" to name the type.
+      # and "description" (via the describe function) to describe its particular usage
+      # Summary item containing run statistics about a subset of the controls
+      STATISTIC_ITEM: untyped
+
+      # Bundles several results statistics, representing distinct groups of controls
+      STATISTIC_GROUPING: untyped
+
+      # Contains statistics of an exec run.
+      STATISTICS: untyped
+
+      # Profile dependencies
+      DEPENDENCY: untyped
+
+      # Represents the platform the test was run on
+      PLATFORM: untyped
+
+      # Explains what software ran the inspec profile/made this file. Typically inspec but could in theory be a different software
+      GENERATOR: untyped
+
+      # Occurs from "exec --reporter json" and "inspec json"
+      # Denotes what file this control comes from, and where within
+      SOURCE_LOCATION: untyped
+
+      # References an external document
+      REFERENCE: untyped
+
+      # Represents a group of controls within a profile/.rb file
+      CONTROL_GROUP: untyped
+
+      # Occurs from "inspec exec --reporter json" and "inspec json"
+      # Represents a platfrom or group of platforms that this profile supports
+      SUPPORT: untyped
+    end
+  end
+end

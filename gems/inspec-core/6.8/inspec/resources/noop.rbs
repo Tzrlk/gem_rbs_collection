@@ -1,0 +1,7 @@
+module Inspec::Resources
+  class Noop
+    def resource_id: () -> "No-op"
+
+    def to_s: () -> "No-op"
+  end
+end

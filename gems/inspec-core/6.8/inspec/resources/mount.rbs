@@ -1,0 +1,37 @@
+module Inspec::Resources
+  class Mount
+    attr_reader file: untyped
+
+    def initialize: (untyped path) -> void
+
+    def mounted?: () -> untyped
+
+    def count: () -> (nil | untyped)
+
+    def method_missing: (untyped name) -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def mount_manager_for_os: () -> untyped
+  end
+
+  class MountsInfo
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    def parse_mount_options: (untyped _mount_line, ?bool _compatibility) -> untyped
+  end
+
+  class LinuxMounts < MountsInfo
+    include Inspec::Utils::LinuxMountParser
+  end
+
+  class BsdMounts < MountsInfo
+    include Inspec::Utils::BsdMountParser
+  end
+end

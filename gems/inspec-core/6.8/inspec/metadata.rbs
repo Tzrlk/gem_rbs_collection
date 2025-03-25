@@ -1,0 +1,64 @@
+module Inspec
+  # The Metadata class represents a profile's metadata.
+  # This includes the metadata stored in the profile's metadata.rb file, as well as inferred
+  # metadata like if this profile supports the current runtime and the intended target.
+  # This class does NOT represent the runtime state of a profile during execution.
+  # See lib/inspec/profile.rb for the runtime representation of a profile.
+  #
+  # A Metadata object may be created and finalized with invalid data.
+  # This allows the check CLI command to analyse the issues.
+  # Use valid? to determine if the metadata is coherent.
+  class Metadata
+    attr_reader ref: untyped
+
+    attr_accessor params: untyped
+
+    attr_accessor content: untyped
+
+    def initialize: (untyped ref, ?untyped? logger) -> void
+
+    def dependencies: () -> untyped
+
+    def gem_dependencies: () -> untyped
+
+    def supports: (untyped sth, ?untyped? version) -> nil
+
+    def inspec_requirement: () -> untyped
+
+    def supports_runtime?: () -> untyped
+
+    def supports_platform?: (untyped backend) -> untyped
+
+    # return all warn and errors
+    def valid: () -> ::Array[untyped]
+
+    # returns true or false
+    def valid?: () -> untyped
+
+    def valid_version?: (untyped value) -> untyped
+
+    def valid_license?: (untyped value) -> untyped
+
+    def method_missing: (untyped sth, *untyped args) -> untyped
+
+    def unsupported: () -> untyped
+
+    def self.symbolize_keys: (untyped obj) -> untyped
+
+    def self.finalize_supports_elem: (untyped elem, untyped logger) -> untyped
+
+    def self.finalize_supports: (untyped supports, untyped logger) -> untyped
+
+    def self.finalize_name: (untyped metadata, untyped profile_id, untyped original_target) -> (nil | untyped)
+
+    def self.finalize: (untyped metadata, untyped profile_id, untyped options, ?untyped? logger) -> (nil | untyped)
+
+    def self.from_yaml: (untyped ref, untyped content, untyped profile_id, ?untyped? logger) -> untyped
+
+    def self.from_ruby: (untyped ref, untyped content, untyped profile_id, ?untyped? logger) -> untyped
+
+    def self.from_ref: (untyped ref, untyped content, untyped profile_id, ?untyped? logger) -> untyped
+
+    def self.from_file: (untyped path, untyped profile_id, ?untyped? logger) -> (nil | untyped)
+  end
+end

@@ -1,0 +1,33 @@
+module Inspec::Resources
+  class AideConf
+    attr_reader params: untyped
+
+    include Inspec::Utils::CommentParser
+
+    include FileReader
+
+    def initialize: (?untyped? aide_conf_path) -> void
+
+    def all_have_rule: (untyped rule) -> (false | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "AIDE Config"
+
+    private
+
+    def read_content: () -> untyped
+
+    def filter_comments: (untyped data) -> untyped
+
+    def parse_conf: (untyped content) -> untyped
+
+    def parse_line: (untyped line) -> untyped
+
+    def parse_rule_line: (untyped line) -> untyped
+
+    def parse_selection_line: (untyped line) -> ::Hash[::String, untyped]
+
+    def handle_multi_rule: (untyped rule_list, untyped i) -> untyped
+  end
+end

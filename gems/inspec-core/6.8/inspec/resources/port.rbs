@@ -1,0 +1,114 @@
+# TODO: currently we return local ip only
+# TODO: improve handling of same port on multiple interfaces
+module Inspec::Resources
+  class Port
+    def initialize: (*untyped args) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def port_manager_for_os: () -> untyped
+
+    def info: () -> untyped
+  end
+
+  # implements an info method and returns all ip adresses and protocols for
+  # each port
+  # [{
+  #   'port' => 22,
+  #   'address' => '0.0.0.0'
+  #   'protocol' => 'tcp'
+  # },
+  # {
+  #   'port' => 22,
+  #   'address' => '::'
+  #   'protocol' => 'tcp6'
+  # }]
+  class PortsInfo
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec, ?untyped? port) -> void
+  end
+
+  # TODO: Add UDP infromation Get-NetUDPEndpoint
+  # TODO: currently Windows only supports tcp ports
+  # TODO: Get-NetTCPConnection does not return PIDs
+  # TODO: double-check output with 'netstat -ano'
+  # @see https://connect.microsoft.com/PowerShell/feedback/details/1349420/get-nettcpconnection-does-not-show-processid
+  class WindowsPorts < PortsInfo
+    def info: () -> untyped
+
+    private
+
+    def powershell_info: () -> untyped
+
+    def netstat_info: () -> (nil | untyped)
+  end
+
+  # extracts udp and tcp ports from the lsof command
+  class LsofPorts < PortsInfo
+    attr_reader lsof: untyped
+
+    def initialize: (untyped inspec, ?untyped? lsofpath) -> void
+
+    def info: () -> (nil | untyped)
+
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
+    def lsof_parser: (untyped lsof_cmd) -> untyped
+  end
+
+  class AixPorts < PortsInfo
+    def info: () -> untyped
+
+    def ports_via_lsof: () -> (nil | untyped)
+
+    def ports_via_netstat: () -> (nil | untyped)
+
+    def parse_netstat_line: (untyped line) -> (::Hash[untyped, untyped] | ::Hash[::String, untyped])
+
+    def parse_net_address: (untyped net_addr, untyped protocol) -> (::Array[nil] | ::Array[untyped])
+  end
+
+  # extract port information from netstat
+  class LinuxPorts < PortsInfo
+    ALLOWED_PROTOCOLS: ::Array["tcp" | "tcp6" | "udp" | "udp6"]
+
+    def info: () -> untyped
+
+    def ports_via_ss: () -> (nil | untyped)
+
+    def ports_via_netstat: () -> (nil | untyped)
+
+    def parse_net_address: (untyped net_addr, untyped protocol) -> untyped
+
+    def parse_netstat_line: (untyped line) -> (::Hash[untyped, untyped] | ::Hash[::String, untyped])
+
+    def tokenize_ss_line: (untyped line) -> untyped
+
+    def parse_ss_line: (untyped line) -> (nil | ::Hash[::String, untyped])
+  end
+
+  # extracts information from sockstat
+  class FreeBsdPorts < PortsInfo
+    def info: () -> (nil | untyped)
+
+    def parse_net_address: (untyped net_addr, untyped protocol) -> untyped
+
+    def parse_sockstat_line: (untyped line) -> (::Hash[untyped, untyped] | ::Hash[::String, untyped])
+  end
+
+  class SolarisPorts < FreeBsdPorts
+    include Inspec::Utils::SolarisNetstatParser
+
+    def info: () -> (nil | untyped)
+  end
+
+  # extracts information from netstat for hpux
+  class HpuxPorts < FreeBsdPorts
+    def info: () -> (nil | untyped)
+
+    def parse_netstat_line: (untyped line) -> (::Hash[untyped, untyped] | ::Hash[::String, untyped])
+  end
+end

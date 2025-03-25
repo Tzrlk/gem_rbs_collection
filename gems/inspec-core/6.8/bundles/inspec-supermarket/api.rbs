@@ -1,0 +1,25 @@
+module Supermarket
+  class API
+    SUPERMARKET_URL: "https://supermarket.chef.io"
+
+    # displays a list of profiles
+    def self.profiles: (?untyped supermarket_url) -> untyped
+
+    def self.profile_name: (untyped profile) -> untyped
+
+    # displays profile infos
+    def self.info: (untyped profile, ?untyped supermarket_url) -> untyped
+
+    # compares a profile with the supermarket tool info
+    def self.same?: (untyped profile, untyped supermarket_tool, ?untyped supermarket_url) -> untyped
+
+    def self.find: (untyped profile, ?untyped supermarket_url) -> (nil | untyped)
+
+    # verifies that a profile exists
+    def self.exist?: (untyped profile, ?untyped supermarket_url) -> untyped
+
+    def self.get: (untyped url, untyped params) -> untyped
+
+    def self.send_request: (untyped uri, untyped req) -> ::Array[untyped]
+  end
+end

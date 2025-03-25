@@ -1,0 +1,63 @@
+class PluginRegistry
+  attr_reader registry: untyped
+
+  def initialize: () -> void
+
+  # Resolve a target via available plugins.
+  #
+  # @param [String] target to resolve
+  # @return [Plugin] plugin instance if it can be resolved, nil otherwise
+  def resolve: (untyped target, ?::Hash[untyped, untyped] opts) -> (untyped | nil)
+
+  private
+
+  # Get all registered plugins sorted by priority, with highest first
+  #
+  # @return [Array[Plugin]] sorted list of plugins
+  def modules: () -> untyped
+end
+
+class PluginRegistry
+  class Plugin
+    # Retrieve the plugin registry associated with this plugin
+    #
+    # @return [PluginRegistry] plugin registry for this plugin
+    def self.plugin_registry: () -> untyped
+
+    # Register a new plugin by name
+    #
+    # @param [String] the unique name of this plugin
+    # @return [nil] disregard
+    def self.name: (untyped name) -> untyped
+
+    # This plugin's priority. Set it by providing the priority as an
+    # argument. Higher numbers ensure that the plugin is
+    # called early to check if a target belongs to it. When called without
+    # an argument, it retrieves this plugin's priority. Defaults to 0.
+    #
+    # @param [Numeric] Priority as a number. Will only be set if != nil
+    # @return [Numeric] This plugin's priority
+    def self.priority: (?untyped? x) -> untyped
+
+    # Try to resolve the target. If this plugin cannot handle it, the result
+    # will be nil. If, however, the plugin can resolve it, the resulting
+    # object will be an instance of this plugin. This means, that the interface
+    # that this base class provides, is the basis for the returned type.
+    #
+    # @param [String] target to try to resolve
+    # @return [Plugin] instance if it can be resolved, nil otherwise
+    def self.resolve: (untyped _target) -> untyped
+
+    # When a plugin's resolve doesn't lead to the final state, it can
+    # use this method to hand it back for another resolver to handle.
+    #
+    # @param [Any] the current target that needs resolving
+    # @param [Plugin] an instance of the calling resolver
+    # @return [Plugin] instance if it can be resolved, nil otherwise
+    def self.resolve_next: (untyped target, untyped parent) -> untyped
+
+    attr_reader target: untyped
+
+    attr_accessor parent: untyped
+  end
+end

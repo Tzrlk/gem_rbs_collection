@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class OracledbConf
+    attr_reader oracledb_session: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def method_missing: (untyped name) -> untyped
+
+    def to_s: () -> "Oracle DB Configuration"
+
+    def resource_id: () -> untyped
+
+    private
+
+    def determine_database_setting: (untyped setting) -> untyped
+  end
+end

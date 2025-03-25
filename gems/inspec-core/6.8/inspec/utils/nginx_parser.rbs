@@ -1,0 +1,16 @@
+class NginxParser < Parslet::Parser
+end
+
+class NginxTransform < Parslet::Transform
+  Group: untyped
+
+  Exp: untyped
+
+  def self.assemble_binary: (untyped seq) -> untyped
+end
+
+class NginxConfig
+  def self.parse: (untyped content) -> untyped
+
+  def self.read_nginx_group: (untyped t) -> untyped
+end

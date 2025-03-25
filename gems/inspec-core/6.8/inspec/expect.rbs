@@ -1,0 +1,17 @@
+module Inspec
+  class Expect
+    attr_reader calls: untyped
+
+    attr_reader value: untyped
+
+    attr_reader block: untyped
+
+    def initialize: (untyped value) ?{ () -> untyped } -> void
+
+    def to: (*untyped args) ?{ () -> untyped } -> untyped
+
+    def not_to: (*untyped args) ?{ () -> untyped } -> untyped
+
+    def example_group: () -> untyped
+  end
+end

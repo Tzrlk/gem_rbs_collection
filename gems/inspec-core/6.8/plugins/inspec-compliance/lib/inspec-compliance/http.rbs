@@ -1,0 +1,24 @@
+module InspecPlugins
+  module Compliance
+    # implements a simple http abstraction on top of Net::HTTP
+    class HTTP
+      # generic get requires
+      def self.get: (untyped url, ?untyped? headers, untyped insecure) -> untyped
+
+      # generic post request
+      def self.post: (untyped url, untyped token, untyped insecure, ?bool basic_auth) -> untyped
+
+      def self.post_with_headers: (untyped url, untyped headers, untyped body, untyped insecure) -> untyped
+
+      # post a file
+      def self.post_file: (untyped url, untyped headers, untyped file_path, untyped insecure) -> untyped
+
+      def self.post_multipart_file: (untyped url, untyped headers, untyped file_path, untyped insecure) -> untyped
+
+      # sends a http requests
+      def self.send_request: (untyped uri, untyped req, untyped insecure) -> untyped
+
+      def self._parse_url: (untyped url) -> untyped
+    end
+  end
+end

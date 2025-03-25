@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class Passwd
+    include Inspec::Utils::PasswdParser
+
+    include FileReader
+
+    attr_reader params: untyped
+
+    attr_reader content: untyped
+
+    attr_reader lines: untyped
+
+    def initialize: (?untyped? path, ?untyped? opts) -> void
+
+    def to_s: () -> "/etc/passwd"
+  end
+end

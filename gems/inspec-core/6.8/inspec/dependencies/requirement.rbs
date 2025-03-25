@@ -1,0 +1,47 @@
+module Inspec
+  #
+  # Inspec::Requirement represents a given profile dependency, where
+  # appropriate we delegate to Inspec::Profile directly.
+  #
+  class Requirement
+    def self.from_metadata: (untyped dep, untyped cache, untyped opts) -> untyped
+
+    def self.from_lock_entry: (untyped entry, untyped config, ?::Hash[untyped, untyped] opts) -> untyped
+
+    attr_reader cwd: untyped
+
+    attr_reader opts: untyped
+
+    attr_reader version_constraints: untyped
+
+    attr_reader cache: untyped
+
+    def initialize: (untyped name, untyped version_constraints, untyped config, untyped opts) -> void
+
+    #
+    # A dependency can be renamed in inspec.yml/inspec.lock.  Prefer
+    # the name the user gave this dependency over the profile name.
+    #
+    def name: () -> untyped
+
+    def source_version: () -> untyped
+
+    def source_satisfies_spec?: () -> (true | untyped)
+
+    def resolved_source: () -> untyped
+
+    def to_hash: () -> untyped
+
+    def lock_deps: (untyped dep_array) -> untyped
+
+    def fetcher: () -> untyped
+
+    # load dependencies of the dependency
+    def dependencies: () -> untyped
+
+    def to_s: () -> untyped
+
+    # load the profile for the requirement
+    def profile: () -> untyped
+  end
+end

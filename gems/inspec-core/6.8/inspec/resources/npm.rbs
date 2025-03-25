@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class NpmPackage
+    def initialize: (untyped package_name, ?::Hash[untyped, untyped] opts) -> void
+
+    def info: () -> untyped
+
+    def installed?: () -> untyped
+
+    def version: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

@@ -1,0 +1,20 @@
+module Inspec::Plugin::V2::PluginType
+  class Reporter < Inspec::Plugin::V2::PluginBase
+    include Inspec::Utils::RunDataFilters
+
+    attr_reader run_data: untyped
+
+    attr_accessor enhanced_outcomes: untyped
+
+    def initialize: (untyped config) -> void
+
+    def output: (untyped str, ?bool newline) -> untyped
+
+    def rendered_output: () -> untyped
+
+    # each reporter must implement #render
+    def render: () -> untyped
+
+    def self.run_data_schema_constraints: () -> untyped
+  end
+end

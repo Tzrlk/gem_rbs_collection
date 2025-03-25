@@ -1,0 +1,31 @@
+# Change module if required
+module Inspec::Resources
+  class SshKey < FileResource
+    include FileReader
+
+    def initialize: (untyped keypath, ?untyped? passphrase) -> void
+
+    def public?: () -> (nil | untyped)
+
+    def private?: () -> (nil | untyped)
+
+    def key_length: () -> (nil | untyped)
+
+    def type: () -> (nil | untyped)
+
+    # Define a resource ID. This is used in reporting engines to uniquely identify the individual resource.
+    # This might be a file path, or a process ID, or a cloud instance ID. Only meaningful to the implementation.
+    # Must be a string. Defaults to the empty string if not implemented.
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def set_ssh_key_path: (untyped keypath) -> untyped
+
+    def read_ssh_key: () -> untyped
+
+    def key_lengh: (untyped key) -> (untyped | nil)
+  end
+end

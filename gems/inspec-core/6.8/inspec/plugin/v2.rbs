@@ -1,0 +1,44 @@
+module Inspec
+  module Plugin
+    module V2
+      class Exception < Inspec::Error
+      end
+
+      class ConfigError < Inspec::Plugin::V2::Exception
+      end
+
+      class LoadError < Inspec::Plugin::V2::Exception
+      end
+
+      class GemActionError < Inspec::Plugin::V2::Exception
+        attr_accessor plugin_name: untyped
+
+        attr_accessor version: untyped
+      end
+
+      class InstallError < Inspec::Plugin::V2::GemActionError
+      end
+
+      class PluginExcludedError < Inspec::Plugin::V2::InstallError
+        attr_accessor details: untyped
+      end
+
+      class UpdateError < Inspec::Plugin::V2::GemActionError
+        attr_accessor from_version: untyped
+
+        attr_accessor to_version: untyped
+      end
+
+      class UnInstallError < Inspec::Plugin::V2::GemActionError
+      end
+
+      class SearchError < Inspec::Plugin::V2::GemActionError
+      end
+    end
+  end
+end
+
+module Inspec
+  # Provides the base class that plugin implementors should use.
+  def self.plugin: (untyped version, ?untyped? plugin_type) -> untyped
+end

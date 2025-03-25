@@ -1,0 +1,17 @@
+module InspecPlugins::Parallelism
+  class SuperReporter
+    def self.make: (untyped `type`, untyped job_count, untyped invocations) -> untyped
+
+    class Base
+      def initialize: (untyped job_count, untyped invocations) -> void
+
+      def child_spawned: (untyped pid, untyped invocation) -> nil
+
+      def child_forked: (untyped pid, untyped invocation) -> nil
+
+      def child_exited: (untyped pid) -> nil
+
+      def child_status_update_line: (untyped pid, untyped update_line) -> nil
+    end
+  end
+end

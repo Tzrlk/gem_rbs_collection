@@ -1,0 +1,81 @@
+module Inspec
+  class ProfileContext
+    def self.for_profile: (untyped profile, untyped backend) -> untyped
+
+    attr_reader library_eval_context: untyped
+
+    attr_reader backend: untyped
+
+    attr_reader profile_name: untyped
+
+    attr_reader profile_id: untyped
+
+    attr_reader resource_registry: untyped
+
+    attr_accessor rules: untyped
+
+    def initialize: (untyped profile_id, untyped backend, untyped conf) -> void
+
+    def attributes: () -> untyped
+
+    def dependencies: () -> (::Hash[untyped, untyped] | untyped)
+
+    def to_resources_dsl: () -> untyped
+
+    def control_eval_context: () -> untyped
+
+    def reload_dsl: () -> untyped
+
+    def profile_supports_platform?: () -> (true | untyped)
+
+    def profile_supports_inspec_version?: () -> (true | untyped)
+
+    def remove_rule: (untyped id) -> untyped
+
+    def all_controls: () -> untyped
+
+    alias all_rules all_controls
+
+    def subcontext_by_name: (untyped name) -> untyped
+
+    def add_resources: (untyped context) -> untyped
+
+    def add_subcontext: (untyped context) -> untyped
+
+    def load_libraries: (untyped libs) -> untyped
+
+    def load_control_file: (*untyped args) -> untyped
+
+    alias load load_control_file
+
+    def load_library_file: (*untyped args) -> untyped
+
+    def load_with_context: (untyped context, untyped content, ?untyped? source, ?untyped? line) -> untyped
+
+    def unregister_rule: (untyped id) -> untyped
+
+    attr_reader current_load: untyped
+
+    def register_rule: (untyped r) -> untyped
+
+    def set_header: (untyped field, untyped val) -> untyped
+
+    private
+
+    def full_id: (untyped pid, untyped rid) -> untyped
+
+    module DomainSpecificLunacy
+      def self.create_dsl: (untyped profile_context) -> untyped
+
+      def self.included: (untyped mod) -> untyped
+
+      def resource_class: (untyped profile_name, untyped resource_name) -> untyped
+
+      module ClassMethods
+        def add_methods: (untyped profile_context) -> untyped
+
+        def add_registry_methods: (untyped profile_context) -> untyped
+      end
+    end
+  end
+end

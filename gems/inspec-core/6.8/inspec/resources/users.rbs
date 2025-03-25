@@ -1,0 +1,338 @@
+module Inspec::Resources
+  # This file contains two resources, the `user` and `users` resource.
+  # The `user` resource is optimized for requests that verify specific users
+  # that you know upfront for testing. If you need to query all users or search
+  # specific users with certain properties, use the `users` resource.
+  module UserManagementSelector
+    # select user provider based on the operating system
+    # returns nil, if no user manager was found for the operating system
+    def select_user_manager: (untyped os) -> (untyped | untyped | untyped | untyped | untyped | untyped | untyped | nil)
+  end
+
+  # The InSpec users resources looksup all local users available on a system.
+  # TODO: the current version of the users resource will use eg. /etc/passwd
+  # on Linux to parse all usernames. Therefore the resource may not return
+  # users managed on other systems like LDAP/ActiveDirectory. Please open
+  # a feature request at https://github.com/chef/inspec if you need that
+  # functionality
+  #
+  # This resource allows complex filter mechanisms
+  #
+  # describe users.where(uid: 0).entries do
+  #   it { should eq ['root'] }
+  #   its('uids') { should eq [1234] }
+  #   its('gids') { should eq [1234] }
+  # end
+  #
+  # describe users.where { uid =~ /S\-1\-5\-21\-\d+\-\d+\-\d+\-500/ } do
+  #   it { should exist }
+  # end
+  class Users
+    include UserManagementSelector
+
+    def initialize: () -> void
+
+    def to_s: () -> "Users"
+
+    private
+
+    # method to get all available users
+    def list_users: () -> (untyped | nil)
+
+    # collects information about every user
+    def collect_user_details: () -> (untyped | nil)
+  end
+
+  # The `user` resource handles the special case where only one resource is required
+  #
+  # describe user('root') do
+  #   it { should exist }
+  #   its('uid') { should eq 0 }
+  #   its('gid') { should eq 0 }
+  #   its('group') { should eq 'root' }
+  #   its('groups') { should eq ['root', 'wheel']}
+  #   its('home') { should eq '/root' }
+  #   its('shell') { should eq '/bin/bash' }
+  #   its('mindays') { should eq 0 }
+  #   its('maxdays') { should eq 99 }
+  #   its('warndays') { should eq 5 }
+  #   its('passwordage') { should be >= 0 }
+  #   its('maxbadpasswords') { should eq nil } // not yet supported on linux
+  #   its('badpasswordattempts') { should eq 0 }
+  # end
+  # describe user('Administrator') do
+  #   it { should exist }
+  #   its('uid') { should eq "S-1-5-21-1759981009-4135989804-1844563890-500" }
+  #   its('gid') { should eq nil } // not supported on Windows
+  #   its('group') { should eq nil } // not supported on Windows
+  #   its('groups') { should eq ['Administrators', 'Users']}
+  #   its('home') { should eq '' }
+  #   its('shell') { should eq nil } // not supported on Windows
+  #   its('mindays') { should eq 0 }
+  #   its('maxdays') { should eq 42 }
+  #   its('warndays') { should eq nil }
+  #   its('passwordage') { should eq 355 }
+  #   its('maxbadpasswords') { should eq 0 }
+  #   its('badpasswordattempts') { should eq 0 }
+  # end
+  #
+  # The following  Serverspec  matchers were deprecated in favor for direct value access
+  # but are made available as part of Serverspec compatibility in March, 2022.
+  #
+  # describe user('root') do
+  #   it { should belong_to_group 'root' }
+  #   it { should belong_to_primary_group 'root' }
+  #   it { should have_uid 0 }
+  #   it { should have_home_directory '/root' }
+  #   it { should have_login_shell '/bin/bash' }
+  #   its('minimum_days_between_password_change') { should eq 0 }
+  #   its('maximum_days_between_password_change') { should eq 99 }
+  #   it { should have_authorized_key 'ssh-rsa ADg54...3434 user@example.local' }
+  #   its(:encrypted_password) { should eq 1234 }
+  # end
+  class User
+    include UserManagementSelector
+
+    def initialize: (?untyped? username) -> void
+
+    def exists?: () -> untyped
+
+    def disabled?: () -> (untyped | nil)
+
+    def enabled?: () -> (untyped | nil)
+
+    def username: () -> (untyped | nil)
+
+    def uid: () -> (untyped | nil)
+
+    def gid: () -> (untyped | nil)
+
+    def groupname: () -> (untyped | nil)
+
+    alias group groupname
+
+    def groups: () -> (untyped | nil)
+
+    def home: () -> (untyped | nil)
+
+    def shell: () -> (untyped | nil)
+
+    def domain: () -> (untyped | nil)
+
+    def userflags: () -> (untyped | nil)
+
+    def lastlogin: () -> (untyped | nil)
+
+    # returns the minimum days between password changes
+    def mindays: () -> (untyped | nil)
+
+    # returns the maximum days between password changes
+    def maxdays: () -> (untyped | nil)
+
+    # returns the days for password change warning
+    def warndays: () -> (untyped | nil)
+
+    def badpasswordattempts: () -> (untyped | nil)
+
+    def maxbadpasswords: () -> (untyped | nil)
+
+    def passwordage: () -> (untyped | nil)
+
+    # implement 'mindays' method to be compatible with serverspec
+    def minimum_days_between_password_change: () -> untyped
+
+    # implement 'maxdays' method to be compatible with serverspec
+    def maximum_days_between_password_change: () -> untyped
+
+    # implements rspec has matcher, to be compatible with serverspec
+    # @see: https://github.com/rspec/rspec-expectations/blob/master/lib/rspec/matchers/built_in/has.rb
+    # has_uid matcher: compatibility with serverspec
+    def has_uid?: (untyped compare_uid) -> untyped
+
+    # has_home_directory matcher: compatibility with serverspec
+    def has_home_directory?: (untyped compare_home) -> untyped
+
+    # has_login_shell matcher: compatibility with serverspec
+    def has_login_shell?: (untyped compare_shell) -> untyped
+
+    # has_authorized_key matcher: compatibility with serverspec
+    def has_authorized_key?: (untyped compare_key) -> untyped
+
+    # belongs_to_primary_group matcher: compatibility with serverspec
+    def belongs_to_primary_group?: (untyped group_name) -> untyped
+
+    # belongs_to_group matcher: compatibility with serverspec
+    def belongs_to_group?: (untyped group_name) -> untyped
+
+    # encrypted_password property: compatibility with serverspec
+    # it allows to run test against the hashed passwords of the given user
+    # applicable for unix/linux systems with getent utility.
+    def encrypted_password: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    # returns the iden
+    def identity: () -> untyped
+
+    def meta_info: () -> untyped
+
+    def credentials: () -> untyped
+
+    # helper method for has_authorized_key matcher
+    # get_authorized_keys return the key/keys stored in the authorized_keys path
+    def get_authorized_keys: () -> untyped
+
+    # Helper method for encrypted_password property
+    def shadow_information: () -> untyped
+
+    # check if getent exist in the system
+    def find_getent_utility: () -> untyped
+  end
+
+  # Class defined to compare for groups without case-sensitivity
+  class UserGroups < Array
+    def initialize: (untyped user_groups) -> void
+
+    def include?: (untyped group) -> untyped
+  end
+
+  # This is an abstract class that every user provoider has to implement.
+  # A user provider implements a system abstracts and helps the InSpec resource
+  # hand-over system specific behavior to those providers
+  class UserInfo
+    include Converter
+
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    # returns a hash with user-specific values:
+    # {
+    #   uid: '',
+    #   user: '',
+    #   gid: '',
+    #   group: '',
+    #   groups: '',
+    # }
+    def identity: (untyped _username) -> untyped
+
+    # returns optional information about a user, eg shell
+    def meta_info: (untyped _username) -> nil
+
+    # returns a hash with meta-data about user credentials
+    # {
+    #   mindays: 1,
+    #   maxdays: 1,
+    #   warndays: 1,
+    # }
+    # this method is optional and may not be implemented by each provider
+    def credentials: (untyped _username) -> nil
+
+    # returns an array with users
+    def list_users: () -> untyped
+
+    # retuns all aspects of the user as one hash
+    def user_details: (untyped username) -> untyped
+
+    # returns the full information list for a user
+    def collect_user_details: () -> untyped
+  end
+
+  # implements generic unix id handling
+  class UnixUser < UserInfo
+    attr_reader inspec: untyped
+
+    attr_reader id_cmd: untyped
+
+    attr_reader list_users_cmd: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    # returns a list of all local users on a system
+    def list_users: () -> (::Array[untyped] | untyped)
+
+    # parse one id entry like '0(wheel)''
+    def parse_value: (untyped line) -> untyped
+
+    # extracts the identity
+    def identity: (untyped username) -> (nil | { uid: untyped, username: untyped, gid: untyped, groupname: untyped, groups: untyped })
+
+    # splits the results of id into seperate lines
+    def parse_id_entries: (untyped raw) -> untyped
+  end
+
+  class LinuxUser < UnixUser
+    include Inspec::Utils::PasswdParser
+
+    include Inspec::Utils::CommentParser
+
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped })
+
+    def credentials: (untyped username) -> (nil | { mindays: untyped, maxdays: untyped, warndays: untyped, passwordage: untyped, badpasswordattempts: untyped })
+  end
+
+  class SolarisUser < LinuxUser
+    def initialize: (untyped inspec) -> void
+  end
+
+  class AixUser < UnixUser
+    def identity: (untyped username) -> (nil | untyped)
+
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped })
+
+    def credentials: (untyped username) -> (nil | { mindays: untyped, maxdays: untyped, warndays: untyped, passwordage: nil, badpasswordattempts: nil })
+  end
+
+  class HpuxUser < UnixUser
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped })
+  end
+
+  # we do not use 'finger' for MacOS, because it is harder to parse data with it
+  # @see https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man8/fingerd.8.html
+  # instead we use 'dscl' to request user data
+  # @see https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/dscl.1.html
+  # @see http://superuser.com/questions/592921/mac-osx-users-vs-dscl-command-to-list-user
+  class DarwinUser < UnixUser
+    def initialize: (untyped inspec) -> void
+
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped })
+  end
+
+  # FreeBSD recommends to use the 'pw' command for user management
+  # @see: https://www.freebsd.org/doc/handbook/users-synopsis.html
+  # @see: https://www.freebsd.org/cgi/man.cgi?pw(8)
+  # It offers the following commands:
+  # - adduser(8) The recommended command-line application for adding new users.
+  # - rmuser(8)  The recommended command-line application for removing users.
+  # - chpass(1)  A flexible tool for changing user database information.
+  # - passwd(1)  The command-line tool to change user passwords.
+  class FreeBSDUser < UnixUser
+    include Inspec::Utils::PasswdParser
+
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped })
+  end
+
+  # This optimization was inspired by
+  # @see https://mcpmag.com/articles/2015/04/15/reporting-on-local-accounts.aspx
+  # Alternative solutions are WMI Win32_UserAccount
+  # @see https://msdn.microsoft.com/en-us/library/aa394507(v=vs.85).aspx
+  # @see https://msdn.microsoft.com/en-us/library/aa394153(v=vs.85).aspx
+  class WindowsUser < UserInfo
+    def parse_windows_account: (untyped username) -> ::Array[untyped]
+
+    def identity: (untyped username) -> (nil | untyped)
+
+    def meta_info: (untyped username) -> (nil | { home: untyped, shell: untyped, domain: untyped, userflags: untyped, lastlogin: untyped })
+
+    def credentials: (untyped username) -> (nil | { mindays: untyped, maxdays: untyped, warndays: untyped, badpasswordattempts: untyped, maxbadpasswords: untyped, minpasswordlength: untyped, passwordage: untyped })
+
+    def list_users: () -> untyped
+
+    # https://msdn.microsoft.com/en-us/library/aa746340(v=vs.85).aspx
+    def collect_user_details: () -> (untyped | nil)
+  end
+end

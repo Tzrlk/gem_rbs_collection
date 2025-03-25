@@ -1,0 +1,39 @@
+module Inspec::Resources
+  class Postgres
+    attr_reader service: untyped
+
+    attr_reader data_dir: untyped
+
+    attr_reader conf_dir: untyped
+
+    attr_reader conf_path: untyped
+
+    attr_reader version: untyped
+
+    attr_reader cluster: untyped
+
+    def initialize: () -> void
+
+    def to_s: () -> "PostgreSQL"
+
+    private
+
+    def determine_dirs: () -> untyped
+
+    def determine_service: () -> untyped
+
+    def verify_dirs: () -> untyped
+
+    def version_from_psql: () -> (nil | untyped)
+
+    def locate_data_dir_location_by_version: (?untyped ver) -> untyped
+
+    def version_from_dir: (untyped dir) -> untyped
+
+    def version_from_dir_windows: (untyped dir) -> untyped
+
+    def dir_to_version: (untyped dir) -> untyped
+
+    def cluster_from_dir: (untyped dir) -> ("main" | nil | untyped)
+  end
+end

@@ -1,0 +1,39 @@
+module Inspec::Resources
+  class FileSystemResource
+    attr_reader partition: untyped
+
+    def initialize: (untyped partition) -> void
+
+    def info: () -> (untyped | ::Hash[untyped, untyped])
+
+    def to_s: () -> ::String
+
+    def size_kb: () -> untyped
+
+    def size: () -> untyped
+
+    def free_kb: () -> untyped
+
+    def percent_free: () -> untyped
+
+    def type: () -> untyped
+
+    def name: () -> untyped
+
+    def resource_id: () -> untyped
+  end
+
+  class FsManagement
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+  end
+
+  class UnixFileSystemResource < FsManagement
+    def info: (untyped partition) -> { name: untyped, size_kb: untyped, free_kb: untyped, type: untyped }
+  end
+
+  class WindowsFileSystemResource < FsManagement
+    def info: (untyped partition) -> { name: untyped, size_kb: untyped, free_kb: untyped, type: untyped }
+  end
+end

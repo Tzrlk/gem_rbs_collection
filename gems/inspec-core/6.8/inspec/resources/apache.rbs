@@ -1,0 +1,17 @@
+module Inspec::Resources
+  class Apache
+    attr_reader service: untyped
+
+    attr_reader conf_dir: untyped
+
+    attr_reader conf_path: untyped
+
+    attr_reader user: untyped
+
+    def initialize: () -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "Apache Environment"
+  end
+end

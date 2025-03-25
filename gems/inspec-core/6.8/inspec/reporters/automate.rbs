@@ -1,0 +1,16 @@
+module Inspec::Reporters
+  class Automate < JsonAutomate
+    def initialize: (untyped config) -> void
+
+    def enriched_report: () -> untyped
+
+    def send_report: () -> untyped
+
+    private
+
+    # This hashes the passed string into SHA1.
+    # Then it downgrades the 160bit SHA1 to a 128bit
+    # then we format it as a valid UUIDv5.
+    def uuid_from_string: (untyped string) -> untyped
+  end
+end

@@ -1,0 +1,31 @@
+module Inspec
+  #
+  # Inspec::Resolver is a simple dependency resolver. Unlike Bundler
+  # or Berkshelf, it does not attempt to resolve each named dependency
+  # to a single version. Rather, it traverses down the dependency tree
+  # and:
+  #
+  # - Fetches the dependency from the source
+  # - Checks the presence of cycles, and
+  # - Checks that the specified dependency source satisfies the
+  #   specified version constraint
+  #
+  # The full dependency tree is then available for the loader, which
+  # will provide the isolation necessary to support multiple versions
+  # of the same profile being used at runtime.
+  #
+  # Currently the fetching happens somewhat lazily depending on the
+  # implementation of the fetcher being used.
+  #
+  class Resolver
+    # Here deps is an Array of Hashes
+    def self.resolve: (untyped dependencies, untyped cache, untyped working_dir, untyped backend) -> untyped
+
+    def detect_duplicates: (untyped deps, untyped top_level, untyped path_string) -> untyped
+
+    # Here deps is an Array of Inspec::Requirement
+    def resolve: (untyped deps, ?bool top_level, ?::Hash[untyped, untyped] seen_items, ?::String path_string) -> untyped
+
+    def fallback_to_archive_on_fetch_failure: (untyped dep) -> untyped
+  end
+end

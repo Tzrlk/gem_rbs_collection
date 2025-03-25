@@ -1,0 +1,46 @@
+module Inspec::Resources
+  class IisSite
+    def initialize: (untyped site_name) -> void
+
+    def app_pool: () -> (nil | untyped)
+
+    def bindings: () -> (nil | untyped)
+
+    def state: () -> (nil | untyped)
+
+    def path: () -> (nil | untyped)
+
+    def exists?: () -> untyped
+
+    def running?: () -> (false | untyped)
+
+    def has_app_pool?: (untyped app_pool) -> (false | untyped)
+
+    def has_path?: (untyped path) -> (false | untyped)
+
+    def has_binding?: (untyped binding) -> (false | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def iis_site: () -> untyped
+  end
+
+  class SiteProvider
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+
+    # want to populate everything using one powershell command here and spit it out as json
+    def iis_site: (untyped name) -> (nil | untyped)
+  end
+
+  # for compatability with serverspec
+  # this is deprecated syntax and will be removed in future versions
+  class IisSiteServerSpec < IisSite
+    def initialize: (untyped site_name) -> void
+
+    def in_app_pool?: (untyped app_pool) -> untyped
+  end
+end

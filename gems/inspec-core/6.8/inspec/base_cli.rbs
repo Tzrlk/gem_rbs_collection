@@ -1,0 +1,75 @@
+# Allow end of options during array type parsing
+# https://github.com/erikhuda/thor/issues/631
+class Thor::Arguments
+  alias old_parse_array parse_array
+
+  def parse_array: (untyped _name) -> untyped
+end
+
+module Inspec
+  class BaseCLI < Thor
+    attr_accessor self.inspec_cli_command: untyped
+
+    def self.start: (?untyped given_args, ?::Hash[untyped, untyped] config) -> untyped
+
+    def self.fetch_and_persist_license: () -> untyped
+
+    # EULA acceptance
+    def self.check_license!: () -> untyped
+
+    # https://github.com/erikhuda/thor/issues/244
+    def self.exit_on_failure?: () -> true
+
+    def self.target_options: () -> untyped
+
+    def self.profile_options: () -> untyped
+
+    def self.supermarket_options: () -> untyped
+
+    def self.exec_options: () -> untyped
+
+    def self.audit_log_options: () -> untyped
+
+    def self.help: (*untyped args) -> untyped
+
+    def self.format_platform_info: (?params: ::Hash[untyped, untyped], ?indent: ::Integer, ?color: ::Integer, ?enable_color: bool) -> untyped
+
+    def ui: () -> untyped
+
+    # Rationale: converting this to attr_writer breaks Thor
+    def ui=: (untyped new_ui) -> untyped
+
+    def mark_text: (untyped text) -> untyped
+
+    def headline: (untyped title) -> untyped
+
+    def li: (untyped entry) -> untyped
+
+    def plain_text: (untyped msg) -> untyped
+
+    def exit: (untyped code) -> untyped
+
+    private
+
+    ALL_OF_OUR_REPORTERS: ::Array["json" | "json-min" | "json-rspec" | "json-automate" | "junit" | "html" | "html2" | "yaml" | "documentation" | "progress"]
+
+    def suppress_log_output?: (untyped opts) -> (false | true)
+
+    def diagnose: (?untyped? _) -> untyped
+
+    def config: () -> untyped
+
+    # get the log level
+    # DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+    def get_log_level: (untyped level) -> untyped
+
+    def pretty_handle_exception: (untyped exception) -> untyped
+
+    def vendor_deps: (untyped path, untyped opts) -> untyped
+
+    def configure_logger: (untyped o) -> untyped
+
+    # This method is currenlty under feature preview flag and audit log will only be enabeld when CHEF_PREVIEW_AUDIT_LOGGING is set in the env variable
+    def set_and_validate_audit_log_options: (untyped opts) -> untyped
+  end
+end

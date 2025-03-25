@@ -1,0 +1,19 @@
+module Inspec::Resources
+  class KernelParameter
+    def initialize: (?untyped? parameter) -> void
+
+    def value: () -> (nil | untyped)
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+
+  class LinuxKernelParameter < KernelParameter
+    def initialize: (untyped parameter) -> void
+
+    def value: () -> untyped
+
+    def to_s: () -> ::String
+  end
+end

@@ -1,0 +1,35 @@
+module Inspec
+  class Backend
+    attr_accessor backend: untyped
+
+    attr_accessor profile: untyped
+
+    def self.add_resource_methods: () -> untyped
+
+    # Create the transport backend with aggregated resources.
+    #
+    # @param [Inspec::Config] config for the transport backend
+    # @return [TransportBackend] enriched transport instance
+    def self.create: (untyped config) -> untyped
+
+    def initialize: (untyped backend) -> void
+
+    # Provide a shorthand to retrieve the inspec version from within a profile
+    #
+    # @return [String] inspec version
+    def version: () -> untyped
+
+    # Determine whether the connection/transport is a local connection
+    # Useful for resources to modify behavior as necessary, such as using
+    # the Ruby stdlib for a better experience.
+    def local_transport?: () -> (false | untyped)
+
+    # Ruby internal for printing a nice name for this class
+    def to_s: () -> "Inspec::Backend::Class"
+
+    # Ruby internal for pretty-printing a summary for this class
+    def inspect: () -> ::String
+
+    def method_missing: (untyped id, *untyped args) ?{ () -> untyped } -> untyped
+  end
+end

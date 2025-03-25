@@ -1,0 +1,19 @@
+module Inspec::Resources
+  class RabbitmqConfig
+    include FileReader
+
+    def initialize: (?untyped? conf_path) -> void
+
+    def params: (*untyped opts) -> untyped
+
+    def to_s: () -> ::String
+
+    def resource_id: () -> untyped
+
+    private
+
+    def read_content: () -> untyped
+
+    def read_params: () -> untyped
+  end
+end

@@ -1,0 +1,134 @@
+module Inspec::Resources
+  module FilePermissionsSelector
+    def select_file_perms_style: (untyped os) -> (untyped | untyped | nil)
+  end
+
+  # TODO: rename file_resource.rb
+  class FileResource
+    include FilePermissionsSelector
+
+    include Inspec::Utils::LinuxMountParser
+
+    attr_reader file: untyped
+
+    attr_reader mount_options: untyped
+
+    attr_reader path: untyped
+
+    def initialize: (untyped path) -> void
+
+    def content: () -> (nil | untyped)
+
+    # returns hash containing list of users/groups and their file permissions.
+    def user_permissions: () -> (::Hash[untyped, untyped] | untyped)
+
+    # returns true if inheritance is enabled on file or folder
+    def inherited?: () -> (false | untyped)
+
+    def contain: (*untyped _) -> untyped
+
+    def readable?: (untyped by_usergroup, untyped by_specific_user) -> (false | untyped)
+
+    def writable?: (untyped by_usergroup, untyped by_specific_user) -> (false | untyped)
+
+    def executable?: (untyped by_usergroup, untyped by_specific_user) -> (false | untyped)
+
+    def allowed?: (untyped permission, ?::Hash[untyped, untyped] opts) -> (false | untyped)
+
+    def mounted?: (?untyped? expected_options, ?bool identical) -> (untyped | nil)
+
+    def suid: () -> untyped
+
+    alias setuid? suid
+
+    def sgid: () -> untyped
+
+    alias setgid? sgid
+
+    def sticky: () -> untyped
+
+    alias sticky? sticky
+
+    def more_permissive_than?: (?untyped? max_mode) -> (nil | untyped)
+
+    def immutable?: () -> untyped
+
+    # parse the json file content and returns the content
+    def content_as_json: () -> untyped
+
+    # parse the yaml file content and returns the content
+    def content_as_yaml: () -> untyped
+
+    def to_s: () -> (::String | untyped)
+
+    def resource_id: () -> untyped
+
+    private
+
+    def file_permission_granted?: (untyped access_type, untyped by_usergroup, untyped by_specific_user) -> untyped
+  end
+
+  class FilePermissions
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+  end
+
+  class UnixFilePermissions < FilePermissions
+    def permission_flag: (untyped access_type) -> untyped
+
+    def usergroup_for: (untyped usergroup, untyped specific_user) -> ("other" | "all" | untyped)
+
+    def check_file_permission_by_mask: (untyped file, untyped access_type, untyped usergroup, untyped specific_user) -> untyped
+
+    def check_file_permission_by_user: (untyped access_type, untyped user, untyped path) -> untyped
+  end
+
+  class WindowsFilePermissions < FilePermissions
+    def user_permissions: (untyped file) -> untyped
+
+    def inherited?: (untyped file) -> untyped
+
+    def check_file_permission_by_mask: (untyped _file, untyped _access_type, untyped _usergroup, untyped _specific_user) -> untyped
+
+    def more_permissive_than?: (*untyped) -> untyped
+
+    def check_file_permission_by_user: (untyped access_type, untyped user, untyped path) -> untyped
+
+    private
+
+    def convert_to_powershell_array: (untyped arr) -> ("@()" | ::String)
+
+    # Translates a developer-friendly string into a list of acceptable
+    # FileSystemRights that match it, because Windows has a fun heirarchy
+    # of permissions that are able to be noted in multiple ways.
+    #
+    # See also: https://www.codeproject.com/Reference/871338/AccessControl-FileSystemRights-Permissions-Table
+    def translate_perm_names: (untyped access_type) -> untyped
+
+    def translate_common_perms: (untyped access_type) -> untyped
+
+    def translate_uncommon_perms: (untyped access_type) -> untyped
+
+    def translate_granular_perms: (untyped access_type) -> untyped
+  end
+
+  # Helper class for immutable matcher.
+  class ImmutableFlagCheck
+    attr_reader inspec: untyped
+
+    attr_reader file_path: untyped
+
+    def initialize: (untyped inspec, untyped file) -> void
+
+    def find_utility_or_error: (untyped utility_name) -> untyped
+  end
+
+  class LinuxImmutableFlagCheck < ImmutableFlagCheck
+    def is_immutable?: () -> untyped
+  end
+
+  class UnixImmutableFlagCheck < ImmutableFlagCheck
+    def is_immutable?: () -> untyped
+  end
+end

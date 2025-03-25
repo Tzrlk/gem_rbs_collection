@@ -1,0 +1,44 @@
+module Inspec::Resources
+  # STABILITY: Experimental
+  # This resource needs further testing and refinement
+  #
+  class OracledbSession
+    attr_reader bin: untyped
+
+    attr_reader db_role: untyped
+
+    attr_reader host: untyped
+
+    attr_reader password: untyped
+
+    attr_reader port: untyped
+
+    attr_reader service: untyped
+
+    attr_reader su_user: untyped
+
+    attr_reader user: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def query: (untyped sql) -> untyped
+
+    def to_s: () -> "Oracle Session"
+
+    def resource_id: () -> (::String | ::String | "")
+
+    private
+
+    # 3 commands
+    # regular user password
+    # using a db_role
+    # su, using a db_role
+    def command_builder: (untyped format_options, untyped query) -> untyped
+
+    def verify_query: (untyped query) -> untyped
+
+    def escape_query: (untyped query) -> untyped
+
+    def parse_csv_result: (untyped stdout) -> untyped
+  end
+end

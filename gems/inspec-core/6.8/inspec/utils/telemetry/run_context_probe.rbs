@@ -1,0 +1,21 @@
+module Inspec
+  class Telemetry
+    class RunContextProbe
+      # Guess if we are running under Automate
+      def self.under_automate?: () -> untyped
+
+      # Guess, using stack introspection, if we were called under
+      # test-kitchen, cli, audit-cookbook, or otherwise.
+      # TODO add compliance-phase of chef-infra
+      def self.guess_run_context: (?untyped? stack) -> ("test-kitchen" | "cli" | "audit-cookbook" | "unknown")
+
+      def self.run_by_thor?: (untyped stack) -> untyped
+
+      def self.kitchen?: (untyped stack) -> untyped
+
+      def self.audit_cookbook?: (untyped stack) -> untyped
+
+      def self.stack_match: (?stack: untyped, ?label: untyped?, ?path: untyped?) -> (false | untyped)
+    end
+  end
+end

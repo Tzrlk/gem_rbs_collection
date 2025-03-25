@@ -1,0 +1,90 @@
+module Inspec
+  #
+  # ControlEvalContext constructs an anonymous class that control
+  # files will be instance_exec'd against.
+  #
+  # The anonymous class includes the given passed resource_dsl as well
+  # as the basic DSL of the control files (describe, control, title,
+  # etc).
+  #
+  class ControlEvalContext
+    include Inspec::DSL
+
+    include Inspec::DSL::RequireOverride
+
+    attr_accessor skip_file: untyped
+
+    attr_accessor profile_context: untyped
+
+    attr_accessor resources_dsl: untyped
+
+    attr_accessor conf: untyped
+
+    def initialize: (untyped profile_context, untyped resources_dsl, untyped backend, untyped conf, untyped dependencies, untyped require_loader, untyped skip_only_if_eval) -> void
+
+    alias profile_context_owner profile_context
+
+    def profile_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def title: (untyped arg) -> untyped
+
+    def profile_name: () -> untyped
+
+    def control: (untyped id, ?::Hash[untyped, untyped] opts) ?{ () -> untyped } -> untyped
+
+    alias rule control
+
+    def control_tags: (untyped inspec_rule) -> untyped
+
+    # Describe allows users to write rspec-like bare describe
+    # blocks without declaring an inclosing control. Here, we
+    # generate a control for them automatically and then execute
+    # the describe block in the context of that control.
+    #
+    def describe: (*untyped args) ?{ () -> untyped } -> untyped
+
+    def add_resource: (untyped name, untyped new_res) -> untyped
+
+    def add_resources: (untyped context) -> untyped
+
+    def add_subcontext: (untyped context) -> untyped
+
+    def register_control: (untyped control) ?{ () -> untyped } -> untyped
+
+    def input: (untyped input_name, ?::Hash[untyped, untyped] options) -> untyped
+
+    # Find the Input object, but don't collapse to a value.
+    # Will return nil on a miss.
+    def input_object: (untyped input_name) -> untyped
+
+    def attribute: (untyped name, ?::Hash[untyped, untyped] options) -> untyped
+
+    def skip_control: (untyped id) -> untyped
+
+    alias skip_rule skip_control
+
+    def only_if: (?untyped? message) ?{ () -> untyped } -> (nil | untyped)
+
+    # Check if the given control exist in the --tags option
+    def tag_exist_in_control_tags?: (untyped tag_ids) -> untyped
+
+    def tags_list_empty?: () -> untyped
+
+    # Check if the given control exist in the --controls option
+    def control_exist_in_controls_list?: (untyped id) -> untyped
+
+    # Returns true if configuration hash is empty or configuration hash does not have the list of controls that needs to be included
+    def controls_list_empty?: () -> untyped
+
+    private
+
+    def block_location: (untyped block, untyped alternate_caller) -> (untyped | ::String)
+
+    # Returns true if configuration hash is not empty and it contains the list of controls is not empty
+    def profile_config_exist?: () -> untyped
+
+    def profile_tag_config_exist?: () -> untyped
+  end
+end

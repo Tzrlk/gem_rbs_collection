@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class PodmanVolume
+    include Inspec::Utils::Podman
+
+    attr_reader volume_info: untyped
+
+    attr_reader volume_name: untyped
+
+    def initialize: (untyped volume_name) -> void
+
+    LABELS: ::Hash[::String, "Name" | "Driver" | "Mountpoint" | "CreatedAt" | "Labels" | "Scope" | "Options" | "MountCount" | "NeedsCopyUp" | "NeedsChown"]
+
+    def exist?: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def get_volume_info: () -> untyped
+  end
+end

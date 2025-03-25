@@ -1,0 +1,33 @@
+module Inspec
+  class IafFile
+    KEY_ALG: untyped
+
+    INSPEC_PROFILE_VERSION_1: "INSPEC-PROFILE-1"
+
+    INSPEC_PROFILE_VERSION_2: "INSPEC-PROFILE-2"
+
+    ARTIFACT_DIGEST: untyped
+
+    ARTIFACT_DIGEST_NAME: "SHA512"
+
+    VALID_PROFILE_VERSIONS: untyped
+
+    VALID_PROFILE_DIGESTS: untyped
+
+    def self.find_validation_key: (untyped keyname) -> untyped
+
+    def self.find_signing_key: (untyped keyname, ?untyped? config_dir) -> untyped
+
+    def self.fetch_validation_key_from_github: (untyped keyname) -> untyped
+
+    attr_reader key_name: untyped
+
+    attr_reader version: untyped
+
+    def initialize: (untyped path) -> void
+
+    def valid?: () -> untyped
+
+    def valid_header?: (untyped header) -> untyped
+  end
+end

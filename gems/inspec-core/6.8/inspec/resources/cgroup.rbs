@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class Cgroup
+    # Resource initialization.
+    def initialize: (untyped cgroup_name) -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    def method_missing: (untyped param) -> untyped
+
+    private
+
+    # Method to find cgget tool
+    def find_cgget_or_error: () -> untyped
+
+    # find the cgroup info of the query which is given as input by the user
+    def find_cgroup_info: (untyped query) -> (nil | untyped)
+
+    # find all the information about all relevant controllers for the current cgroup
+    def find_valid_queries: () -> untyped
+  end
+end

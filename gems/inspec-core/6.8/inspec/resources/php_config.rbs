@@ -1,0 +1,25 @@
+module Inspec::Resources
+  class PhpConfig
+    # Resource initialization.
+    attr_reader config_param: untyped
+
+    # Resource initialization.
+    attr_reader config_file_or_path: untyped
+
+    def initialize: (untyped config_param, ?::Hash[untyped, untyped] config_file_or_path) -> void
+
+    # Unique resource id
+    def resource_id: () -> untyped
+
+    # Resource appearance in test reports.
+    def to_s: () -> ::String
+
+    # Returns the value evaluated for the initialized config parameter
+    def value: () -> untyped
+
+    private
+
+    # Method to check if php is present or not on the system.
+    def find_utility_or_error: () -> untyped
+  end
+end

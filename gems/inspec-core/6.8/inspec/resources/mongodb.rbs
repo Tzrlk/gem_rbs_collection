@@ -1,0 +1,23 @@
+module Inspec::Resources
+  class Mongodb
+    attr_reader conf_path: untyped
+
+    def initialize: () -> void
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> "MongoDB"
+
+    private
+
+    def init_linux: () -> untyped
+
+    def init_macos: () -> untyped
+
+    def init_windows: () -> untyped
+
+    def version_from_dir: (untyped dir) -> untyped
+
+    def dir_to_version: (untyped dir) -> untyped
+  end
+end

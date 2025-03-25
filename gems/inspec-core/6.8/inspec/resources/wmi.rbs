@@ -1,0 +1,28 @@
+module Inspec::Resources
+  # This resource simplifies the access to wmi
+  # on CLI you would use:
+  # WMIC /NAMESPACE:\\root\rsop\computer PATH RSOP_SecuritySettingNumeric WHERE "KeyName = 'MinimumPasswordAge' And precedence=1" GET Setting
+  # We use Get-WmiObject via Powershell to retrieve all values.
+  class WMI
+    include ObjectTraverser
+
+    attr_accessor content: untyped
+
+    def initialize: (?untyped? wmiclass, ?untyped? opts) -> void
+
+    # returns nil, if not existent or value
+    def method_missing: (*untyped keys) -> untyped
+
+    def value: (untyped key) -> untyped
+
+    def params: () -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def lowercase_keys: (untyped content) -> untyped
+  end
+end

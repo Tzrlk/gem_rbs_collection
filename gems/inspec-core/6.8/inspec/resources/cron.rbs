@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class Cron < Crontab
+    def initialize: (?untyped? opts) -> void
+
+    def read_cron_contents: () -> untyped
+
+    def table: () -> untyped
+
+    def has_entry?: (untyped rule) -> untyped
+
+    def resource_id: () -> ::String
+
+    def to_s: () -> (::String | "cron for current user")
+  end
+end

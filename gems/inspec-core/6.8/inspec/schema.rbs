@@ -1,0 +1,45 @@
+module Inspec
+  class Schema
+    STATISTICS: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "number"] | ::Hash[::String, "object" | true | ::Hash[::String, ::Hash[::String, "number"] | ::Hash[::String, "object" | ::Hash[::String, ::Hash[::String, "number"]]]]]]]
+
+    PLATFORM: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "string" | true]]]
+
+    # Tags are open right, with simple key-value associations and not restrictions
+    TAGS: ::Hash[::String, "object"]
+
+    RESULT: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "number"] | ::Hash[::String, "string" | true] | ::Hash[::String, "object" | true]]]
+
+    REF: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "string" | true]]]
+
+    REFS: ::Hash[::String, "array" | untyped]
+
+    CONTROL: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, ::Array["string" | "null"]] | ::Hash[::String, ::Array["array"]] | ::Hash[::String, "number"] | untyped | ::Hash[::String, "object" | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "number"]]] | ::Hash[::String, "array" | untyped] | ::Hash[::String, "object" | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "boolean"]]]]]
+
+    CONTROL_ENHANCED_OUTCOME: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, ::Array["string" | "null"]] | ::Hash[::String, ::Array["array"]] | ::Hash[::String, "number"] | ::Hash[::String, ::Array["passed" | "failed" | "not_applicable" | "not_reviewed" | "error"] | untyped] | untyped | ::Hash[::String, "object" | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "number"]]] | ::Hash[::String, "array" | untyped] | ::Hash[::String, "object" | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "boolean"]]]]]
+
+    SUPPORTS: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string" | true]]]
+
+    CONTROL_GROUP: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "string" | true] | ::Hash[::String, "array" | ::Hash[::String, "string"]]]]
+
+    PROFILE: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "string" | true] | ::Hash[::String, "string" | false] | ::Hash[::String, "array" | untyped | true] | ::Hash[::String, "array" | untyped] | ::Hash[::String, "array"]]]
+
+    PROFILE_ENHANCED_OUTCOME: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, "string" | true] | ::Hash[::String, "string" | false] | ::Hash[::String, "array" | untyped | true] | ::Hash[::String, "array" | untyped] | ::Hash[::String, "array"]]]
+
+    EXEC_JSON: ::Hash[::String, "object" | false | ::Hash[::String, untyped | ::Hash[::String, "array" | untyped] | ::Hash[::String, "string"]]]
+
+    EXEC_JSON_ENHANCED_OUTCOME: ::Hash[::String, "object" | false | ::Hash[::String, untyped | ::Hash[::String, "array" | untyped] | ::Hash[::String, "string"]]]
+
+    MIN_CONTROL: ::Hash[::String, "object" | false | ::Hash[::String, ::Hash[::String, "string"] | ::Hash[::String, ::Array["string" | "null"]] | ::Hash[::String, "string" | true] | ::Hash[::String, "object" | true]]]
+
+    EXEC_JSONMIN: ::Hash[::String, "object" | false | ::Hash[::String, untyped | ::Hash[::String, "string"] | ::Hash[::String, "array" | untyped]]]
+
+    # using a proc here so we can lazy load it when we need
+    PLATFORMS: untyped
+
+    LIST: ::Hash[::String, untyped]
+
+    def self.names: () -> untyped
+
+    def self.json: (untyped name) -> untyped
+  end
+end

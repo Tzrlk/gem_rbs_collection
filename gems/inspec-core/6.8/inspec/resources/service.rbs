@@ -1,0 +1,274 @@
+module Inspec::Resources
+  class Runlevels < Hash
+    attr_accessor owner: untyped
+
+    def self.from_hash: (untyped owner, ?::Hash[untyped, untyped] hash, ?untyped? filter) -> untyped
+
+    def initialize: (untyped owner, ?bool default) -> void
+
+    def filter: (untyped f) -> untyped
+
+    # Check if all runlevels are enabled
+    #
+    # @return [boolean] true if all runlevels are enabled
+    def enabled?: () -> untyped
+
+    # Check if all runlevels are disabled
+    #
+    # @return [boolean] true if all runlevels are disabled
+    def disabled?: () -> untyped
+
+    def to_s: () -> ::String
+  end
+
+  # We detect the init system for each operating system, based on the operating
+  # system.
+  #
+  # Fedora 15 : systemd
+  # RedHat 7 : systemd
+  # Ubuntu 15.04 : systemd
+  # Ubuntu < 15.04 : upstart
+  #
+  # TODO: extend the logic to detect the running init system, independently of OS
+  class Service
+    attr_reader service_ctl: untyped
+
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def select_service_mgmt: () -> untyped
+
+    private
+
+    def info: () -> (nil | untyped)
+
+    public
+
+    # verifies if the service is enabled
+    def enabled?: (?untyped? _level) -> (false | untyped)
+
+    def params: () -> (::Hash[untyped, untyped] | untyped)
+
+    # verifies the service is registered
+    def installed?: (?untyped? _name, ?untyped? _version) -> (false | untyped)
+
+    # verifies the service is currently running
+    def running?: (?untyped? _under) -> (false | untyped)
+
+    # get all runlevels that are available and their configuration
+    def runlevels: (*untyped args) -> untyped
+
+    # returns the service type from info
+    def type: () -> (nil | untyped)
+
+    # returns the service name from info
+    def name: () -> untyped
+
+    # returns the service description from info
+    def description: () -> (nil | untyped)
+
+    # returns the service start up mode from info
+    def startmode: () -> (nil | untyped)
+
+    # returns the service's user from info
+    def startname: () -> (nil | untyped)
+
+    # matcher equivalent to startmode property; compares start-up mode
+    # supported only on windows.
+    def has_start_mode?: (untyped mode) -> untyped
+
+    # matcher to check if the service is monitored by the given monitoring tool/software
+    def monitored_by?: (untyped monitoring_tool) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+  end
+
+  class ServiceManager
+    attr_reader inspec: untyped
+
+    attr_reader service_ctl: untyped
+
+    def initialize: (untyped inspec, ?untyped? service_ctl) -> void
+  end
+
+  # @see: http://www.freedesktop.org/software/systemd/man/systemctl.html
+  # @see: http://www.freedesktop.org/software/systemd/man/systemd-system.conf.html
+  class Systemd < ServiceManager
+    def initialize: (untyped inspec, ?untyped? service_ctl) -> void
+
+    def is_enabled?: (untyped service_name) -> (true | untyped | false)
+
+    def is_active?: (untyped service_name) -> untyped
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: untyped, startname: untyped, installed: untyped, running: untyped, enabled: untyped, type: "systemd", params: untyped })
+  end
+
+  # AIX services
+  class SrcMstr < ServiceManager
+    attr_reader name: untyped
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, type: "srcmstr" })
+
+    private
+
+    def status?: () -> (nil | untyped)
+
+    def enabled?: () -> untyped
+
+    def enabled_rc_tcpip?: () -> untyped
+
+    def enabled_inittab?: () -> untyped
+  end
+
+  # @see: http://upstart.ubuntu.com
+  class Upstart < ServiceManager
+    include FileReader
+
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (untyped | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, type: "upstart" })
+
+    private
+
+    def info_enabled: (untyped service_name) -> untyped
+
+    def version: () -> untyped
+  end
+
+  class SysV < ServiceManager
+    RUNLEVELS: { 0 => false, 1 => false, 2 => false, 3 => false, 4 => false, 5 => false, 6 => false }
+
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, runlevels: untyped, type: "sysv" })
+  end
+
+  # @see: https://www.freebsd.org/doc/en/articles/linux-users/startup.html
+  # @see: https://www.freebsd.org/cgi/man.cgi?query=rc.conf&sektion=5
+  # @see: https://www.freebsd.org/cgi/man.cgi?query=rc&apropos=0&sektion=8&manpath=FreeBSD+9.3-RELEASE&arch=default&format=html
+  class BSDInit < ServiceManager
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, type: "bsd-init" })
+  end
+
+  # @see: https://www.freebsd.org/doc/en/articles/linux-users/startup.html
+  # @see: https://www.freebsd.org/cgi/man.cgi?query=rc.conf&sektion=5
+  # @see: https://www.freebsd.org/cgi/man.cgi?query=rc&apropos=0&sektion=8&manpath=FreeBSD+10.0-RELEASE&arch=default&format=html
+  class FreeBSD10Init < ServiceManager
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, type: "bsd-init" })
+  end
+
+  class Runit < ServiceManager
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    # rubocop:disable Style/DoubleNegation
+    def info: (untyped service_name) -> { name: untyped, description: nil, installed: untyped, running: untyped, enabled: untyped, type: "runit" }
+  end
+
+  # MacOS / Darwin
+  # new launctl on macos 10.10
+  class LaunchCtl < ServiceManager
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: nil, installed: true, running: untyped, enabled: untyped, type: "darwin" })
+  end
+
+  # Determine the service state from Windows
+  # Uses Powershell to retrieve the information
+  class WindowsSrv < ServiceManager
+    # Determine service details
+    # PS: Get-Service -Name 'dhcp'| Select-Object -Property Name, DisplayName, Status | ConvertTo-Json
+    # {
+    #     "Name":  "dhcp",
+    #     "DisplayName":  "DHCP Client",
+    #     "Status":  4
+    # }
+    #
+    # Until StartMode is not added to Get-Service, we need to do a workaround
+    # @see: https://connect.microsoft.com/PowerShell/feedback/details/424948/i-would-like-to-see-the-property-starttype-added-to-get-services
+    # Also see: https://msdn.microsoft.com/en-us/library/aa384896(v=vs.85).aspx
+    # Use the following powershell to determine the start mode
+    # PS: Get-WmiObject -Class Win32_Service | Where-Object {$_.Name -eq $name -or $_.DisplayName -eq $name} | Select-Object -Prop
+    # erty Name, StartMode, State, Status, StartName | ConvertTo-Json
+    # {
+    #     "Name":  "Dhcp",
+    #     "StartMode":  "Auto",
+    #     "State":  "Running",
+    #     "Status":  "OK",
+    #     "StartName":  "LocalSystem"
+    # }
+    #
+    # Windows Services have the following status code:
+    # @see: https://msdn.microsoft.com/en-us/library/windows/desktop/ms685996(v=vs.85).aspx
+    # - 1: Stopped
+    # - 2: Starting
+    # - 3: Stopping
+    # - 4: Running
+    # - 5: Continue Pending
+    # - 6: Pause Pending
+    # - 7: Paused
+    def info: (untyped service_name) -> (nil | { name: untyped, description: untyped, installed: true, running: untyped, enabled: untyped, startmode: untyped, startname: untyped, type: "windows" })
+
+    private
+
+    # detect if service is enabled
+    def service_enabled?: (untyped service) -> untyped
+
+    # detect if service is running
+    def service_running?: (untyped service) -> untyped
+  end
+
+  # Solaris services
+  class Svcs < ServiceManager
+    def initialize: (untyped service_name, ?untyped? service_ctl) -> void
+
+    def info: (untyped service_name) -> (nil | { name: untyped, description: untyped, installed: untyped, running: untyped, enabled: untyped, type: "svcs" })
+  end
+
+  class SystemdService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  class UpstartService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  class SysVService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  class BSDService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  class LaunchdService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  class RunitService < Service
+    def select_service_mgmt: () -> untyped
+  end
+
+  # Helper class for monitored_by matcher
+  class MonitoringTool
+    attr_reader inspec: untyped
+
+    attr_reader service_name: untyped
+
+    def initialize: (untyped inspec, untyped service_name) -> void
+
+    def find_utility_or_error: (untyped utility_name) -> untyped
+  end
+
+  class Monit < MonitoringTool
+    def is_service_monitored?: () -> untyped
+  end
+
+  class God < MonitoringTool
+    def is_service_monitored?: () -> untyped
+  end
+end

@@ -1,0 +1,3 @@
+class Object
+  def configure_licensing_config_for_kitchen: (?::Hash[untyped, untyped] opts) -> untyped
+end

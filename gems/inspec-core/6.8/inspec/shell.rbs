@@ -1,0 +1,26 @@
+module Inspec
+  # A pry based shell for inspec. Given a runner (with a configured backend and
+  # all that jazz), this shell will produce a pry shell from which you can run
+  # inspec/ruby commands that will be run within the context of the runner.
+  class Shell
+    def initialize: (untyped runner) -> void
+
+    def start: () -> untyped
+
+    def configure_pry: () -> untyped
+
+    def readline_ignore: (untyped code) -> ::String
+
+    def mark: (untyped x) -> ::String
+
+    def intro: () -> untyped
+
+    def print_target_info: () -> untyped
+
+    def help: (?untyped? topic) -> untyped
+
+    def resources: () -> untyped
+
+    def print_matchers_help: () -> untyped
+  end
+end

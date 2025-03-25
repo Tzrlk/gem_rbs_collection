@@ -1,0 +1,31 @@
+module Inspec::Resources
+  class X509PrivateKey
+    # Resource initialization.
+    attr_reader secret_key_path: untyped
+
+    # Resource initialization.
+    attr_reader passphrase: untyped
+
+    # Resource initialization.
+    attr_reader openssl_utility: untyped
+
+    def initialize: (untyped secret_key_path, ?untyped? passphrase) -> void
+
+    # Resource appearance in test reports.
+    def to_s: () -> "x509_private_key"
+
+    # Matcher to check if the given key is valid.
+    def valid?: () -> untyped
+
+    # Matcher to check if the given key is encrypted.
+    def encrypted?: () -> untyped
+
+    # Matcher to verify if the private key maatches the certificate
+    def has_matching_certificate?: (untyped cert_file_or_path) -> untyped
+
+    private
+
+    # This resource requires openssl to be available on the system
+    def check_openssl_or_error: () -> untyped
+  end
+end

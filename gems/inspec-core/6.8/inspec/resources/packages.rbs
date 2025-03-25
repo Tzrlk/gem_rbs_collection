@@ -1,0 +1,36 @@
+module Inspec::Resources
+  class Packages
+    def initialize: (untyped pattern) -> void
+
+    def to_s: () -> ::String
+
+    private
+
+    def pattern_regexp: (untyped p) -> untyped
+
+    def filtered_packages: () -> untyped
+  end
+
+  class PkgsManagement
+    PackageStruct: untyped
+
+    attr_reader inspec: untyped
+
+    def initialize: (untyped inspec) -> void
+  end
+
+  # Debian / Ubuntu
+  class Debs < PkgsManagement
+    def build_package_list: () -> (::Array[untyped] | untyped)
+  end
+
+  # RedHat family
+  class Rpms < PkgsManagement
+    def build_package_list: () -> (::Array[untyped] | untyped)
+  end
+
+  # RedHat family
+  class AlpinePkgs < PkgsManagement
+    def build_package_list: () -> (::Array[untyped] | untyped)
+  end
+end

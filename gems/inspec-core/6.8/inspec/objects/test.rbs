@@ -1,0 +1,39 @@
+module Inspec
+  class Test
+    attr_accessor qualifier: untyped
+
+    attr_accessor matcher: untyped
+
+    attr_accessor expectation: untyped
+
+    attr_accessor skip: untyped
+
+    attr_accessor negated: untyped
+
+    attr_accessor variables: untyped
+
+    attr_accessor only_if: untyped
+
+    include RubyHelper
+
+    def initialize: () -> void
+
+    def negate!: () -> untyped
+
+    def to_ruby: () -> untyped
+
+    def to_hash: () -> { qualifier: untyped, matcher: untyped, expectation: untyped, skip: untyped, negated: untyped }
+
+    def resource: () -> untyped
+
+    def remove_expectation: () -> untyped
+
+    private
+
+    def describe_chain: () -> (nil | ::Array[untyped])
+
+    def rb_describe: () -> untyped
+
+    def rb_skip: () -> untyped
+  end
+end

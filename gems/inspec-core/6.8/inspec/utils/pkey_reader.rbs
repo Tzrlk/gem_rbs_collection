@@ -1,0 +1,5 @@
+module PkeyReader
+  def read_pkey: (untyped filecontent, untyped passphrase) -> untyped
+
+  def raise_if_unset: (untyped passphrase) -> (untyped | nil)
+end

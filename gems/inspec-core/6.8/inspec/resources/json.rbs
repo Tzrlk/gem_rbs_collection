@@ -1,0 +1,42 @@
+module Inspec::Resources
+  class JsonConfig
+    include ObjectTraverser
+
+    include FileReader
+
+    # make params readable
+    attr_reader params: untyped
+
+    # make params readable
+    attr_reader raw_content: untyped
+
+    def initialize: (untyped opts) -> void
+
+    # Shorthand to retrieve a parameter name via `#its`.
+    # Example: describe json('file') { its('paramX') { should eq 'Y' } }
+    #
+    # @param [String] name name of the field to retrieve
+    # @return [Object] the value stored at this position
+    def method_missing: (*untyped keys) -> untyped
+
+    def value: (untyped key) -> untyped
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> ::String
+
+    private
+
+    def parse: (untyped content) -> untyped
+
+    def load_raw_content: (untyped opts) -> untyped
+
+    def load_raw_from_file: (untyped path) -> untyped
+
+    def load_raw_from_command: (untyped command) -> untyped
+
+    # for resources the subclass JsonConfig, this allows specification of the resource
+    # base name in each subclass so we can build a good to_s method
+    def resource_base_name: () -> "JSON"
+  end
+end

@@ -1,0 +1,32 @@
+module InspecPlugins::JUnitReporter
+  class Reporter
+    def self.run_data_schema_constraints: () -> "~> 0.0"
+
+    def render: () -> untyped
+
+    def count_profile_tests: (untyped profile) -> untyped
+
+    def count_profile_failed_tests: (untyped profile) -> untyped
+
+    def count_profile_skipped_tests: (untyped profile) -> untyped
+
+    def count_profile_errored_tests: (untyped profile) -> untyped
+  end
+
+  # This is the "Legacy" JUnit reporter. It produces XML which is not
+  # correct according to the JUnit standard. It is retained for backwards
+  # compatibility.
+  class ReporterV1 < Reporter
+    def build_profile_xml: (untyped profile, untyped _idx) -> untyped
+
+    def build_result_xml: (untyped profile_name, untyped control, untyped result) -> untyped
+  end
+
+  # This is the "Corrected" JUnit reporter. It produces XML which is intended
+  # to be valid. It should be used whenever possible.
+  class ReporterV2 < Reporter
+    def build_profile_xml: (untyped profile, untyped idx) -> untyped
+
+    def build_result_xml: (untyped profile_name, untyped control, untyped result) -> untyped
+  end
+end

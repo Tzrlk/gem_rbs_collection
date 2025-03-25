@@ -1,0 +1,26 @@
+module Inspec
+  module Plugins
+    class SourceReader < PluginRegistry::Plugin
+      def self.plugin_registry: () -> untyped
+
+      # Retrieve this profile's metadata.
+      #
+      # @return [Inspec::Metadata] profile metadata
+      def metadata: () -> untyped
+
+      # Retrieve this profile's tests
+      #
+      # "tests" here refers to a test file. Individual controls and anonymous
+      # tests are later extracted from the raw contents of a test file. The map
+      # her simply maps from a test file name to the file contents.
+      #
+      # @return [Hash] Collection with references pointing to test contents
+      def tests: () -> untyped
+
+      # Retrieve this profile's libraries
+      #
+      # @return [Hash] Collection with references pointing to library contents
+      def libraries: () -> untyped
+    end
+  end
+end

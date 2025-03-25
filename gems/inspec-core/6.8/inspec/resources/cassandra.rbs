@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class Cassandra
+    attr_reader conf_path: untyped
+
+    def initialize: () -> void
+
+    def to_s: () -> "CassandraDB"
+
+    private
+
+    def determine_conf_dir_and_path_in_linux: () -> untyped
+
+    def determine_conf_dir_and_path_in_windows: () -> untyped
+  end
+end

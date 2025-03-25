@@ -1,0 +1,27 @@
+module Inspec::Resources
+  class Lines
+    attr_reader output: untyped
+
+    attr_reader exit_status: untyped
+
+    def initialize: (untyped raw, untyped desc, untyped exit_status) -> void
+
+    def lines: () -> untyped
+
+    def to_s: () -> untyped
+  end
+
+  class PostgresSession
+    def initialize: (untyped user, untyped pass, ?untyped? host, ?untyped? port, ?untyped? socket_path) -> void
+
+    def query: (untyped query, ?untyped db) -> untyped
+
+    def resource_id: () -> ::String
+
+    private
+
+    def escaped_query: (untyped query) -> untyped
+
+    def create_psql_cmd: (untyped query, ?untyped db) -> untyped
+  end
+end

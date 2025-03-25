@@ -1,0 +1,6 @@
+module InspecPlugins
+  module JsonMinReporter
+    class Plugin
+    end
+  end
+end

@@ -1,0 +1,46 @@
+module Inspec::Resources
+  class Yum
+    # returns all repositories
+    # works as following:
+    # search for Repo-id
+    #   parse data in hashmap
+    #   store data in object
+    # until \n
+    def repositories: () -> untyped
+
+    def repos: () -> untyped
+
+    def repo: (untyped repo) -> untyped
+
+    # alias for yum.repo('reponame')
+    def method_missing: (untyped name) -> (untyped | nil)
+
+    def resource_id: () -> "Yum repository"
+
+    def to_s: () -> "Yum Repository"
+
+    private
+
+    # Removes lefthand and righthand whitespace
+    def strip: (untyped value) -> untyped
+
+    # Optimize the key value
+    def repo_key: (untyped key) -> untyped
+  end
+
+  class YumRepo
+    def initialize: (untyped yum, untyped reponame) -> void
+
+    # extracts the shortname from a repo id
+    # e.g. extras/7/x86_64 -> extras
+    def shortname: (untyped id) -> untyped
+
+    def info: () -> untyped
+
+    def exist?: () -> untyped
+
+    def enabled?: () -> (false | untyped)
+
+    def to_s: () -> ::String
+  end
+end

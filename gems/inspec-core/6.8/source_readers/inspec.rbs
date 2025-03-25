@@ -1,0 +1,41 @@
+module SourceReaders
+  class InspecReader
+    def self.resolve: (untyped target) -> (untyped | nil)
+
+    attr_reader metadata: untyped
+
+    attr_reader metadata_src: untyped
+
+    attr_reader tests: untyped
+
+    attr_reader libraries: untyped
+
+    attr_reader data_files: untyped
+
+    attr_reader target: untyped
+
+    attr_reader readme: untyped
+
+    # This create a new instance of an InSpec profile source reader
+    #
+    # @param [FileProvider] target An instance of a FileProvider object that can list files and read them
+    # @param [String] metadata_source eg. inspec.yml or metadata.rb
+    def initialize: (untyped target, untyped metadata_source) -> void
+
+    private
+
+    def load_metadata: (untyped metadata_source) -> untyped
+
+    def find_all: (untyped regexp) -> untyped
+
+    def load_all: (untyped regexp) -> untyped
+
+    def load_tests: () -> untyped
+
+    def load_libs: () -> untyped
+
+    def load_data_files: () -> untyped
+
+    def load_readme: () -> untyped
+  end
+end

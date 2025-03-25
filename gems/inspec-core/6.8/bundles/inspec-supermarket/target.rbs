@@ -1,0 +1,8 @@
+# InSpec Target Helper for Supermarket
+module Supermarket
+  class Fetcher
+    def self.resolve: (untyped target, ?::Hash[untyped, untyped] opts) -> untyped
+
+    def to_s: () -> "Chef Compliance Profile Loader"
+  end
+end

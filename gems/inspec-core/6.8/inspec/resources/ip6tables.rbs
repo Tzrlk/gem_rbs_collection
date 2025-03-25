@@ -1,0 +1,35 @@
+# Usage:
+# describe ip6tables do
+#   it { should have_rule('-P INPUT ACCEPT') }
+# end
+#
+# The following serverspec sytax is not implemented:
+# describe ip6tables do
+#   it { should have_rule('-P INPUT ACCEPT').with_table('mangle').with_chain('INPUT') }
+# end
+# Please use the new sytax:
+# describe ip6tables(table:'mangle', chain: 'input') do
+#   it { should have_rule('-P INPUT ACCEPT') }
+# end
+#
+# Note: Docker containers normally do not have ip6tables installed
+#
+# @see http://ipset.netfilter.org/ip6tables.man.html
+# @see http://ipset.netfilter.org/ip6tables.man.html
+module Inspec::Resources
+  class Ip6Tables
+    def initialize: (?::Hash[untyped, untyped] params) -> void
+
+    def has_rule?: (?untyped? rule, ?untyped? _table, ?untyped? _chain) -> untyped
+
+    def retrieve_rules: () -> (untyped | ::Array[untyped])
+
+    def resource_id: () -> untyped
+
+    def to_s: () -> untyped
+
+    private
+
+    def find_ip6tables_or_error: () -> untyped
+  end
+end

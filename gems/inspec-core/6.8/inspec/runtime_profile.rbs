@@ -1,0 +1,13 @@
+module Inspec
+  class RuntimeProfile
+    attr_reader files: untyped
+
+    def initialize: (untyped profile) -> void
+
+    # Retrieve a profile file's contents
+    #
+    # @param name [String] the name of the file
+    # @return [String] contents of the file of RuntimeError if missing
+    def file: (untyped name) -> untyped
+  end
+end

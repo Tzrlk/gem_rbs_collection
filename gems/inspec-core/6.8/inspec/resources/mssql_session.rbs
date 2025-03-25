@@ -1,0 +1,39 @@
+module Inspec::Resources
+  # STABILITY: Experimental
+  # This resource needs further testing and refinement
+  #
+  # This requires the `sqlcmd` tool available on platform
+  # @see https://docs.microsoft.com/en-us/sql/relational-databases/scripting/sqlcmd-use-the-utility
+  # @see https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd
+  class MssqlSession
+    attr_reader user: untyped
+
+    attr_reader password: untyped
+
+    attr_reader host: untyped
+
+    attr_reader port: untyped
+
+    attr_reader instance: untyped
+
+    attr_reader local_mode: untyped
+
+    attr_reader db_name: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def query: (untyped q) -> untyped
+
+    def resource_id: () -> ::String
+
+    def to_s: () -> "MSSQL session"
+
+    private
+
+    def local_mode?: () -> untyped
+
+    def test_connection: () -> untyped
+
+    def parse_csv_result: (untyped stdout) -> untyped
+  end
+end

@@ -1,0 +1,15 @@
+module Inspec::Resources
+  class Ibmdb2Conf
+    attr_reader output: untyped
+
+    def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+    def resource_id: () -> ("ibmdb2_conf" | ::String)
+
+    def to_s: () -> "IBM Db2 Conf"
+
+    private
+
+    def run_command: () -> untyped
+  end
+end
