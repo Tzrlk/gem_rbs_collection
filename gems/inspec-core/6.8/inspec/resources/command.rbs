@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Cmd
+  class Cmd < Inspec::Resource
     attr_reader command: untyped
 
     def initialize: (untyped cmd, ?::Hash[untyped, untyped] options) -> void

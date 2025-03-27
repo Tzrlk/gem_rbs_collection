@@ -1,41 +1,50 @@
 module Inspec::Resources
-  class NetworkInterface
+
+  class NetworkInterface < Inspec::Resource
+
     def initialize: (untyped iface) -> void
 
-    def exists?: () -> untyped
+    def exists?: () -> bool
 
-    def up?: () -> untyped
+    def up?: () -> bool
 
-    def name: () -> untyped
+    def name: () -> String
 
     # returns link speed in Mbits/sec
-    def speed: () -> untyped
+    def speed: () -> Integer?
 
-    def ipv4_address?: () -> untyped
+    def ipv4_address?: () -> bool
 
-    def ipv6_address?: () -> untyped
+    def ipv6_address?: () -> bool
 
-    def ipv4_address: () -> untyped
+    def ipv4_address: () -> String?
 
-    def ipv4_addresses: () -> untyped
+    def ipv4_addresses: () -> Array[String]
 
-    def ipv6_address: () -> untyped
+    def ipv6_address: () -> String?
 
-    def ipv6_addresses: () -> untyped
+    def ipv6_addresses: () -> Array[String]
 
-    def ipv4_addresses_netmask: () -> untyped
+    def ipv4_addresses_netmask: () -> Array[String]
 
-    def ipv4_cidrs: () -> untyped
+    def ipv4_cidrs: () -> Array[String]
 
-    def ipv6_cidrs: () -> untyped
+    def ipv6_cidrs: () -> Array[String]
 
-    def resource_id: () -> untyped
+    def resource_id: () -> ( String | "Interface" )
 
     def to_s: () -> ::String
 
     private
 
-    def interface_info: () -> untyped
+    def interface_info: () -> ( {} | {
+        name:           String,
+        up:             bool,
+        speed?:         Integer?,
+        ipv4_addresses: Array[String],
+        ipv6_addresses: Array[String],
+      } )
+
   end
 
   class InterfaceInfo
@@ -44,25 +53,51 @@ module Inspec::Resources
     attr_reader inspec: untyped
 
     def initialize: (untyped inspec) -> void
+
   end
 
   class BsdInterface < InterfaceInfo
-    def interface_info: (untyped iface) -> (nil | untyped)
+    def interface_info: (String iface) -> {
+        name: String,
+        up:             bool,
+        speed?:         Integer,
+        ipv4_addresses: Array[String],
+        ipv6_addresses: Array[String],
+      }?
   end
 
   class LinuxInterface < InterfaceInfo
-    def interface_info: (untyped iface) -> (nil | { name: untyped, up: untyped, speed: untyped, :ipv4_addresses => untyped, :ipv6_addresses => untyped })
+
+    def interface_info: (String iface) -> {
+        name:           String,
+        up:             bool,
+        speed:          Integer?,
+        ipv4_addresses: Array[String],
+        ipv6_addresses: Array[String],
+      }?
 
     private
 
-    def addresses: (untyped iface) -> untyped
+    def addresses: (String iface) -> {
+        'inet6' => Array[String],
+        'inet'  => Array[String],
+      }
+
   end
 
   class WindowsInterface < InterfaceInfo
-    def interface_info: (untyped iface) -> (nil | untyped)
+
+    def interface_info: (String iface) -> {
+        name:           String,
+        up:             bool,
+        speed:          Numeric,
+        ipv4_addresses: Array[String],
+        ipv6_addresses: Array[String],
+      }
 
     private
 
-    def addresses_for_proto: (untyped all_addresses, untyped iface, untyped proto) -> untyped
+    def addresses_for_proto: (Array[Hash[String,String]] all_addresses, String iface, String proto) -> Array[String]
+
   end
 end

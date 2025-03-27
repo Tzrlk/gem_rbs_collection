@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class ChronyConf
+  class ChronyConf < Inspec::Resource
     include FileReader
 
     def initialize: (?untyped? path) -> void

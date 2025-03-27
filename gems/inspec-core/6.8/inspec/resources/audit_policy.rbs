@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class AuditPolicy
+  class AuditPolicy < Inspec::Resource
     def method_missing: (untyped method) -> untyped
 
     # Since this resource does not have any unique identifier for resource, sending the Auditpol command as UUID.

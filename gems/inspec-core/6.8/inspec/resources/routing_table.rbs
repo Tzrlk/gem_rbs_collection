@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Routingtable
+  class Routingtable < Inspec::Resource
     def initialize: () -> void
 
     # resource appearance in test reports.

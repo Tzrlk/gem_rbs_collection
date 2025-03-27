@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class CranPackage
+  class CranPackage < Inspec::Resource
     def initialize: (untyped package_name) -> void
 
     def info: () -> untyped

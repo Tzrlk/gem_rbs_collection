@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class FirewallD
+  class FirewallD < Inspec::Resource
     attr_reader params: untyped
 
     def initialize: () -> void

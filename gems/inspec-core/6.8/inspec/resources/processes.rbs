@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Processes
+  class Processes < Inspec::Resource
     def initialize: (?untyped grep) -> void
 
     def exists?: () -> untyped

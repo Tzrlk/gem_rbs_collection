@@ -11,7 +11,7 @@ module Inspec::Resources
     def to_s: () -> untyped
   end
 
-  class PostgresSession
+  class PostgresSession < Inspec::Resource
     def initialize: (untyped user, untyped pass, ?untyped? host, ?untyped? port, ?untyped? socket_path) -> void
 
     def query: (untyped query, ?untyped db) -> untyped

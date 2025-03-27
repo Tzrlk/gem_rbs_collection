@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class RegistryKey
+  class RegistryKey < Inspec::Resource
     def initialize: (untyped name, ?untyped? reg_key) -> void
 
     def exists?: () -> untyped

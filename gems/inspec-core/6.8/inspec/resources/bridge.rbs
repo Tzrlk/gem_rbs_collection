@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Bridge
+  class Bridge < Inspec::Resource
     def initialize: (untyped bridge_name) -> void
 
     def exists?: () -> untyped

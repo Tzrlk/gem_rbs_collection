@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class AuditDaemonConf
+  class AuditDaemonConf < Inspec::Resource
     include FileReader
 
     attr_reader conf_path: untyped

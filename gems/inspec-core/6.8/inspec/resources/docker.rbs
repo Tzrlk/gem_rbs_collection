@@ -27,7 +27,7 @@ module Inspec::Resources
   # For compatability with Serverspec we also offer the following resouses:
   # - docker_container
   # - docker_image
-  class Docker
+  class Docker < Inspec::Resource
     def containers: () -> untyped
 
     def images: () -> untyped

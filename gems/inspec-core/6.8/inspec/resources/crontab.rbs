@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Crontab
+  class Crontab < Inspec::Resource
     attr_reader params: untyped
 
     include Inspec::Utils::CommentParser

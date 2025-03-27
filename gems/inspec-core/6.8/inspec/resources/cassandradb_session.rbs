@@ -9,7 +9,7 @@ module Inspec::Resources
     def to_s: () -> untyped
   end
 
-  class CassandradbSession
+  class CassandradbSession < Inspec::Resource
     attr_reader user: untyped
 
     attr_reader password: untyped

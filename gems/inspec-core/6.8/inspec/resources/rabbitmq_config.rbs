@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class RabbitmqConfig
+  class RabbitmqConfig < Inspec::Resource
     include FileReader
 
     def initialize: (?untyped? conf_path) -> void

@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class AptRepository
+  class AptRepository < Inspec::Resource
     def initialize: (untyped ppa_name) -> void
 
     def exists?: () -> untyped

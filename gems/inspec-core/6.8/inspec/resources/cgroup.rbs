@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class Cgroup
+  class Cgroup < Inspec::Resource
     # Resource initialization.
     def initialize: (untyped cgroup_name) -> void
 

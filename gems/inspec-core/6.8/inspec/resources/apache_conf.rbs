@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class ApacheConf
+  class ApacheConf < Inspec::Resource
     include FindFiles
 
     include FileReader

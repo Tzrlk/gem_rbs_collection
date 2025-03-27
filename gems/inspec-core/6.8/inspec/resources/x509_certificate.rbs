@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class X509CertificateResource
+  class X509CertificateResource < Inspec::Resource
     include FileReader
 
     # @see https://tools.ietf.org/html/rfc5280#page-23

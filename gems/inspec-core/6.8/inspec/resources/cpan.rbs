@@ -1,5 +1,5 @@
 module Inspec::Resources
-  class CpanPackage
+  class CpanPackage < Inspec::Resource
     def initialize: (untyped package_name, ?untyped? perl_lib_path) -> void
 
     def info: () -> untyped
