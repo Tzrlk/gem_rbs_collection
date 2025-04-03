@@ -1,0 +1,121 @@
+class Inifile
+	include Enumerable[untyped] # TODO
+
+	class Error < StandardError
+	end
+
+	VERSION: '3.0.0'
+
+	def self.load: (String, {
+			comment?: String,
+			parameter?: String,
+			encoding?: String,
+			default?: String,
+		}) -> Inifile
+
+	attr_accessor filename: String
+
+	attr_accessor encoding: String
+
+	def initialize: ({
+			content?:   String | Hash[String, untyped],
+			comment?:   String,
+			parameter?: String,
+			encoding?:  String,
+			default?:   String,
+			filename?:  String,
+		}) -> void
+
+	def write: ({
+			filename?: String,
+			encoding?: String,
+		}) -> self
+	alias save write
+
+	def read: ({
+			filename?: String,
+			encoding?: String,
+		}) -> self
+	alias restore read
+
+	def to_s: () -> String
+
+	def to_h: () -> Hash[String, Hash[String, String]]
+
+	def merge: (Inifile) -> self
+
+	def merge!: (Inifile) -> self
+
+	def each
+		: () -> void
+		| ()
+			{ (section: String, parameter: String, value: String) -> void }
+			-> self
+
+	def each_section
+		: () -> void
+		| ()
+			{ (section: String) -> void }
+			-> self
+
+	def delete_section: (String) -> Hash[String, String]
+
+	def []: (String) -> Hash[String, String]
+
+	def []=: (String, Hash[String, String]) -> Hash[String, String]
+
+	def match: (Regexp) -> Hash[String, Hash[String, String]]
+
+	def has_section?: (String) -> bool
+
+	def sections: () -> Array[String]
+
+	def freeze: () -> self
+
+	def taint: () -> self
+
+	def dup: () -> Inifile
+
+	def clone: () -> Inifile
+
+	def eql?: (Inifile) -> bool
+	alias == eql?
+
+	def escape_value: (String) -> String
+
+	def parse: (String) -> self
+
+	class Parser
+
+		attr_writer section: Hash[String, String]
+		attr_accessor property: String
+		attr_accessor value: String
+
+		def initialize
+			: (Hash[String, Hash[String, String]], String, String, String) -> void
+
+		def leading_quote?: () -> bool
+
+		def parse_value: (String) -> bool
+
+		def parse
+			: (?nil) -> void
+			| (String) -> nil
+
+		def process_property: () -> void
+
+		def section: () -> Hash[String, String]
+
+		def error: (?String) -> void
+
+		def typecast
+			: ('true') -> true
+			| ('false') -> false
+			| ('') -> nil
+			| (String) -> (String|Integer|Float)
+
+		def unescape_value: (String) -> String
+
+	end
+
+end
