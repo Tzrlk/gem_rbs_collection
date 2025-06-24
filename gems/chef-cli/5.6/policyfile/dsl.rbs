@@ -1,0 +1,59 @@
+module ChefCLI
+	module Policyfile
+		class DSL
+
+			@name: String?
+
+			# TODO: initialize
+
+			def name
+				: (String) -> String
+				| (String?) -> String?
+				| () -> String?
+
+			# TODO: run_list
+			# TODO: named_run_list
+
+			type cookbook_source
+				: NullCookbookSource
+				| CommunityCookbookSource
+
+			# TODO: flesh-out with the actual inputs
+			def default_source
+				: (Symbol, untyped) ?{ (cookbook_source) -> void } -> Array[cookbook_source]
+				| -> Array[untyped]
+
+			type cookbook_opts = {
+					?path: String,
+					?git: String,
+					?branch: String,
+					?tag: String,
+					?github: String,
+				}
+
+			def cookbook
+				: (String, String, cookbook_opts) -> void
+				| (String, cookbook_opts) -> void
+				| (String, String) -> void
+				| (String) -> void
+
+			# TODO include_policy
+
+			def metadata
+				: -> void
+
+			def default
+				: -> Chef::Node::VividMash
+
+			def override
+				: -> Chef::Node::VividMash
+
+			# TODO: eval_policyfile
+
+		private
+
+			# TODO: private methods.
+
+		end
+	end
+end

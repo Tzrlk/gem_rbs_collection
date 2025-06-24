@@ -1,0 +1,50 @@
+module ChefCLI
+	module Policyfile
+		class CommunityCookbookSource
+
+			attr_reader uri: String
+			attr_reader preferred_cookbooks: Array[String]
+
+			def initialize
+				: (String?) { (self) -> void } -> void
+				| (String?) -> void
+				| () { (self) -> void } -> void
+
+			def default_source_args
+				: -> [ :supermarket, String ]
+
+			def preferred_for
+				: (*String) -> Array[String]
+
+			def preferred_source_for?
+				: (String) -> bool
+
+			def ==
+				: (untyped) -> bool
+
+			def universe_graph
+				: -> object
+
+			def source_options_for
+				: (String, String) -> {
+						artifactserver: String,
+						version: String,
+					}
+
+			def null?
+				: -> false
+
+			def desc
+				: -> String
+
+		private
+
+			def http_connection_for
+				: (String) -> Chef::HTTP::Simple
+
+			def full_community_graph
+				: -> object
+
+		end
+	end
+end
