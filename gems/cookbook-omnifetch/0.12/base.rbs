@@ -1,0 +1,31 @@
+module CookbookOmnifetch
+
+	class BaseLocation[Options = Hash[Symbol, untyped]]
+
+		attr_reader dependency: _Dependency
+		attr_reader options: Options
+
+		def initialize
+			: (_Dependency, ?Options) -> void
+
+		def installed?
+			: () -> bool
+
+		def install
+			: () -> void
+
+		def cached_cookbook
+			: () -> ChefCLI::Policyfile::CachedCookbook
+
+		def lock_data
+			: () -> Hash[String, String]
+
+		def to_lock
+			: () -> String
+
+		def validate_cached!
+			: (String) -> true
+
+	end
+
+end

@@ -1,0 +1,54 @@
+module CookbookOmnifetch
+
+	interface _Dependency
+		# TODO
+	end
+
+	def self.init
+		: (_Dependency, ?Hash[_ToS, untyped]) -> BaseLocation?
+		| (_Dependency, ArtifactoryLocation::options) -> ArtifactoryLocation
+		| (_Dependency, ArtifactserverLocation::options) -> ArtifactserverLocation
+		| (_Dependency, ChefServerLocation::options) -> ChefServerLocation
+		| (_Dependency, ChefServerArtifactLocation::options) -> ChefServerArtifactLocation
+		| (_Dependency, GithubLocation::options) -> GithubLocation
+		| (_Dependency, GitLocation::options) -> GitLocation
+		| (_Dependency, PathLocation::options) -> PathLocation
+
+	def self.which
+		: (String) -> String?
+
+	def self.integration
+		: () -> Integration
+
+	def self.configure
+		: [O] () { (Integration) -> O } -> O
+
+	def self.cache_path
+		: () -> String
+
+	def self.shell_out_class
+		: () -> _ShellOut
+
+	def self.cached_cookbook_class
+		: () -> _FromPath
+
+	def self.storage_path
+		: () -> Pathname
+
+	def self.chef_server_download_concurrency
+		: () -> Integer
+
+	def self.default_chef_server_http_client
+		: () -> untyped # TODO
+
+	def self.cookbook?
+		: (_ToS) -> bool
+
+	# class << self
+
+private
+
+	def klass_from_options
+		: (Hash[_ToS, untyped]) -> Class?
+
+end

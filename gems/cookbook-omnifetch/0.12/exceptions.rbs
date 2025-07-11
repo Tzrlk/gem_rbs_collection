@@ -1,0 +1,60 @@
+module CookbookOmnifetch
+
+	class OmnifetchError < StandardError
+
+		def self.status_code
+			: (Integer) -> void
+
+		alias message to_s
+
+	end
+
+	class AbstractFunction < OmnifetchError
+	end
+
+	class GitError < OmnifetchError
+
+		def self?.status_code
+			: () -> 400
+
+	end
+
+	class GitNotInstalled < GitError
+	end
+
+	class GitCommandError < GitError
+	end
+
+	class NotACookbook < OmnifetchError
+
+		def self?.status_code
+			: () -> 141
+
+		def initialize
+			: (String) -> void
+
+	end
+
+	class CookbookValidationFailure < OmnifetchError
+
+		def self?.status_code
+			: () -> 124
+
+		def initialize
+			: (_Location, ChefCLI::Policyfile::CachedCookbook) -> void
+
+	end
+
+	class MismatchedCookbookName < OmnifetchError
+
+		def self?.status_code
+			: () -> 114
+
+		def initialize
+			: (_Dependency, ChefCLI::Policyfile::CachedCookbook) -> void
+
+	end
+
+
+
+end

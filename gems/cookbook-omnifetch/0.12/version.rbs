@@ -1,0 +1,3 @@
+module CookbookOmnifetch
+	Version: String
+end

@@ -1,0 +1,61 @@
+
+module ChefCLI
+	module Policyfile
+
+		class StorageConfig
+
+			type options = {
+					?cache_path: String?,
+					?relative_paths_root: String?
+				}
+
+			attr_accessor relative_paths_root: String
+			attr_accessor cache_path: Pathname
+
+			attr_reader policyfile_filename: String
+			attr_reader policyfile_lock_filename: String
+
+			def initialize
+				: (options) -> void
+
+			# @raises [InvalidPolicyfileFilename] unless policyfile_filename ends with either ".rb", or ".lock.json".
+			def use_policyfile
+				: (String) -> self
+
+			def use_policyfile_lock
+				: (String) -> self
+
+			def policyfile_expanded_path
+				: () -> String
+
+			def policyfile_lock_expanded_path
+				: () -> String
+
+			private
+
+			def handle_options
+				: (options) -> void
+
+		end
+
+		module StorageConfigDelegation
+
+			def cache_path
+				: () -> Pathname
+
+			def relative_paths_root
+				: () -> String
+
+			def policyfile_filename
+				: () -> String
+
+			def policyfile_expanded_path
+				: () -> String
+
+			def policyfile_lock_expanded_path
+				: () -> String
+
+		end
+
+	end
+end

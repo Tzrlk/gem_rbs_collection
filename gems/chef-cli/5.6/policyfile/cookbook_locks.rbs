@@ -1,0 +1,43 @@
+module ChefCLI
+	module Policyfile
+
+		class CookbookLock
+
+			REQUIRED_LOCK_DATA_KEYS: [
+				'version',
+				'identifier',
+				'dotted_decimal_identifier',
+				'cache_key',
+				'source_options',
+			]
+
+			include StorageConfigDelegation
+
+			attr_reader name: String
+			attr_accessor source_options: Hash[Symbol, untyped]
+			attr_accessor identifier: String
+			attr_accessor dotted_decimal_identifier: String
+			attr_reader storage_config: untyped # TODO
+			attr_accessor version: String
+
+			# TODO
+
+		end
+
+		class CachedCookbook < CookbookLock
+
+			attr_accessor cache_key: String
+
+			# TODO
+		end
+
+		class LocalCookbook < CookbookLock
+			# TODO
+		end
+
+		class ArchivedCookbook < CookbookLock
+			# TODO
+		end
+
+	end
+end

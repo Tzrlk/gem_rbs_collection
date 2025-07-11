@@ -1,0 +1,97 @@
+module ChefCLI
+	module Policyfile
+
+		class CookbookLocationSpecification
+
+			type source_type_remote
+				= :git
+				| :github
+				| :artifactserver
+				| :chef_server
+				| :chef_server_artifact
+				| :artifactory
+			type source_type
+				= source_type_remote
+				| :path
+			type source_options = { }
+			# TODO
+			type storage_config = { }
+			# TODO
+
+			include StorageConfigDelegation
+
+			SOURCE_TYPES: [:git, :github, :path, :artifactserver, :chef_server, :chef_server_artifact, :artifactory]
+
+			@installer: CookbookOmnifetch
+
+			attr_reader version_constraint: String
+
+			attr_reader name: String
+
+			attr_reader source_options: source_options
+			attr_reader source_type: source_type
+			attr_reader storage_config: storage_config
+
+			def initialize
+				: (String, String, source_options, storage_config) -> void
+
+			def ==
+				: (untyped) -> bool
+
+			def to_s
+				: () -> String
+
+			def mirrors_canonical_upstream?
+				: () -> bool
+
+			def installed?
+				: () -> bool
+
+			def ensure_cached
+				: () -> void
+
+			def valid?
+				: () -> bool
+
+			def errors
+				: () -> Array[String]
+
+			def installer
+				: () -> CookbookOmnifetch
+
+			def cache_key
+				: () -> untyped
+
+			def relative_path
+				: () -> String
+
+			def uri
+				: () -> untyped
+
+			def version_fixed?
+				: () -> bool
+
+			def version
+				: () -> untyped
+
+			def dependencies
+				: () -> untyped
+
+			def cookbook_has_recipe?
+				: (String) -> bool
+
+			def cached_cookbook
+				: () -> untyped
+
+			def source_options_for_lock
+				: () -> untyped
+
+			def source_options_invalid?
+				: () -> bool
+
+			def cookbook_path
+				: () -> String
+
+		end
+	end
+end

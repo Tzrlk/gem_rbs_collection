@@ -1,0 +1,31 @@
+module CookbookOmnifetch
+	class PathLocation < BaseLocation[options]
+
+		type options = {
+				path: String,
+				?metadata: boolish,
+			}
+
+		def installed?
+			: () -> false
+
+		def metadata?
+			: () -> bool
+
+		def install_path
+			: () -> Pathname
+
+		def relative_path
+			: () -> Pathname
+
+		def expanded_path
+			: () -> Pathname
+
+		def lock_data
+			: () -> {
+				'path'     => String,
+				'metadata' => bool
+			}
+
+	end
+end

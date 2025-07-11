@@ -1,0 +1,82 @@
+module CookbookOmnifetch
+
+	interface _ShellOut
+		def shell_out: () -> void
+	end
+
+	interface _Version
+		def version: () -> String
+	end
+
+	interface _CookbookName
+		def cookbook_name: () -> String
+	end
+
+	interface _FromPath
+		def from_path: () -> (_Version & _CookbookName)
+	end
+
+	class MissingConfiguration < OmnifetchError
+	end
+
+	class NullValue
+	end
+
+	class Integration
+
+		def self.configurables
+			: () -> [
+				:cache_path,
+				:storage_path,
+				:shell_out_class,
+				:cached_cookbook_class,
+				:chef_server_download_concurrency,
+				:default_chef_server_http_client,
+			]
+
+		def self.configurable
+			: (Symbol) -> Symbol
+
+		########################################################################
+		# <editor-fold desc="Defined via {self.configurable}">
+
+		@cache_path: NullValue | ^() -> String | String
+		attr_writer cache_path: ^() -> String | String
+		def cache_path
+			: () -> String
+
+		@storage_path: NullValue | ^() -> String | String
+		attr_writer storage_path: ^() -> String | String
+		def storage_path
+			: () -> String
+
+		@shell_out_class: NullValue | ^() -> _ShellOut | _ShellOut
+		attr_writer shell_out_class: ^() -> _ShellOut | _ShellOut
+		def shell_out_class
+			: () -> _ShellOut
+
+		@cached_cookbook_class: NullValue | ^() -> _FromPath | _FromPath
+		attr_writer cached_cookbook_class: ^() -> _FromPath | _FromPath
+		def cached_cookbook_class
+			: () -> _FromPath
+
+		@chef_server_download_concurrency: 1 | ^() -> Integer | Integer
+		attr_writer chef_server_download_concurrency: ^() -> Integer | Integer
+		def chef_server_download_concurrency
+			: () -> Integer
+
+		# TODO
+		@default_chef_server_http_client: NullValue | ^() -> untyped | untyped
+		attr_writer default_chef_server_http_client: ^() -> untyped | untyped
+		def default_chef_server_http_client
+			: () -> untyped
+
+		# </editor-fold>
+		########################################################################
+
+		def initialize
+			: () -> void
+
+	end
+
+end
