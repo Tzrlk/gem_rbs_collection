@@ -11,32 +11,179 @@ module ChefCLI
 				'source_options',
 			]
 
+			type lock_data = {
+					'version' => String,
+					'identifier' => String,
+					'dotted_decimal_identifier' => String,
+					'cache_key' => String,
+					'source_options' => Hash[String, String],
+				}
+
 			include StorageConfigDelegation
+
+			@name: String
+			@version: String?
+			@source_options: Hash[Symbol, untyped]?
+			@identifier: String?
+			@dotted_decimal_identifier: String?
+			@storage_config: StorageConfig
+			@location_spec: CookbookLocationSpecification
+			@identifiers: CookbookProfiler::Identifiers
+			@cookbook_version: Chef::CookbookVersion
+			@cookbook_loader: Chef::Cookbook::CookbookVersionLoader
+			@chefignore: Chef::Cookbook::Chefignore
 
 			attr_reader name: String
 			attr_accessor source_options: Hash[Symbol, untyped]
 			attr_accessor identifier: String
 			attr_accessor dotted_decimal_identifier: String
-			attr_reader storage_config: untyped # TODO
-			attr_accessor version: String
+			attr_reader storage_config: StorageConfig
+			attr_accessor version: String?
 
-			# TODO
+
+			def initialize
+				: (String, StorageConfig) -> void
+
+			def installed?
+				: () -> bool
+
+			def install_locked
+				: () -> void
+
+			def cookbook_location_spec
+				: () -> CookbookLocationSpecification
+
+			def dependencies
+				: () -> CookbookOmnifetch::_Dependency
+
+			def gather_profile_data
+				: () -> void
+
+			def identifiers
+				: () -> CookbookProfiler::Identifiers
+
+			def cookbook_path
+				: () -> String
+
+			def to_lock
+				: () -> lock_data
+
+			def lock_data
+				: () -> lock_data
+
+			def build_from_lock_data
+				: (lock_data) -> void
+
+			def validate!
+				: () -> void
+
+			def refresh!
+				: () -> void
+
+			def updated?
+				: () -> false
+
+			def identifier_updated?
+				: () -> false
+
+			def version_updated?
+				: () -> false
+
+			def symbolize_source_options_keys
+				: [V] (Hash[_ToSym, V]?) -> Hash[Symbol, V]
+
+			def cookbook_version
+				: () -> Chef::CookbookVersion
+
+			def cookbook_loader
+				: () -> Chef::Cookbook::CookbookVersionLoader
+
+			def chefignore
+				: () -> Chef::Cookbook::Chefignore
+
+		private
+
+			def assert_required_keys_valid!
+				: (Hash[String, String]) -> void
 
 		end
 
 		class CachedCookbook < CookbookLock
 
-			attr_accessor cache_key: String
+			type lock_data = CookbookLock::lock_data & {
+					'origin' => String,
+				}
 
-			# TODO
+			@cache_key: String
+			@origin: String
+
+			attr_accessor cache_key: String
+			attr_accessor origin: String
+
+			def build_from_lock_data
+				: (lock_data) -> void
+
+			def lock_data
+				: () -> lock_data
+
 		end
 
 		class LocalCookbook < CookbookLock
-			# TODO
+
+			type lock_data = CookbookLock::lock_data & {
+					'cache_key' => nil,
+					'scm_info' => untyped?,
+				}
+
+			@identifier_updated: untyped?
+			@version_updated: untyped?
+			@cookbook_in_git_repo: untyped?
+			@scm_info: untyped?
+
+			attr_accessor source: String
+
+			def scm_profiler
+				: () -> CookbookProfiler::_CookbookProfiler
+
+			def scm_info
+				: () -> untyped?
+
+			def refresh!
+				: () -> self
+
+			def updated?
+				: () -> bool?
+
+			def version_updated?
+				: () -> bool?
+
+			def identifier_updated?
+				: () -> bool?
+
+		private
+
+			def refresh_scm_info
+				: () -> untyped?
+
+			def cookbook_in_git_repo?
+				: () -> bool
+
 		end
 
-		class ArchivedCookbook < CookbookLock
-			# TODO
+		class ArchivedCookbook[T < CookbookLock] < CookbookLock
+			extend Forwardable
+
+			@archived_lock: T
+
+			def initialize
+				: (T, StorageConfig) -> void
+
+			def validate!
+				: () -> true
+
+			def refresh!
+				: () -> true
+
 		end
 
 	end

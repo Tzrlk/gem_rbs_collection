@@ -1,0 +1,14 @@
+module ChefCLI
+	module CookbookProfiler
+		class NullSCM
+			include _CookbookProfiler
+
+			def initialize
+				: (untyped?) -> void
+
+			def profile_data
+				: () -> nil
+
+		end
+	end
+end

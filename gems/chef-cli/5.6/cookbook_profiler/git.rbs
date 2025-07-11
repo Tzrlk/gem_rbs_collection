@@ -1,0 +1,80 @@
+module ChefCLI
+	module CookbookProfiler
+		class Git
+			include _CookbookProfiler
+			include Helpers
+
+			type options = {
+					?cwd: String,
+				}
+
+			@@git_memo: Hash[[String, String, options], Mixlib::ShellOut]
+
+			@cookbook_path: String
+			@synchronized_remotes: Array[String]?
+			@remote_url: String?
+			@remote_name: String?
+			@current_branch: String?
+			@repo_path: String?
+			@unborn_branch: bool?
+			@unborn_branch_ref: String?
+
+			attr_reader cookbook_path: String
+
+			def self.uncache
+				: () -> {}
+
+			def profile_data
+				: () -> {
+					'scm' => 'git',
+					'remote' => String?,
+					'revision' => String?,
+					'working_tree_clean' => bool,
+					'published' => bool,
+					'synchronized_remote_branches' => Array[String],
+				}
+
+			def revision
+				: () -> String?
+
+			def clean?
+				: () -> bool
+
+			def unpublished_commits?
+				: () -> bool
+
+			def synchronized_remotes
+				: () -> Array[String]
+
+			def remote
+				: () -> String?
+
+			def remote_name
+				: () -> String
+
+			def have_remote?
+				: () -> bool
+
+			def current_branch
+				: () -> String
+
+		private
+
+			def git!
+				: (String, ?options) -> Mixlib::ShellOut
+
+			def git
+				: (String, ?options) -> Mixlib::ShellOut
+
+			def get_repo_path
+				: () -> String
+
+			def detect_current_branch
+				: () -> String
+
+			def unborn_branch_ref
+				: () -> String?
+
+		end
+	end
+end

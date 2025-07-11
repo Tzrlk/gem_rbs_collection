@@ -1,0 +1,92 @@
+module ChefCLI
+	module Helpers
+		# extend self
+
+		type usr_bin_prefix
+			= '/usr/local/bin'
+			| '/usr/bin'
+		type omnibus_env = {
+				'PATH' => String,
+				'GEM_ROOT' => String,
+				'GEM_HOME' => String,
+				'GEM_PATH' => String,
+			}
+
+		@omnibus_root: String?
+		@omnibus_bin_dir: String?
+		@omnibus_embedded_bin_dir: String?
+		@package_home: String?
+		@usr_bin_prefix: usr_bin_prefix?
+		@git_bin_dir: String?
+		@git_windows_bin_dir: String?
+		@omnibus_env: omnibus_env?
+
+		def system_command
+			: (*String, Hash[Symbol, String]) -> Mixlib::ShellOut
+			| (*String) -> Mixlib::ShellOut
+
+		def err
+			: (String) -> void
+
+		def msg
+			: (String) -> void
+
+		def stdout
+			: () -> IO
+
+		def stderr
+			: () -> IO
+
+		def omnibus_install?
+			: () -> bool
+
+		def omnibus_root
+			: () -> String
+
+		def omnibus_bin_dir
+			: () -> String
+
+		def omnibus_embedded_bin_dir
+			: () -> String
+
+		def package_home
+			: () -> String
+
+		def usr_bin_prefix
+			: () -> usr_bin_prefix
+
+		def usr_bin_path
+			: (String) -> String
+
+		def git_bin_dir
+			: () -> String
+
+		def git_windows_bin_dir
+			: () -> String
+
+		def omnibus_env
+			: () -> omnibus_env
+
+		def omnibus_expand_path
+			: (*String) -> String
+
+	private
+
+		def expected_omnibus_root
+			: () -> String
+
+		def default_package_home
+			: () -> String
+
+		def with_file
+			: [T] (String, ?String) { (File) -> T } -> T
+			| (String, ?String) -> File
+
+		def reset!
+			: () -> void
+
+		def macos?
+			: () -> bool
+
+	end
+end

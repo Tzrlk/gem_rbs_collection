@@ -1,0 +1,25 @@
+module ChefCLI
+	module Policyfile
+		interface _CookbookSource
+
+			def initialize
+				: (?String?) -> void
+
+			def universe_graph
+				: () -> Hash[untyped, untyped]
+
+			def source_options_for
+				: (String, String) -> untyped
+
+			def null?
+				: () -> bool
+
+			def preferred_cookbooks
+				: () -> Array[String]
+
+			def desc
+				: () -> String
+
+		end
+	end
+end

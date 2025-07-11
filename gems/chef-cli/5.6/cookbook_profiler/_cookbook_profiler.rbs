@@ -1,0 +1,13 @@
+module ChefCLI
+	module CookbookProfiler
+		interface _CookbookProfiler
+
+			def initialize
+				: (String) -> void
+
+			def profile_data
+				: () -> Hash[String, untyped]
+
+		end
+	end
+end

@@ -1,0 +1,5 @@
+# @see rbs/core/builtin.rbs
+
+interface _ToSym
+	def to_sym: () -> Symbol
+end

@@ -2,27 +2,6 @@ module ChefCLI
 	module Policyfile
 		class DSL
 
-			@name: String?
-
-			# TODO: initialize
-
-			def name
-				: (String) -> String
-				| (String?) -> String?
-				| () -> String?
-
-			# TODO: run_list
-			# TODO: named_run_list
-
-			type cookbook_source
-				: NullCookbookSource
-				| CommunityCookbookSource
-
-			# TODO: flesh-out with the actual inputs
-			def default_source
-				: (Symbol, untyped) ?{ (cookbook_source) -> void } -> Array[cookbook_source]
-				| -> Array[untyped]
-
 			type cookbook_opts = {
 					?path: String,
 					?git: String,
@@ -31,28 +10,101 @@ module ChefCLI
 					?github: String,
 				}
 
+			RUN_LIST_ITEM_COMPONENT: Regexp
+
+			include StorageConfigDelegation
+
+			attr_writer name: String?
+
+			attr_reader errors: Array[String]
+			attr_writer run_list: Array[String]
+			attr_writer default_source: Array[_CookbookSource]
+			attr_reader cookbook_location_specs: Hash[String, CookbookLocationSpecification]
+			attr_reader included_policies: untyped
+
+			attr_reader named_run_lists: Hash[String, Array[String]]
+			attr_reader node_attributes: Chef::Node::Attribute
+
+			attr_reader storage_config: StorageConfig
+
+			attr_reader chef_config: untyped?
+
+			def initialize
+				: (StorageConfig, ?chef_config: untyped?) -> void
+
+			def name
+				: (String) -> String
+				| (String?) -> String?
+				| () -> String?
+
+			def run_list
+				: (*(String | Array[String])) -> Array[String]
+
+			def named_run_list
+				: (String, *(String | Array[String])) -> Array[String]
+
+			def default_source
+				: (?Symbol?, ?String?) ?{ (_CookbookSource) -> void } -> Array[_CookbookSource]
+				| () -> Array[_CookbookSource]
+
 			def cookbook
-				: (String, String, cookbook_opts) -> void
+				: (String, String?, cookbook_opts) -> void
 				| (String, cookbook_opts) -> void
-				| (String, String) -> void
+				| (String, String?) -> void
 				| (String) -> void
 
-			# TODO include_policy
+			def include_policy
+				: (String, ?Hash[Symbol, untyped]) -> void
 
 			def metadata
-				: -> void
+				: () -> void
 
 			def default
-				: -> Chef::Node::VividMash
+				: () -> Chef::Node::VividMash
 
 			def override
-				: -> Chef::Node::VividMash
+				: () -> Chef::Node::VividMash
 
-			# TODO: eval_policyfile
+			def eval_policyfile
+				: (String) -> self
 
 		private
 
-			# TODO: private methods.
+			def set_default_community_source
+				: (String) { (CommunityCookbookSource) -> void } -> ( Array[_CookbookSource] & [ CommunityCookbookSource ] )
+
+			def set_default_delivery_supermarket_source
+				: (String) { (DeliverySupermarketSource) -> void } -> ( Array[_CookbookSource] & [ DeliverySupermarketSource ] )
+
+			def set_default_chef_server_source
+				: (String) { (ChefServerCookbookSource) -> void } -> ( Array[_CookbookSource] & [ ChefServerCookbookSource ] )
+
+			def set_default_artifactory_source
+				: (String) { (ArtifactoryCookbookSource) -> void } -> ( Array[_CookbookSource] & [ ArtifactoryCookbookSource ] )
+
+			def set_default_chef_repo_source
+				: (String) { (ChefRepoCookbookSource) -> void } -> ( Array[_CookbookSource] & [ ChefRepoCookbookSource ] )
+
+			def set_default_source
+				: [T < _CookbookSource] (T) -> ( Array[_CookbookSource] & Array[T] )
+
+			def validate!
+				: () -> bool
+
+			def validate_run_list_items
+				: (Array[String], ?String?) -> void
+
+			def handle_preferred_cookbooks_conflicts
+				: () -> void
+
+			def error_context
+				: (String, String, Exception) -> ( String | "Could not find relevant code from backtrace" )
+
+			def culprit_line_number
+				: (String, Exception) -> Integer?
+
+			def filtered_bt
+				: (String, Exception) -> Array[String]
 
 		end
 	end

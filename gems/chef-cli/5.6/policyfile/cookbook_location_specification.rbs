@@ -13,10 +13,7 @@ module ChefCLI
 			type source_type
 				= source_type_remote
 				| :path
-			type source_options = { }
-			# TODO
-			type storage_config = { }
-			# TODO
+			type source_options = Hash[Symbol, untyped]
 
 			include StorageConfigDelegation
 
@@ -30,10 +27,10 @@ module ChefCLI
 
 			attr_reader source_options: source_options
 			attr_reader source_type: source_type
-			attr_reader storage_config: storage_config
+			attr_reader storage_config: StorageConfig
 
 			def initialize
-				: (String, String, source_options, storage_config) -> void
+				: (String, String, source_options, StorageConfig) -> void
 
 			def ==
 				: (untyped) -> bool
@@ -57,34 +54,35 @@ module ChefCLI
 				: () -> Array[String]
 
 			def installer
-				: () -> CookbookOmnifetch
+				: () -> CookbookOmnifetch::BaseLocation
 
 			def cache_key
-				: () -> untyped
+				: () -> String
 
 			def relative_path
 				: () -> String
 
 			def uri
-				: () -> untyped
+				: () -> URI
 
 			def version_fixed?
 				: () -> bool
 
 			def version
-				: () -> untyped
+				: () -> String
 
+			# FIXME: Return type is speculative.
 			def dependencies
-				: () -> untyped
+				: () -> Array[CookbookOmnifetch::_Dependency]
 
 			def cookbook_has_recipe?
 				: (String) -> bool
 
 			def cached_cookbook
-				: () -> untyped
+				: () -> CachedCookbook
 
 			def source_options_for_lock
-				: () -> untyped
+				: () -> Hash[String, String]
 
 			def source_options_invalid?
 				: () -> bool

@@ -1,0 +1,8 @@
+module ChefCLI
+	module Policyfile
+		class ArtifactoryCookbookSource
+			include _CookbookSource
+			# TODO
+		end
+	end
+end

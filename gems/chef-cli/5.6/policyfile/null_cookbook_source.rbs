@@ -1,0 +1,26 @@
+module ChefCLI
+	module Policyfile
+		class NullCookbookSource
+			extend _CookbookSource
+
+			def initialize
+				: (?String?) -> void
+
+			def universe_graph
+				: () -> {}
+
+			def source_options_for
+				: (String, String) -> void
+
+			def null?
+				: () -> true
+
+			def preferred_cookbooks
+				: () -> []
+
+			def desc
+				: () -> "null_cookbook_source"
+
+		end
+	end
+end

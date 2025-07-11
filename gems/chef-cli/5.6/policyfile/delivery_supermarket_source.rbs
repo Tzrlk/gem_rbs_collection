@@ -1,0 +1,11 @@
+module ChefCLI
+	module Policyfile
+		class DeliverySupermarketSource
+			include _CookbookSource
+			extend Forwardable
+
+			# TODO
+
+		end
+	end
+end
