@@ -2,6 +2,73 @@ class Chef
 	module Mixin
 		module ParamsValidate
 
+			# TODO
+			def self?.validate
+				: (untyped, untyped) -> untyped
+
+			def self?.lazy
+				: [T] () { () -> T } -> DelayedEvaluator[T]
+
+			# TODO
+			def self?.set_or_return
+				: (untyped, untyped, untyped) -> untyped
+
+		private
+
+			def self?._validation_message
+				: (Symbol|String, String) -> String
+				| (Symbol|String, nil) -> String?
+
+			def self?._pv_opts_lookup
+				: [T] (Hash[Symbol|String,T], _ToSym|_ToS) -> T?
+
+			def self?._pv_required
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, ?bool, ?bool) -> bool
+				| (Hash[Symbol|String,untyped], _ToSym|_ToS, false, ?bool) -> true
+
+			def self?._pv_equal_to
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, untyped|Array[untyped]) -> bool?
+
+			def self?._pv_kind_of
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, Class|Array[Class]) -> bool?
+
+			def self?._pv_respond_to
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, Symbol|Array[Symbol]) -> bool?
+
+			def self?._pv_cannot_be
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, Symbol|Array[Symbol]) -> bool?
+
+			def self?._pv_default
+				: [T] (Hash[Symbol|String,untyped], _ToSym|_ToS, T|DelayedEvaluator[T]) -> void
+
+			def self?._pv_regex
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, Regexp|Array[Regexp]) -> bool
+
+			def self?._pv_callbacks
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, Hash[_ToS,^(untyped) -> boolish]) -> void
+
+			def _pv_name_property
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, ?bool) -> void
+
+			alias _pv_name_attribute _pv_name_property
+
+			def _pv_is
+				: (Hash[Symbol|String,untyped], _ToSym|_ToS, untyped|Array[untyped]) -> bool
+
+			def _pv_coerce
+				: [T] (Hash[Symbol|String,untyped], _ToSym|_ToS) { (untyped?) -> T? } -> T?
+				| [T] (Hash[Symbol|String,untyped], _ToSym|_ToS) { (untyped?) -> T } -> T
+
+			class SetOrReturnProperty[T] < Property[T]
+
+				def get
+					: (Resource, ?nil_set: bool) -> (T|DelayedEvaluator[T])?
+
+				def call
+					: (Resource, ?(T|DelayedEvaluator[T])?) -> (T|DelayedEvaluator[T])?
+
+			end
+
 		end
 	end
 end

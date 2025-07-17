@@ -1,0 +1,66 @@
+class Chef
+	class Property[T = untyped]
+
+		# TODO
+
+		def initialize
+			: (**untyped) -> void
+
+		def to_s
+			: () -> String
+
+		def name
+			: () -> String
+
+		def declared_in
+			: () -> Class
+
+		def description
+			: () -> String
+
+		def introduced
+			: () -> String
+
+		def instance_variable_name
+			: () -> Symbol
+
+		def default
+			: () -> (T?|DelayedEvaluator[T])
+
+		def default_description
+			: () -> String
+
+		def equal_to
+			: () -> Array[untyped]?
+
+		def identity?
+			: () -> bool
+
+		def desired_state?
+			: () -> bool
+
+		def name_property?
+			: () -> bool
+
+		def has_default?
+			: () -> bool
+
+		def required?
+			: (?untyped?) -> bool
+
+		def skip_docs?
+			: () -> bool
+
+		def sensitive?
+			: () -> bool
+
+		def validation_options
+			: () -> Hash[Symbol,untyped]
+
+		def call
+			: (Resource, ?(T|DelayedEvaluator[T])?) -> (T|DelayedEvaluator[T])?
+
+		# TODO
+
+	end
+end

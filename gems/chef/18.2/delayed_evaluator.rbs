@@ -1,0 +1,17 @@
+class Chef
+	class DelayedEvaluator[T = untyped] < Proc
+
+		def dup
+			: () -> instance
+
+		def inspect
+			: () -> String
+
+		# Methods below aren't defined on the class itself, but these signatures
+		# indicate the usage behaviour.
+
+		def call
+			: () -> T
+
+	end
+end
