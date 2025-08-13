@@ -1,0 +1,144 @@
+class Chef
+	class CookbookManifest
+
+
+		type filespec = {
+				name:        String,
+				path:        String,
+				checksum:    String,
+				specificity: __todo__,
+			}
+		type manifest = {
+				cookbook_name: String,
+				metadata:      Cookbook::Metadata,
+				version:       Version,
+				name:          String,
+				recipes:       Array[filespec],
+				definitions:   Array[filespec],
+				libraries:     Array[filespec],
+				attributes:    Array[filespec],
+				files:         Array[filespec],
+				templates:     Array[filespec],
+				resources:     Array[filespec],
+				providers:     Array[filespec],
+				root_files:    Array[filespec],
+			}
+
+		@manifest: ChefUtils::Mash & manifest
+		@checksums: Hash[String, String?]
+		@manifest_records_by_path: Hash[String, filespec]
+		@policy_mode: bool
+
+		extend Forwardable
+
+		attr_reader cookbook_version: CookbookVersion
+
+		# <editor-fold desc="@cookbook_version delegate methods">
+
+		def root_paths
+			: () -> Array[String]
+
+		def name
+			: () -> String
+
+		def identifier
+			: () -> String
+
+		def metadata
+			: () -> Cookbook::Metadata
+
+		def full_name
+			: () -> String
+
+		def version
+			: () -> Version
+
+		def frozen_version?
+			: () -> bool
+
+		# </editor-fold>
+
+		def initialize
+			: (CookbookVersion, policy_mode: bool) -> void
+
+		def reset!
+			: () -> true
+
+		def manifest
+			: () -> manifest
+
+		def checksums
+			: () -> Hash[String, String?]
+
+		def manifest_records_by_path
+			: () -> Hash[String, filespec]
+
+		def policy_mode?
+			: () -> bool
+
+		# @see CookbookManifestVersions.to_h
+		def to_h
+			: () -> manifest
+
+		alias to_hash to_h
+
+		# @see chef/json_compat
+		# @see ffi_yajl/encoder
+		def to_json
+			: (*__todo__) -> String
+
+		def save_url
+			: () -> String
+
+		def named_cookbook_url
+			: () -> String
+
+		def force_save_url
+			: () -> String
+
+		def update_from
+			: (instance) -> void
+
+		def add_files_to_manifest
+			: (filespec|Array[filespec]) -> void
+
+		def files_for
+			: (_ToS) -> Array[filespec]
+
+		def each_file
+			: (?excluded_parts?: Array[_ToS]) ?{ (filespec) -> void } -> Array[filespec]
+
+		def by_parent_directory
+			: () -> Hash[String, Array[filespec]]
+
+		def root_files
+			: () -> Array[filespec]
+
+	private
+
+		def cookbook_url_path
+			: () -> String
+
+		def generate_manifest
+			: () -> (ChefUtils::Mash & manifest)
+
+		def parse_file_from_root_paths
+			: (String) -> [ String, String, String ]
+
+		def extract_checksums_from_manifest
+			: (manifest) -> Hash[String, nil]
+
+		def checksum_cookbook_file
+			: (String) -> String?
+
+		def extract_manifest_records_by_path
+			: (manifest) -> Hash[String, filespec]
+
+	end
+
+	class CookbookManifestVersions
+		extend Mixin::VersionedAPIFactory
+		# TODO delegated methods
+	end
+
+end

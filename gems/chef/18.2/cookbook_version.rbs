@@ -1,0 +1,108 @@
+class Chef
+	class CookbookVersion
+
+		type filespec = CookbookManifest::filespec
+
+		@name: String
+		@root_paths: Array[String]
+		@frozen: bool
+		@all_files: Array[filespec]
+		@file_vendor: __todo__?
+		@cookbook_manifest: CookbookManifest
+		@metadata: Cookbook::Metadata
+		@chef_server_rest: __todo__?
+		@attribute_filenames_by_short_filename: Hash[String, String]
+		@recipe_yml_filenames_by_name: Hash[String, String]
+		@recipe_filenames_by_name: Hash[String, String]
+
+		include Comparable
+		extend Forwardable
+
+		# <editor-fold desc="@cookbook_manifest delegates">
+
+		def files_for
+			: () -> __todo__
+
+		def each_file
+			: () -> __todo__
+
+		# </editor_fold>
+
+		COOKBOOK_SEGMENTS: [
+				:resources,
+				:providers,
+				:recipes,
+				:definitions,
+				:libraries,
+				:attributes,
+				:files,
+				:templates,
+				:root_files,
+			]
+
+		attr_reader all_files: Array[filespec]
+
+		attr_accessor root_paths: __todo__
+		attr_accessor name: String
+
+		attr_reader metadata: Cookbook::Metadata
+		attr_accessor identifier: String?
+
+		def root_dir
+			: () -> String
+
+		def all_files=
+			: (filespec) -> void
+
+		def self.checksum_cookbook_file
+			: (String) -> String?
+
+		def self.cache
+			: () -> FileCache
+
+		def initialize
+			: (String, *String, ?chef_server_rest: __todo__?) -> void
+
+		def version
+			: () -> String
+
+		def frozen_version?
+			: () -> bool
+
+		def freeze_version
+			: () -> true
+
+		def version=
+			: (String) -> void
+
+		def full_name
+			: () -> String
+
+		def attribute_filenames_by_short_filename
+			: () -> Hash[String, String]
+
+		def recipe_yml_filenames_by_name
+			: () -> Hash[String, String]
+
+		def recipe_filenames_by_name
+			: () -> Hash[String, String]
+
+		def metadata=
+			: (Cookbook::Metadata) -> void
+
+		def manifest
+			: () -> CookbookManifest
+
+		def manifest=
+			: (CookbookManifest) -> void
+
+		def checksums
+			: () -> Hash[String, String?]
+
+		def manifest_records_by_path
+			: () -> Hash[String, CookbookManifest::filespec]
+
+		# TODO
+
+	end
+end

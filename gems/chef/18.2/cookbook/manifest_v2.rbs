@@ -1,0 +1,22 @@
+class Chef
+	class Cookbook
+		class ManifestV2
+			extend Mixin::VersionedAPI
+
+			@minimum_api_version: 2
+
+			def self.from_hash
+				: (CookbookManifest::manifest) -> (ChefUtils::Mash & CookbookManifest::manifest)
+
+			def self.to_h
+				: (CookbookManifest) -> (CookbookManifest::manifest & {
+						all_files: CookbookManifest::filespec,
+						frozen?:   bool,
+						chef_type: 'cookbook_version',
+					})
+
+			alias self.to_hash self.to_h
+
+		end
+	end
+end

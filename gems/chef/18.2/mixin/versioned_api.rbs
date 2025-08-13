@@ -1,0 +1,44 @@
+class Chef
+	module Mixin
+
+		module VersionedAPI
+
+			@minimum_api_version: String?
+
+			def minimum_api_version
+				: (?String?) -> String?
+
+		end
+
+		module VersionedAPIFactory
+
+			@versioned_interfaces: Array[__todo__]?
+
+			def versioned_interfaces
+				: () -> Array[__todo__]
+
+			def add_versioned_api_class
+				: (__todo__) -> Array[__todo__]
+
+			def versioned_api_class
+				: () -> __todo__
+
+			def get_class_for
+				: (__todo__) -> __todo__
+
+			def def_versioned_delegator
+				: (Symbol) -> void
+
+			def best_request_version
+				: () -> String
+
+			def possible_requests
+				: () -> Integer
+
+			def new
+				: (*untyped) -> __todo__
+
+		end
+
+	end
+end

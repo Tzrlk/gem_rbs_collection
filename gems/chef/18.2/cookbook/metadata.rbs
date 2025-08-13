@@ -1,0 +1,9 @@
+class Chef
+	class Cookbook
+		class Metadata
+
+			# TODO
+
+		end
+	end
+end

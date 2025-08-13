@@ -1,0 +1,51 @@
+class Chef
+	class Cookbook
+		class ManifestV0
+
+			type manifest_file = {
+					name: String,
+				}
+			type manifest_hash = {
+					?resources: Array[manifest_file],
+					?providers: Array[manifest_file],
+					?recipes: Array[manifest_file],
+					?definitions: Array[manifest_file],
+					?libraries: Array[manifest_file],
+					?attributes: Array[manifest_file],
+					?files: Array[manifest_file],
+					?templates: Array[manifest_file],
+					?root_files: Array[manifest_file],
+				}
+
+			extend Mixin::VersionedAPI
+
+			@minimum_api_version: 0
+
+			COOKBOOK_SEGMENTS: [
+					'resources',
+					'providers',
+					'recipes',
+					'definitions',
+					'libraries',
+					'attributes',
+					'files',
+					'templates',
+					'root_files',
+				]
+
+			def self.from_hash
+				: [T < Hash[untyped, untyped]] (manifest_hash & T) -> (ChefUtils::Mash & T & {
+						all_files: Array[manifest_file],
+					})
+
+			def self.to_h
+				: (CookbookManifest) -> (manifest_hash & {
+						frozen?:   bool,
+						chef_type: 'cookbook_version',
+					})
+
+			alias self.to_hash self.to_h
+
+		end
+	end
+end

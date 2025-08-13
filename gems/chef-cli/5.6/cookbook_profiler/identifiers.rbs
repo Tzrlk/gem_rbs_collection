@@ -1,0 +1,32 @@
+module ChefCLI
+	module CookbookProfiler
+		class Identifiers
+			@cookbook_version: Chef::CookbookVersion
+			@files: Array[[ String, untyped ]]
+
+			attr_reader cookbook_version: Chef::CookbookVersion
+
+			def initialize
+				: (Chef::CookbookVersion) -> void
+
+			def semver_version
+				: () -> String
+
+			def content_identifier
+				: () -> String
+
+			def dotted_decimal_identifier
+				: () -> String
+
+			def fingerprint_text
+				: () -> String
+
+			def files_with_checksums
+				: () -> Array[[ String, String ]]
+
+			def cookbook_files
+				: () -> Array[[ String, untyped ]]
+
+		end
+	end
+end
