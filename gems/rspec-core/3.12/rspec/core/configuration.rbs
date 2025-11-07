@@ -1,0 +1,216 @@
+# https://github.com/rspec/rspec/blob/main/rspec-core/lib/rspec/core/configuration.rb
+module RSpec
+	module Core
+		class Configuration
+			include RSpec::Core::Hooks
+
+			type pending_failure_output
+				= :full
+				| :no_backtrace
+				| :skip
+
+			type bisect_runner
+				= :shell
+				| :fork
+
+			type color_mode
+				= :automatic
+				| :on
+				| :off
+
+			type mocking_framework
+				= :rspec
+				| :mocha
+				| :flexmock
+				| :rr
+				| :nothing
+				| Module
+
+			interface _Configuration[T]
+
+				def configuration
+					: () -> T
+
+			end
+
+			type expectation_framework
+				= :rspec
+				| :test_unit
+				| :minitest
+				| Module
+
+			type color
+				= :black
+				| :white
+				| :red
+				| :green
+				| :yellow
+				| :blue
+				| :magenta
+				| :cyan
+
+			type setting_opts[T = nil] = {
+					?alias_with: Symbol | Array[Symbol],
+					?default:    T,
+				}
+
+			module Readers
+
+				attr_reader default_path: String
+				attr_reader default_path?: bool
+				attr_reader drb: bool
+				attr_reader drb_port: Integer?
+				attr_reader error_stream: IO | String
+				attr_reader deprecation_stream: IO | String
+				attr_reader example_status_persistence_file_path: String
+				attr_reader only_failures: bool
+				attr_reader fail_fast: bool
+				attr_reader dry_run: bool
+				attr_reader failure_exit_code: Integer
+				attr_reader error_exit_code: Integer
+				attr_reader fail_if_no_examples: bool
+				attr_reader requires: Array[String]
+				attr_reader libs: Array[String]
+				attr_reader output_stream: IO | String
+				attr_reader pattern: String
+				attr_reader exclude_pattern: String
+				attr_reader project_source_dirs: Array[String]
+				attr_reader profile_examples?: bool
+				attr_reader success_color: color
+				attr_reader pending_color: color
+				attr_reader failure_color: color
+				attr_reader default_color: color
+				attr_reader fixed_color: color
+				attr_reader detail_color: color
+				attr_reader silence_filter_announcements: bool
+				attr_reader start_time: Time
+				attr_reader threadsafe: bool
+				attr_reader max_displayed_failure_line_count: Integer
+				attr_reader full_cause_backtrace: bool
+				attr_reader pending_failure_output: pending_failure_output
+				attr_reader pending_failure_output?: bool
+				attr_reader force_line_number_for_spec_rerun: bool
+				attr_reader bisect_runner: bisect_runner
+
+				alias only_failures? only_failures
+
+			end
+
+			include Readers
+
+			class MustBeConfiguredBeforeExampleGroupsError < StandardError
+			end
+
+			def self.define_reader
+				: (Symbol) -> void
+
+			def self.define_alias
+				: (Symbol, Symbol) -> void
+
+			def self.define_predicate
+				: (Symbol) -> void
+
+			def self.add_setting
+				: (Symbol, setting_opts) -> void
+
+			def self.add_read_only_setting
+				: (Symbol, ?{}) -> void
+
+			## SETTINGS ########################################################
+
+			attr_writer default_path: String
+			attr_writer drb: bool
+			attr_writer drb_port: Integer?
+			attr_writer error_stream: IO | String
+			attr_writer deprecation_stream: IO | String
+			attr_writer example_status_persistence_file_path: String
+			attr_writer fail_fast: bool | 'true' | 'false' | _ToI | nil
+			attr_writer dry_run: bool
+			attr_writer failure_exit_code: Integer
+			attr_writer error_exit_code: Integer
+			attr_writer fail_if_no_examples: bool
+			attr_writer output_stream: IO | String
+			attr_writer pattern: String
+			attr_writer exclude_pattern: String
+			attr_writer project_source_dirs: Array[String]
+			attr_writer profile_examples: bool
+			attr_writer success_color: color
+			attr_writer pending_color: color
+			attr_writer failure_color: color
+			attr_writer default_color: color
+			attr_writer fixed_color: color
+			attr_writer detail_color: color
+			attr_writer silence_filter_announcements: bool
+			attr_writer start_time: Time
+			attr_writer threadsafe: bool
+			attr_writer max_displayed_failure_line_count: Integer
+			attr_writer full_cause_backtrace: bool
+			attr_writer pending_failure_output: pending_failure_output
+			attr_writer force_line_number_for_spec_rerun: bool
+			attr_writer bisect_runner: bisect_runner
+
+			####################################################################
+
+			## API PRIVATE #####################################################
+
+			attr_reader only_failures_but_not_configured?: bool
+			attr_writer files_to_run: __todo__
+			attr_accessor filter_manager: __todo__
+			attr_accessor world: __todo__
+			attr_accessor static_config_filter_manager: __todo__
+			attr_reader backtrace_formatter: __todo__
+			attr_reader ordering_manager: __todo__
+			attr_reader loaded_spec_files: __todo__
+
+			####################################################################
+
+			def initialize
+				: () -> void
+
+			# TODO
+
+			MOCKING_ADAPTERS: {
+				rspec:    :RSpec,
+				flexmock: :Flexmock,
+				rr:       :RR,
+				mocha:    :Mocha,
+				nothing:  :Null,
+			}
+
+			def mock_with
+				: [T] (*mocking_framework) ?{ (T) -> void } -> void
+				| [T] (_Configuration[T]) ?{ (T) -> void } -> void
+
+			attr_reader expectation_frameworks: Array[expectation_framework]
+
+			def expect_with
+				: [T] (*expectation_framework) ?{ (T) -> void } -> void
+				| [T] (_Configuration[T]) ?{ (T) -> void } -> void
+			alias expectation_framework= expect_with
+
+			attr_reader full_backtrace?: bool
+			attr_writer full_backtrace: bool
+
+			attr_accessor color_mode: color_mode
+			attr_reader color_enabled?: bool
+
+			attr_writer libs: Array[String]
+
+			attr_writer full_description: String | Regexp
+			attr_reader full_description: Array[String]?
+
+			def add_formatter
+				: (Class|String|Object, ?String|IO) -> void
+			alias formatter= add_formatter
+
+			attr_accessor default_formatter: Class|String|Object
+
+			attr_reader formatters: Array[untyped]
+
+			attr_reader formatter_loader: Formatters::Loader
+
+			# TODO
+
+		end
+	end
+end

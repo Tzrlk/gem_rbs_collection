@@ -1,0 +1,7 @@
+dependencies:
+  - name: erb
+  - name: json
+  - name: open3
+  - name: socket
+  - name: stringio
+  - name: uri

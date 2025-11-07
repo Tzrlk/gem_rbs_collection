@@ -1,0 +1,33 @@
+# https://github.com/rspec/rspec/blob/main/rspec-core/lib/rspec/core.rb
+module RSpec
+	extend Core::Warnings
+
+	attr_writer world: __todo__
+
+	def self.reset
+		: () -> void
+
+	def self.clear_examples
+		: () -> void
+
+	attr_accessor self.configuration: Core::Configuration
+
+	def self.configure
+		: [T] () { (Core::Configuration) -> T } -> T
+
+	# TODO
+
+	module Core
+
+		class Time
+			attr_reader self.now: ::Time
+		end
+
+		attr_reader self.path_to_executable: String
+
+	end
+
+	def self.const_missing
+		: (String) -> untyped
+
+end
