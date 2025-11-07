@@ -1,0 +1,13 @@
+module ChefSpec
+	module API
+		module Reboot
+
+			def now_reboot
+				: (String) -> ChefSpec::Matchers::ResourceMatcher
+
+			def request_reboot
+				: (String) -> ChefSpec::Matchers::ResourceMatcher
+
+		end
+	end
+end

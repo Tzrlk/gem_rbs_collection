@@ -1,0 +1,9 @@
+module ChefSpec
+	module API
+		module Stubs
+
+			# TODO https://github.com/chefspec/chefspec/blob/main/lib/chefspec/api/stubs.rb
+
+		end
+	end
+end

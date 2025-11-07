@@ -1,0 +1,19 @@
+module ChefSpec
+	module API
+		include Core
+		include Described
+		include DoNothing
+		include IncludeAnyRecipe
+		include IncludeRecipe
+		include DoNothing
+		include RenderFile
+		include StateAttrs
+		include Notifications
+		include Stubs
+		include StubsFor
+		include Subscriptions
+		include User
+		include Link
+		include Reboot
+	end
+end

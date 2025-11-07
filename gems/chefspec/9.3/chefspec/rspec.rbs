@@ -1,0 +1,54 @@
+module RSpec
+	module Core
+		class Configuration
+			include ChefSpec::API
+
+			type log_level
+				= :error
+				| :warn
+				| :info
+				| :debug
+
+			type server_runner_data_store
+				= :in_memory
+				| :on_disk
+
+			type berkshelf_options = {
+					?berksfile: String?
+				}
+
+			module Readers
+				attr_reader berkshelf_options: berkshelf_options
+				attr_reader policyfile_path: String
+				attr_reader file_cache_path: String
+				attr_reader cookbook_root: String
+				attr_reader cookbook_path: String
+				attr_reader role_path: String
+				attr_reader environment_path: String
+				attr_reader log_level: log_level
+				attr_reader path: String
+				attr_reader platform: String
+				attr_reader version: String
+				attr_reader server_runner_data_store: server_runner_data_store
+				attr_reader server_runner_clear_cookbooks: bool
+				attr_reader server_runner_port: Range[Integer]
+			end
+
+			attr_writer berkshelf_options: berkshelf_options
+			attr_writer policyfile_path: String
+			attr_writer file_cache_path: String
+			attr_writer cookbook_root: String
+			attr_writer cookbook_path: String
+			attr_writer role_path: String
+			attr_writer environment_path: String
+			attr_writer log_level: log_level
+			attr_writer path: String
+			attr_writer platform: String
+			attr_writer version: String
+			attr_writer server_runner_data_store: server_runner_data_store
+			attr_writer server_runner_clear_cookbooks: bool
+			attr_writer server_runner_port: Range[Integer]
+
+		end
+	end
+end

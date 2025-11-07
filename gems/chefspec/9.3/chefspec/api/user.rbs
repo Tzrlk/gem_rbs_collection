@@ -1,0 +1,27 @@
+module ChefSpec
+	module API
+		module User
+
+			# TODO: ChefSpec.define_matcher :user
+
+			def create_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+			def remove_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+			def modify_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+			def manage_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+			def lock_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+			def unlock_user
+				: (String|Regexp) -> ChefSpec::Matchers::ResourceMatcher
+
+		end
+	end
+end

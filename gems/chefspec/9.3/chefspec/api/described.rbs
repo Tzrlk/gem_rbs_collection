@@ -1,0 +1,11 @@
+module ChefSpec
+	module API
+		module Described
+
+			attr_reader described_cookbook: String
+
+			attr_reader described_recipe: String
+
+		end
+	end
+end

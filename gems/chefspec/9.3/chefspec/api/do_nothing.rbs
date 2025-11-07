@@ -1,0 +1,9 @@
+module ChefSpec
+	module API
+		module DoNothing
+
+			attr_reader do_nothing: ChefSpec::Matchers::DoNothingMatcher
+
+		end
+	end
+end

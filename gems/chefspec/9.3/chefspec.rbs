@@ -1,0 +1,10 @@
+module ChefSpec
+
+	def define_matcher
+		: (Symbol) -> self
+
+	attr_reader root: Pathname
+
+	attr_reader matchers: Hash[String, Proc]
+
+end

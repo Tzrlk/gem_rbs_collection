@@ -1,0 +1,9 @@
+module ChefSpec
+	module API
+		module IncludeRecipe
+
+			attr_reader include_recipe: ChefSpec::Matchers::IncludeRecipeMatcher
+
+		end
+	end
+end

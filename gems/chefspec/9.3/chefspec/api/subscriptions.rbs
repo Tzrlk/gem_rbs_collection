@@ -1,0 +1,10 @@
+module ChefSpec
+	module API
+		module Subscriptions
+
+			def subscribe_to
+				: (String) -> ChefSpec::Matchers::SubscribesMatcher
+
+		end
+	end
+end

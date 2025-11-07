@@ -1,0 +1,10 @@
+module ChefSpec
+	module API
+		module Notifications
+
+			def notify
+				: (String) -> ChefSpec::Matchers::NotificationsMatcher
+
+		end
+	end
+end

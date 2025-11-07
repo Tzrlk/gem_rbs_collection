@@ -1,0 +1,10 @@
+module ChefSpec
+	module API
+		module RenderFile
+
+			def render_file
+				: (String) -> ChefSpec::Matchers::RenderFileMatcher
+
+		end
+	end
+end

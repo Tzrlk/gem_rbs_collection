@@ -1,0 +1,10 @@
+module ChefSpec
+	module API
+		module Link
+
+			def link_to
+				: (String|Regexp) -> ChefSpec::Matchers::LinkToMatcher
+
+		end
+	end
+end

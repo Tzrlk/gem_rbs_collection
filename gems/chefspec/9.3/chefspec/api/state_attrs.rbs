@@ -1,0 +1,10 @@
+module ChefSpec
+	module API
+		module StateAttrs
+
+			def have_state_attrs
+				: (*Symbol) -> ChefSpec::Matchers::StateAttrsMatcher
+
+		end
+	end
+end
