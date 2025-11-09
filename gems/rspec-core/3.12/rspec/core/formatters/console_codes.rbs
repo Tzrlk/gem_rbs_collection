@@ -1,0 +1,36 @@
+module RSpec
+  module Core
+    module Formatters
+      # ConsoleCodes provides helpers for formatting console output
+      # with ANSI codes, e.g. color's and bold.
+      module ConsoleCodes
+        @config_colors_to_methods: untyped
+
+        # @private
+        VT100_CODES: { black: 30, red: 31, green: 32, yellow: 33, blue: 34, magenta: 35, cyan: 36, white: 37, bold_black: "1;30", bold_red: "1;31", bold_green: "1;32", bold_yellow: "1;33", bold_blue: "1;34", bold_magenta: "1;35", bold_cyan: "1;36", bold_white: "1;37", bold: 1 }
+
+        # @private
+        VT100_CODE_VALUES: untyped
+
+        # @private
+        def self?.config_colors_to_methods: () -> untyped
+
+        # Fetches the correct code for the supplied symbol, or checks
+        # that a code is valid. Defaults to white (37).
+        #
+        # @param code_or_symbol [Symbol, Fixnum] Symbol or code to check
+        # @return [Fixnum] a console code
+        def self?.console_code_for: (untyped code_or_symbol) -> untyped
+
+        # Wraps a piece of text in ANSI codes with the supplied code. Will
+        # only apply the control code if `RSpec.configuration.color_enabled?`
+        # returns true.
+        #
+        # @param text [String] the text to wrap
+        # @param code_or_symbol [Symbol, Fixnum] the desired control code
+        # @return [String] the wrapped text
+        def self?.wrap: (untyped text, untyped code_or_symbol) -> (::String | untyped)
+      end
+    end
+  end
+end

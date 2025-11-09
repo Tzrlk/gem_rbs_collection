@@ -1,0 +1,69 @@
+module RSpec
+  module Core
+    module Formatters
+      # @api private
+      #
+      # Extracts code snippets by looking at the backtrace of the passed error
+      # and applies synax highlighting and line numbers using html.
+      class HtmlSnippetExtractor
+        # rubocop:disable Style/ClassVars
+        # @private
+        @@converter: untyped
+
+        # @private
+        module NullConverter
+          def self.convert: (untyped code) -> ::String
+        end
+
+        # @private
+        module CoderayConverter
+          def self.convert: (untyped code) -> untyped
+        end
+
+        # @api private
+        #
+        # Extract lines of code corresponding to  a backtrace.
+        #
+        # @param backtrace [String] the backtrace from a test failure
+        # @return [String] highlighted code snippet indicating where the test
+        #   failure occurred
+        #
+        # @see #post_process
+        def snippet: (untyped backtrace) -> untyped
+
+        # @api private
+        #
+        # Create a snippet from a line of code.
+        #
+        # @param error_line [String] file name with line number (i.e.
+        #   'foo_spec.rb:12')
+        # @return [String] lines around the target line within the file
+        #
+        # @see #lines_around
+        def snippet_for: (untyped error_line) -> (::Array[untyped] | ::Array[::String | 1])
+
+        # @api private
+        #
+        # Extract lines of code centered around a particular line within a
+        # source file.
+        #
+        # @param file [String] filename
+        # @param line [Fixnum] line number
+        # @return [String] lines around the target line within the file (2 above
+        #   and 1 below).
+        def lines_around: (untyped file, untyped line) -> untyped
+
+        # @api private
+        #
+        # Adds line numbers to all lines and highlights the line where the
+        # failure occurred using html `span` tags.
+        #
+        # @param highlighted [String] syntax-highlighted snippet surrounding the
+        #   offending line of code
+        # @param offending_line [Fixnum] line where failure occurred
+        # @return [String] completed snippet
+        def post_process: (untyped highlighted, untyped offending_line) -> untyped
+      end
+    end
+  end
+end

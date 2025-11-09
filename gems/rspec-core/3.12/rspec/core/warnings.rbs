@@ -1,0 +1,19 @@
+module RSpec
+  module Core
+    # @private
+    module Warnings
+      # @private
+      #
+      # Used internally to print deprecation warnings.
+      def deprecate: (untyped deprecated, ?::Hash[untyped, untyped] data) -> untyped
+
+      # @private
+      #
+      # Used internally to print deprecation warnings.
+      def warn_deprecation: (untyped message, ?::Hash[untyped, untyped] opts) -> untyped
+
+      # @private
+      def warn_with: (untyped message, ?::Hash[untyped, untyped] options) -> untyped
+    end
+  end
+end

@@ -1,0 +1,18 @@
+module RSpec
+  module Core
+    # @private
+    class OutputWrapper
+      @output: untyped
+
+      # @private
+      attr_accessor output: untyped
+
+      # @private
+      def initialize: (untyped output) -> void
+
+      def respond_to?: (untyped name, ?bool priv) -> untyped
+
+      def method_missing: (untyped name, *untyped args) { (?) -> untyped } -> untyped
+    end
+  end
+end

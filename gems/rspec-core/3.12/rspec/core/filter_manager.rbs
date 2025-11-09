@@ -1,0 +1,116 @@
+module RSpec
+  module Core
+    # @private
+    class FilterManager
+      @exclusions: untyped
+
+      @inclusions: untyped
+
+      attr_reader exclusions: untyped
+
+      attr_reader inclusions: untyped
+
+      def initialize: () -> void
+
+      # @api private
+      #
+      # @param file_path [String]
+      # @param line_numbers [Array]
+      def add_location: (untyped file_path, untyped line_numbers) -> untyped
+
+      def add_ids: (untyped rerun_path, untyped scoped_ids) -> untyped
+
+      def empty?: () -> untyped
+
+      def prune: (untyped examples) -> untyped
+
+      def exclude: (*untyped args) -> untyped
+
+      def exclude_only: (*untyped args) -> untyped
+
+      def exclude_with_low_priority: (*untyped args) -> untyped
+
+      def include: (*untyped args) -> untyped
+
+      def include_only: (*untyped args) -> untyped
+
+      def include_with_low_priority: (*untyped args) -> untyped
+
+      private
+
+      def add_path_to_arrays_filter: (untyped filter_key, untyped path, untyped values) -> untyped
+
+      def prune_conditionally_filtered_examples: (untyped examples) -> untyped
+
+      # When a user specifies a particular spec location, that takes priority
+      # over any exclusion filters (such as if the spec is tagged with `:slow`
+      # and there is a `:slow => true` exclusion filter), but only for specs
+      # defined in the same file as the location filters. Excluded specs in
+      # other files should still be excluded.
+      def file_scoped_include?: (untyped ex_metadata, untyped ids, untyped locations) { () -> untyped } -> untyped
+    end
+
+    # @private
+    class FilterRules
+      @rules: untyped
+
+      PROC_HEX_NUMBER: ::Regexp
+
+      PROJECT_DIR: untyped
+
+      attr_accessor opposite: untyped
+
+      attr_reader rules: untyped
+
+      def self.build: () -> ::Array[untyped]
+
+      def initialize: (?::Hash[untyped, untyped] rules) -> void
+
+      def add: (untyped updated) -> untyped
+
+      def add_with_low_priority: (untyped updated) -> untyped
+
+      def use_only: (untyped updated) -> untyped
+
+      def clear: () -> untyped
+
+      def delete: (untyped key) -> untyped
+
+      def fetch: (*untyped args) { (?) -> untyped } -> untyped
+
+      def []: (untyped key) -> untyped
+
+      def empty?: () -> untyped
+
+      def each_pair: () { (?) -> untyped } -> untyped
+
+      def description: () -> untyped
+
+      def include_example?: (untyped example) -> untyped
+    end
+
+    # @private
+    ExclusionRules: untyped
+
+    # @private
+    class InclusionRules < FilterRules
+      def add: (*untyped args) -> untyped
+
+      def add_with_low_priority: (*untyped args) -> untyped
+
+      def include_example?: (untyped example) -> untyped
+
+      def standalone?: () -> untyped
+
+      def split_file_scoped_rules: () -> untyped
+
+      private
+
+      def apply_standalone_filter: (untyped updated) -> (true | nil)
+
+      def replace_filters: (untyped new_rules) -> untyped
+
+      def is_standalone_filter?: (untyped rules) -> untyped
+    end
+  end
+end

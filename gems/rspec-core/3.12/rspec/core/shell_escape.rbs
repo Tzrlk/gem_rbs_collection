@@ -1,0 +1,26 @@
+module RSpec
+  module Core
+    # @private
+    # Deals with the fact that `shellwords` only works on POSIX systems.
+    module ShellEscape
+      def self?.quote: (untyped argument) -> ::String
+
+      # :nocov:
+      alias escape quote
+
+      def self?.escape: (untyped shell_command) -> untyped
+
+      # Known shells that require quoting: zsh, csh, tcsh.
+      #
+      # Feel free to add other shells to this list that are known to
+      # allow `rspec ./some_spec.rb[1:1]` syntax without quoting the id.
+      #
+      # @private
+      SHELLS_ALLOWING_UNQUOTED_IDS: ::Array["bash" | "ksh" | "fish"]
+
+      def self?.conditionally_quote: (untyped id) -> untyped
+
+      def self?.shell_allows_unquoted_ids?: () -> untyped
+    end
+  end
+end

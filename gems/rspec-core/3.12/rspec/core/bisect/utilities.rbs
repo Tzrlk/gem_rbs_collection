@@ -1,0 +1,47 @@
+module RSpec
+  module Core
+    module Bisect
+      # @private
+      ExampleSetDescriptor: untyped
+
+      # @private
+      class BisectFailedError < StandardError
+        def self.for_failed_spec_run: (untyped spec_output) -> untyped
+      end
+
+      # Wraps a `formatter` providing a simple means to notify it in place
+      # of an `RSpec::Core::Reporter`, without involving configuration in
+      # any way.
+      # @private
+      class Notifier
+        @formatter: untyped
+
+        def initialize: (untyped formatter) -> void
+
+        def publish: (untyped event, *untyped args) -> (nil | untyped)
+      end
+
+      # Wraps a pipe to support sending objects between a child and
+      # parent process. Where supported, encoding is explicitly
+      # set to ensure binary data is able to pass from child to
+      # parent.
+      # @private
+      class Channel
+        @read_io: untyped
+
+        @write_io: untyped
+
+        MARSHAL_DUMP_ENCODING: untyped
+
+        def initialize: () -> void
+
+        def send: (untyped message) -> untyped
+
+        # rubocop:disable Security/MarshalLoad
+        def receive: () -> untyped
+
+        def close: () -> untyped
+      end
+    end
+  end
+end

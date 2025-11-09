@@ -1,0 +1,23 @@
+module RSpec
+  module Core
+    module Formatters
+      # This class isn't loaded at runtime but serves to document all of the
+      # notifications implemented as part of the standard interface. The
+      # reporter will issue these during a normal test suite run, but a
+      # formatter will only receive those notifications it has registered
+      # itself to receive. To register a formatter call:
+      #
+      # `::RSpec::Core::Formatters.register class, :list, :of, :notifications`
+      #
+      # e.g.
+      #
+      # `::RSpec::Core::Formatters.register self, :start, :example_started`
+      #
+      # @see RSpec::Core::Formatters::BaseFormatter
+      # @see RSpec::Core::Formatters::BaseTextFormatter
+      # @see RSpec::Core::Reporter
+      class Protocol
+      end
+    end
+  end
+end

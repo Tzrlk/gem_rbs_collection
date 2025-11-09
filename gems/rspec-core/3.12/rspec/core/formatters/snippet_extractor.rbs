@@ -1,0 +1,59 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class SnippetExtractor
+        @source: untyped
+
+        @beginning_line_number: untyped
+
+        @max_line_count: untyped
+
+        @line_range_of_expression: untyped
+
+        @expression_node: untyped
+
+        NoSuchFileError: untyped
+
+        NoSuchLineError: untyped
+
+        def self.extract_line_at: (untyped file_path, untyped line_number) -> untyped
+
+        def self.source_from_file: (untyped path) -> untyped
+
+        NoExpressionAtLineError: untyped
+
+        attr_reader source: untyped
+
+        attr_reader beginning_line_number: untyped
+
+        attr_reader max_line_count: untyped
+
+        def self.extract_expression_lines_at: (untyped file_path, untyped beginning_line_number, ?untyped? max_line_count) -> (::Array[untyped] | untyped)
+
+        def initialize: (untyped source, untyped beginning_line_number, ?untyped? max_line_count) -> void
+
+        def expression_lines: () -> untyped
+
+        private
+
+        def line_range_of_expression: () -> untyped
+
+        def unclosed_tokens_in_line_range: (untyped line_range) -> untyped
+
+        def line_range_of_location_nodes_in_expression: () -> ::Range[untyped]
+
+        def expression_node: () -> untyped
+
+        def expression_outmost_node?: (untyped node) -> (true | false | untyped)
+
+        def location_nodes_at_beginning_line: () -> untyped
+
+        # :nocov:
+        def self.extract_expression_lines_at: (untyped file_path, untyped beginning_line_number) -> ::Array[untyped]
+
+        def self.least_indentation_from: (untyped lines) -> untyped
+      end
+    end
+  end
+end

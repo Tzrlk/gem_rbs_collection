@@ -1,0 +1,57 @@
+module RSpec
+  module Core
+    module Formatters
+      # RSpec's built-in formatters are all subclasses of
+      # RSpec::Core::Formatters::BaseFormatter.
+      #
+      # @see RSpec::Core::Formatters::BaseTextFormatter
+      # @see RSpec::Core::Reporter
+      # @see RSpec::Core::Formatters::Protocol
+      class BaseFormatter
+        @output: untyped
+
+        @example_group: untyped
+
+        @example_count: untyped
+
+        @old_sync: untyped
+
+        attr_accessor example_group: untyped
+
+        attr_reader output: untyped
+
+        # @api public
+        # @param output [IO] the formatter output
+        # @see RSpec::Core::Formatters::Protocol#initialize
+        def initialize: (untyped output) -> void
+
+        # @api public
+        #
+        # @param notification [StartNotification]
+        # @see RSpec::Core::Formatters::Protocol#start
+        def start: (untyped notification) -> untyped
+
+        # @api public
+        #
+        # @param notification [GroupNotification] containing example_group
+        #   subclass of `RSpec::Core::ExampleGroup`
+        # @see RSpec::Core::Formatters::Protocol#example_group_started
+        def example_group_started: (untyped notification) -> untyped
+
+        # @api public
+        #
+        # @param _notification [NullNotification] (Ignored)
+        # @see RSpec::Core::Formatters::Protocol#close
+        def close: (untyped _notification) -> untyped
+
+        private
+
+        def start_sync_output: () -> (untyped | nil)
+
+        def restore_sync_output: () -> (untyped | nil)
+
+        def output_supports_sync: () -> untyped
+      end
+    end
+  end
+end

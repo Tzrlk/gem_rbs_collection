@@ -1,0 +1,70 @@
+module RSpec
+  module Core
+    module Formatters
+      # Formatters helpers.
+      module Helpers
+        # @private
+        SUB_SECOND_PRECISION: 5
+
+        # @private
+        DEFAULT_PRECISION: 2
+
+        # @api private
+        #
+        # Formats seconds into a human-readable string.
+        #
+        # @param duration [Float, Fixnum] in seconds
+        # @return [String] human-readable time
+        #
+        # @example
+        #    format_duration(1) #=>  "1 minute 1 second"
+        #    format_duration(135.14) #=> "2 minutes 15.14 seconds"
+        def self.format_duration: (untyped duration) -> untyped
+
+        # @api private
+        #
+        # Formats seconds to have 5 digits of precision with trailing zeros
+        # removed if the number is less than 1 or with 2 digits of precision if
+        # the number is greater than zero.
+        #
+        # @param float [Float]
+        # @return [String] formatted float
+        #
+        # @example
+        #    format_seconds(0.000006) #=> "0.00001"
+        #    format_seconds(0.020000) #=> "0.02"
+        #    format_seconds(1.00000000001) #=> "1"
+        #
+        # The precision used is set in {Helpers::SUB_SECOND_PRECISION} and
+        # {Helpers::DEFAULT_PRECISION}.
+        #
+        # @see #strip_trailing_zeroes
+        def self.format_seconds: (untyped float, ?untyped? precision) -> ("0" | untyped)
+
+        # @api private
+        #
+        # Remove trailing zeros from a string.
+        #
+        # Only remove trailing zeros after a decimal place.
+        # see: http://rubular.com/r/ojtTydOgpn
+        #
+        # @param string [String] string with trailing zeros
+        # @return [String] string with trailing zeros removed
+        def self.strip_trailing_zeroes: (untyped string) -> untyped
+
+        # @api private
+        #
+        # Pluralize a word based on a count.
+        #
+        # @param count [Fixnum] number of objects
+        # @param string [String] word to be pluralized
+        # @return [String] pluralized word
+        def self.pluralize: (untyped count, untyped string) -> ::String
+
+        # @api private
+        # Given a list of example ids, organizes them into a compact, ordered list.
+        def self.organize_ids: (untyped ids) -> untyped
+      end
+    end
+  end
+end

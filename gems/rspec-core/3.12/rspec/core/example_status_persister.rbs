@@ -1,0 +1,139 @@
+module RSpec
+  module Core
+    # Persists example ids and their statuses so that we can filter
+    # to just the ones that failed the last time they ran.
+    # @private
+    class ExampleStatusPersister
+      @examples: untyped
+
+      @file_name: untyped
+
+      def self.load_from: (untyped file_name) -> (::Array[untyped] | untyped)
+
+      def self.persist: (untyped examples, untyped file_name) -> untyped
+
+      def initialize: (untyped examples, untyped file_name) -> void
+
+      def persist: () -> untyped
+
+      private
+
+      def dump_statuses: (untyped unparsed_previous_runs) -> untyped
+
+      def statuses_from_this_run: () -> untyped
+    end
+
+    # Merges together a list of example statuses from this run
+    # and a list from previous runs (presumably loaded from disk).
+    # Each example status object is expected to be a hash with
+    # at least an `:example_id` and a `:status` key. Examples that
+    # were loaded but not executed (due to filtering, `--fail-fast`
+    # or whatever) should have a `:status` of `UNKNOWN_STATUS`.
+    #
+    # This will produce a new list that:
+    #   - Will be missing examples from previous runs that we know for sure
+    #     no longer exist.
+    #   - Will have the latest known status for any examples that either
+    #     definitively do exist or may still exist.
+    #   - Is sorted by file name and example definition order, so that
+    #     the saved file is easily scannable if users want to inspect it.
+    # @private
+    class ExampleStatusMerger
+      @this_run: untyped
+
+      @from_previous_runs: untyped
+
+      @file_exists_cache: untyped
+
+      @loaded_spec_files: untyped
+
+      def self.merge: (untyped this_run, untyped from_previous_runs) -> untyped
+
+      def initialize: (untyped this_run, untyped from_previous_runs) -> void
+
+      def merge: () -> untyped
+
+      private
+
+      def hash_from: (untyped example_list) -> untyped
+
+      def delete_previous_examples_that_no_longer_exist: () -> untyped
+
+      def example_must_no_longer_exist?: (untyped ex_id) -> (false | true | untyped)
+
+      def loaded_spec_files: () -> untyped
+
+      def spec_file_from: (untyped ex_id) -> untyped
+
+      def sort_value_from: (untyped example) -> untyped
+    end
+
+    # Dumps a list of hashes in a pretty, human readable format
+    # for later parsing. The hashes are expected to have symbol
+    # keys and string values, and each hash should have the same
+    # set of keys.
+    # @private
+    class ExampleStatusDumper
+      @examples: untyped
+
+      @formatted_header_rows: untyped
+
+      @formatted_value_rows: untyped
+
+      @rows: untyped
+
+      @headers: untyped
+
+      @column_widths: untyped
+
+      def self.dump: (untyped examples) -> untyped
+
+      def initialize: (untyped examples) -> void
+
+      def dump: () -> (nil | untyped)
+
+      private
+
+      def formatted_header_rows: () -> untyped
+
+      def formatted_value_rows: () -> untyped
+
+      def rows: () -> untyped
+
+      def formatted_row_from: (untyped row_values) -> untyped
+
+      def headers: () -> untyped
+
+      def column_widths: () -> untyped
+    end
+
+    # Parses a string that has been previously dumped by ExampleStatusDumper.
+    # Note that this parser is a bit naive in that it does a simple split on
+    # "\n" and " | ", with no concern for handling escaping. For now, that's
+    # OK because the values we plan to persist (example id, status, and perhaps
+    # example duration) are highly unlikely to contain "\n" or " | " -- after
+    # all, who puts those in file names?
+    # @private
+    class ExampleStatusParser
+      @header_line: untyped
+
+      @row_lines: untyped
+
+      @headers: untyped
+
+      def self.parse: (untyped string) -> untyped
+
+      def initialize: (untyped string) -> void
+
+      def parse: () -> untyped
+
+      private
+
+      def parse_row: (untyped line) -> untyped
+
+      def headers: () -> untyped
+
+      def split_line: (untyped line) -> untyped
+    end
+  end
+end

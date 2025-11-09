@@ -1,0 +1,47 @@
+module RSpec
+  module Core
+    # @private
+    class DRbRunner
+      @options: untyped
+
+      @configuration: untyped
+
+      @drb_argv: untyped
+
+      def initialize: (untyped options, ?untyped configuration) -> void
+
+      def drb_port: () -> untyped
+
+      def run: (untyped err, untyped out) -> untyped
+
+      def drb_argv: () -> untyped
+    end
+
+    # @private
+    class DRbOptions
+      @submitted_options: untyped
+
+      @filter_manager: untyped
+
+      def initialize: (untyped submitted_options, untyped filter_manager) -> void
+
+      def options: () -> untyped
+
+      def add_failure_exit_code: (untyped argv) -> (nil | untyped)
+
+      def add_error_exit_code: (untyped argv) -> (nil | untyped)
+
+      def add_full_description: (untyped argv) -> (nil | untyped)
+
+      CONDITIONAL_FILTERS: ::Array[:if | :unless]
+
+      def add_filter: (untyped argv, untyped name, untyped hash) -> (untyped | nil)
+
+      def add_formatters: (untyped argv) -> (untyped | nil)
+
+      def add_libs: (untyped argv) -> (untyped | nil)
+
+      def add_requires: (untyped argv) -> (untyped | nil)
+    end
+  end
+end

@@ -1,0 +1,18 @@
+module RSpec
+  module Core
+    module MockingAdapters
+      # @private
+      module Flexmock
+        include ::FlexMock::MockContainer
+
+        def self.framework_name: () -> :flexmock
+
+        def setup_mocks_for_rspec: () -> nil
+
+        def verify_mocks_for_rspec: () -> untyped
+
+        def teardown_mocks_for_rspec: () -> untyped
+      end
+    end
+  end
+end

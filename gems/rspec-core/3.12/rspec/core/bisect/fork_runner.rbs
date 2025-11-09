@@ -1,0 +1,81 @@
+module RSpec
+  module Core
+    module Bisect
+      # A Bisect runner that runs requested subsets of the suite by forking
+      # sub-processes. The main process bootstraps RSpec and the application
+      # environment (including preloading files specified via `--require`) so
+      # that the individual spec runs do not have to re-pay that cost.  Each
+      # spec run happens in a forked process, ensuring that the spec files are
+      # not loaded in the main process.
+      #
+      # For most projects, bisections that use `ForkRunner` instead of
+      # `ShellRunner` will finish significantly faster, because the `ShellRunner`
+      # pays the cost of booting RSpec and the app environment on _every_ run of
+      # a subset. In contrast, `ForkRunner` pays that cost only once.
+      #
+      # However, not all projects can use `ForkRunner`. Obviously, on platforms
+      # that do not support forking (e.g. Windows), it cannot be used. In addition,
+      # it can cause problems for some projects that put side-effectful spec
+      # bootstrapping logic that should run on every spec run directly at the top
+      # level in a file loaded by `--require`, rather than in a `before(:suite)`
+      # hook. For example, consider a project that relies on some top-level logic
+      # in `spec_helper` to boot a Redis server for the test suite, intending the
+      # Redis bootstrapping to happen on every spec run. With `ShellRunner`, the
+      # bootstrapping logic will happen for each run of any subset of the suite,
+      # but for `ForkRunner`, such logic will only get run once, when the
+      # `RunDispatcher` boots the application environment. This might cause
+      # problems. The solution is for users to move the bootstrapping logic into
+      # a `before(:suite)` hook, or use the slower `ShellRunner`.
+      #
+      # @private
+      class ForkRunner
+        @shell_command: untyped
+
+        @channel: untyped
+
+        @run_dispatcher: untyped
+
+        @original_results: untyped
+
+        def self.start: (untyped shell_command, untyped spec_runner) { (untyped) -> untyped } -> untyped
+
+        def self.name: () -> :fork
+
+        def initialize: (untyped shell_command, untyped spec_runner) -> void
+
+        def run: (untyped locations) -> untyped
+
+        def original_results: () -> untyped
+
+        def shutdown: () -> untyped
+
+        private
+
+        def dispatch_run: (untyped run_descriptor) -> untyped
+
+        # @private
+        class RunDispatcher
+          @runner: untyped
+
+          @channel: untyped
+
+          @spec_output: untyped
+
+          def initialize: (untyped runner, untyped channel) -> void
+
+          def dispatch_specs: (untyped run_descriptor) -> untyped
+
+          private
+
+          def run_specs: (untyped run_descriptor) -> untyped
+        end
+
+        class CaptureFormatter < Formatters::BaseBisectFormatter
+          attr_accessor results: untyped
+
+          alias notify_results results=
+        end
+      end
+    end
+  end
+end

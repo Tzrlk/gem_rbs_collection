@@ -1,0 +1,60 @@
+module RSpec
+  module Core
+    module Bisect
+      # @private
+      # Contains the core bisect logic. Searches for examples we can ignore by
+      # repeatedly running different subsets of the suite.
+      class ExampleMinimizer
+        @shell_command: untyped
+
+        @runner: untyped
+
+        @notifier: untyped
+
+        @non_failing_example_ids: untyped
+
+        attr_reader shell_command: untyped
+
+        attr_reader runner: untyped
+
+        attr_reader all_example_ids: untyped
+
+        attr_reader failed_example_ids: untyped
+
+        attr_accessor remaining_ids: untyped
+
+        def initialize: (untyped shell_command, untyped runner, untyped notifier) -> void
+
+        def find_minimal_repro: () -> untyped
+
+        def bisect: (untyped candidate_ids) -> (nil | untyped)
+
+        def bisect_over: (untyped candidate_ids) -> (nil | untyped)
+
+        def currently_needed_ids: () -> untyped
+
+        def repro_command_for_currently_needed_ids: () -> (untyped | "(Not yet enough information to provide any repro command)")
+
+        # @private
+        # Convenience class for describing a subset of the candidate examples
+        ExampleRange: untyped
+
+        private
+
+        def example_range: (untyped ids) -> untyped
+
+        def prep: () -> untyped
+
+        def non_failing_example_ids: () -> untyped
+
+        def get_expected_failures_for?: (untyped ids) -> untyped
+
+        def track_duration: () { () -> untyped } -> ::Array[untyped]
+
+        def abort_if_ordering_inconsistent: (untyped results) -> (nil | untyped)
+
+        def notify: (*untyped args) -> untyped
+      end
+    end
+  end
+end

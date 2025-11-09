@@ -1,0 +1,29 @@
+module RSpec
+  module Core
+    module Formatters
+      # Contains common logic for formatters used by `--bisect` to communicate results
+      # back to the bisect runner.
+      #
+      # Subclasses must define a `notify_results(all_example_ids, failed_example_ids)`
+      # method.
+      # @private
+      class BaseBisectFormatter
+        @all_example_ids: untyped
+
+        @failed_example_ids: untyped
+
+        @remaining_failures: untyped
+
+        def self.inherited: (untyped formatter) -> untyped
+
+        def initialize: (untyped expected_failures) -> void
+
+        def example_failed: (untyped notification) -> untyped
+
+        def example_finished: (untyped notification) -> (nil | untyped)
+
+        def start_dump: (untyped _notification) -> untyped
+      end
+    end
+  end
+end

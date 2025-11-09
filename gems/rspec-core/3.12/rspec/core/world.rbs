@@ -1,0 +1,175 @@
+module RSpec
+  module Core
+    # @api private
+    #
+    # Internal container for global non-configuration data.
+    class World
+      @wants_to_quit: untyped
+
+      @rspec_is_quitting: untyped
+
+      @configuration: untyped
+
+      @example_groups: untyped
+
+      @example_group_counts_by_spec_file: untyped
+
+      @filtered_examples: untyped
+
+      @syntax_highlighter: untyped
+
+      @shared_example_group_registry: untyped
+
+      @sources_by_path: untyped
+
+      @descending_declaration_line_numbers_by_file: untyped
+
+      # @private
+      attr_reader example_groups: untyped
+
+      # @private
+      attr_reader filtered_examples: untyped
+
+      # @private
+      attr_reader example_group_counts_by_spec_file: untyped
+
+      # Used internally to determine what to do when a SIGINT is received.
+      attr_accessor wants_to_quit: untyped
+
+      # Used internally to signify that a SystemExit occurred in
+      # `Configuration#load_file_handling_errors`, and thus examples cannot
+      # be counted accurately. Specifically, we cannot accurately report
+      # "No examples found".
+      # @private
+      attr_accessor rspec_is_quitting: untyped
+
+      # Used internally to signal that a failure outside of an example
+      # has occurred, and that therefore the exit status should indicate
+      # the run failed.
+      # @private
+      attr_accessor non_example_failure: untyped
+
+      def initialize: (?untyped configuration) -> void
+
+      # @api public
+      #
+      # Prepares filters so that they apply to example groups when they run.
+      #
+      # This is a separate method so that filters can be modified/replaced and
+      # examples refiltered during a process's lifetime, which can be useful for
+      # a custom runner.
+      def prepare_example_filtering: () -> untyped
+
+      # @api private
+      #
+      # Apply ordering strategy from configuration to example groups.
+      def ordered_example_groups: () -> untyped
+
+      # @api private
+      #
+      # Reset world to 'scratch' before running suite.
+      def reset: () -> untyped
+
+      # @private
+      def filter_manager: () -> untyped
+
+      # @private
+      def registered_example_group_files: () -> untyped
+
+      # @api private
+      #
+      # Records an example group.
+      def record: (untyped example_group) -> untyped
+
+      # @private
+      def num_example_groups_defined_in: (untyped file) -> untyped
+
+      # @private
+      def shared_example_group_registry: () -> untyped
+
+      # @private
+      def inclusion_filter: () -> untyped
+
+      # @private
+      def exclusion_filter: () -> untyped
+
+      # @api private
+      #
+      # Get count of examples to be run.
+      def example_count: (?untyped groups) -> untyped
+
+      # @private
+      def all_example_groups: () -> untyped
+
+      # @private
+      def all_examples: () -> untyped
+
+      # @private
+      # Traverses the tree of each top level group.
+      # For each it yields the group, then the children, recursively.
+      # Halts the traversal of a branch of the tree as soon as the passed block returns true.
+      # Note that siblings groups and their sub-trees will continue to be explored.
+      # This is intended to make it easy to find the top-most group that satisfies some
+      # condition.
+      def traverse_example_group_trees_until: () { (?) -> untyped } -> untyped
+
+      # @api private
+      #
+      # Find line number of previous declaration.
+      def preceding_declaration_line: (untyped absolute_file_name, untyped filter_line) -> (nil | untyped)
+
+      # @private
+      def reporter: () -> untyped
+
+      # @private
+      def source_from_file: (untyped path) -> untyped
+
+      # @private
+      def syntax_highlighter: () -> untyped
+
+      # @api private
+      #
+      # Notify reporter of filters.
+      def announce_filters: () -> (nil | untyped)
+
+      # @private
+      def report_filter_message: (untyped message) -> (untyped | nil)
+
+      # @private
+      def everything_filtered_message: () -> "\nAll examples were filtered out"
+
+      # @api private
+      #
+      # Add inclusion filters to announcement message.
+      def announce_inclusion_filter: (untyped announcements) -> (nil | untyped)
+
+      # @api private
+      #
+      # Add exclusion filters to announcement message.
+      def announce_exclusion_filter: (untyped announcements) -> (nil | untyped)
+
+      private
+
+      def descending_declaration_line_numbers_by_file: () -> untyped
+
+      def fail_if_config_and_cli_options_invalid: () -> (nil | untyped)
+
+      # @private
+      # Provides a null implementation for initial use by configuration.
+      module Null
+        def self.non_example_failure: () -> nil
+
+        def self.non_example_failure=: (untyped _) -> nil
+
+        def self.registered_example_group_files: () -> ::Array[untyped]
+
+        def self.traverse_example_group_trees_until: () -> nil
+
+        # :nocov:
+        def self.example_groups: () -> ::Array[untyped]
+
+        def self.all_example_groups: () -> ::Array[untyped]
+      end
+    end
+  end
+end

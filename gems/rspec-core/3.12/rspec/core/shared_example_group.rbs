@@ -1,0 +1,139 @@
+module RSpec
+  module Core
+    # Represents some functionality that is shared with multiple example groups.
+    # The functionality is defined by the provided block, which is lazily
+    # eval'd when the `SharedExampleGroupModule` instance is included in an example
+    # group.
+    class SharedExampleGroupModule < Module
+      @description: untyped
+
+      @definition: untyped
+
+      @metadata: untyped
+
+      # @private
+      attr_reader definition: untyped
+
+      def initialize: (untyped description, untyped definition, untyped metadata) -> void
+
+      # Provides a human-readable representation of this module.
+      def inspect: () -> ::String
+
+      alias to_s inspect
+
+      # Ruby callback for when a module is included in another module is class.
+      # Our definition evaluates the shared group block in the context of the
+      # including example group.
+      def included: (untyped klass) -> untyped
+
+      # @private
+      def include_in: (untyped klass, untyped inclusion_line, untyped args, untyped customization_block) -> untyped
+    end
+
+    # Shared example groups let you define common context and/or common
+    # examples that you wish to use in multiple example groups.
+    #
+    # When defined, the shared group block is stored for later evaluation.
+    # It can later be included in an example group either explicitly
+    # (using `include_examples`, `include_context` or `it_behaves_like`)
+    # or implicitly (via matching metadata).
+    #
+    # Named shared example groups are scoped based on where they are
+    # defined. Shared groups defined in an example group are available
+    # for inclusion in that example group or any child example groups,
+    # but not in any parent or sibling example groups. Shared example
+    # groups defined at the top level can be included from any example group.
+    module SharedExampleGroup
+      # @overload shared_examples(name, &block)
+      #   @param name [String, Symbol, Module] identifer to use when looking up
+      #     this shared group
+      #   @param block The block to be eval'd
+      # @overload shared_examples(name, metadata, &block)
+      #   @param name [String, Symbol, Module] identifer to use when looking up
+      #     this shared group
+      #   @param metadata [Array<Symbol>, Hash] metadata to attach to this
+      #     group; any example group or example with matching metadata will
+      #     automatically include this shared example group.
+      #   @param block The block to be eval'd
+      #
+      # Stores the block for later use. The block will be evaluated
+      # in the context of an example group via `include_examples`,
+      # `include_context`, or `it_behaves_like`.
+      #
+      # @example
+      #   shared_examples "auditable" do
+      #     it "stores an audit record on save!" do
+      #       expect { auditable.save! }.to change(Audit, :count).by(1)
+      #     end
+      #   end
+      #
+      #   RSpec.describe Account do
+      #     it_behaves_like "auditable" do
+      #       let(:auditable) { Account.new }
+      #     end
+      #   end
+      #
+      # @see ExampleGroup.it_behaves_like
+      # @see ExampleGroup.include_examples
+      # @see ExampleGroup.include_context
+      def shared_examples: (untyped name, *untyped args) { (?) -> untyped } -> untyped
+
+      alias shared_context shared_examples
+
+      alias shared_examples_for shared_examples
+
+      # @api private
+      #
+      # Shared examples top level DSL.
+      module TopLevelDSL
+        self.@exposed_globally: untyped
+
+        # @private
+        def self.definitions: () -> untyped
+
+        # @private
+        def self.exposed_globally?: () -> untyped
+
+        # @api private
+        #
+        # Adds the top level DSL methods to Module and the top level binding.
+        def self.expose_globally!: () -> (nil | untyped)
+
+        # @api private
+        #
+        # Removes the top level DSL methods to Module and the top level binding.
+        def self.remove_globally!: () -> (nil | untyped)
+      end
+
+      # @private
+      class Registry
+        @shared_example_groups: untyped
+
+        def add: (untyped context, untyped name, *untyped metadata_args) ?{ (?) -> untyped } -> untyped
+
+        def find: (untyped lookup_contexts, untyped name) -> untyped
+
+        private
+
+        # TODO: remove this in RSpec 4. This exists only to support
+        # `config.shared_context_metadata_behavior == :trigger_inclusion`,
+        # the legacy behavior of shared context metadata, which we do
+        # not want to support in RSpec 4.
+        def legacy_add: (untyped context, untyped name, *untyped metadata_args) { (?) -> untyped } -> (nil | untyped)
+
+        def shared_example_groups: () -> untyped
+
+        def valid_name?: (untyped candidate) -> untyped
+
+        def warn_if_key_taken: (untyped context, untyped key, untyped new_block) -> (nil | untyped)
+
+        def formatted_location: (untyped block) -> untyped
+
+        def ensure_block_has_source_location: (untyped _block) -> nil
+
+        # :nocov:
+        def ensure_block_has_source_location: (untyped block) { () -> untyped } -> untyped
+      end
+    end
+  end
+end

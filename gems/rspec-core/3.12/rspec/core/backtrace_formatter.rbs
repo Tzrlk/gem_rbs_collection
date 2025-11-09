@@ -1,0 +1,36 @@
+module RSpec
+  module Core
+    # @private
+    class BacktraceFormatter
+      @full_backtrace: untyped
+
+      @exclusion_patterns: untyped
+
+      @inclusion_patterns: untyped
+
+      # @private
+      attr_accessor exclusion_patterns: untyped
+
+      # @private
+      attr_accessor inclusion_patterns: untyped
+
+      def initialize: () -> void
+
+      attr_writer full_backtrace: untyped
+
+      def full_backtrace?: () -> untyped
+
+      def filter_gem: (untyped gem_name) -> untyped
+
+      def format_backtrace: (untyped backtrace, ?::Hash[untyped, untyped] options) -> (::Array[untyped] | untyped)
+
+      def backtrace_line: (untyped line) -> (untyped | nil)
+
+      def exclude?: (untyped line) -> (false | untyped)
+
+      private
+
+      def matches?: (untyped patterns, untyped line) -> untyped
+    end
+  end
+end

@@ -1,0 +1,366 @@
+module RSpec::Core
+  # Notifications are value objects passed to formatters to provide them
+  # with information about a particular event of interest.
+  module Notifications
+    # @private
+    module NullColorizer
+      def self?.wrap: (untyped line, untyped _code_or_symbol) -> untyped
+    end
+
+    # The `StartNotification` represents a notification sent by the reporter
+    # when the suite is started. It contains the expected amount of examples
+    # to be executed, and the load time of RSpec.
+    #
+    # @attr count [Fixnum] the number counted
+    # @attr load_time [Float] the number of seconds taken to boot RSpec
+    #                         and load the spec files
+    StartNotification: untyped
+
+    # The `ExampleNotification` represents notifications sent by the reporter
+    # which contain information about the current (or soon to be) example.
+    # It is used by formatters to access information about that example.
+    #
+    # @example
+    #   def example_started(notification)
+    #     puts "Hey I started #{notification.example.description}"
+    #   end
+    #
+    # @attr example [RSpec::Core::Example] the current example
+    ExampleNotification: untyped
+
+    class ExampleNotification
+      # @private
+      def self.for: (untyped example) -> untyped
+    end
+
+    # The `ExamplesNotification` represents notifications sent by the reporter
+    # which contain information about the suites examples.
+    #
+    # @example
+    #   def stop(notification)
+    #     puts "Hey I ran #{notification.examples.size}"
+    #   end
+    #
+    class ExamplesNotification
+      @reporter: untyped
+
+      @notifications: untyped
+
+      @failed_notifications: untyped
+
+      @pending_notifications: untyped
+
+      def initialize: (untyped reporter) -> void
+
+      # @return [Array<RSpec::Core::Example>] list of examples
+      def examples: () -> untyped
+
+      # @return [Array<RSpec::Core::Example>] list of failed examples
+      def failed_examples: () -> untyped
+
+      # @return [Array<RSpec::Core::Example>] list of pending examples
+      def pending_examples: () -> untyped
+
+      # @return [Array<RSpec::Core::Notifications::ExampleNotification>]
+      #         returns examples as notifications
+      def notifications: () -> untyped
+
+      # @return [Array<RSpec::Core::Notifications::FailedExampleNotification>]
+      #         returns failed examples as notifications
+      def failure_notifications: () -> untyped
+
+      # @return [Array<RSpec::Core::Notifications::SkippedExampleNotification,
+      #                 RSpec::Core::Notifications::PendingExampleFailedAsExpectedNotification>]
+      #         returns pending examples as notifications
+      def pending_notifications: () -> untyped
+
+      # @return [String] The list of failed examples, fully formatted in the way
+      #   that RSpec's built-in formatters emit.
+      def fully_formatted_failed_examples: (?untyped colorizer) -> untyped
+
+      # @return [String] The list of pending examples, fully formatted in the
+      #   way that RSpec's built-in formatters emit.
+      def fully_formatted_pending_examples: (?untyped colorizer) -> untyped
+
+      private
+
+      def format_examples: (untyped examples) -> untyped
+    end
+
+    # The `FailedExampleNotification` extends `ExampleNotification` with
+    # things useful for examples that have failure info -- typically a
+    # failed or pending spec.
+    #
+    # @example
+    #   def example_failed(notification)
+    #     puts "Hey I failed :("
+    #     puts "Here's my stack trace"
+    #     puts notification.exception.backtrace.join("\n")
+    #   end
+    #
+    # @attr [RSpec::Core::Example] example the current example
+    # @see ExampleNotification
+    class FailedExampleNotification < ExampleNotification
+      @exception_presenter: untyped
+
+      # @return [Exception] The example failure
+      def exception: () -> untyped
+
+      # @return [String] The example description
+      def description: () -> untyped
+
+      # Returns the message generated for this failure line by line.
+      #
+      # @return [Array<String>] The example failure message
+      def message_lines: () -> untyped
+
+      # Returns the message generated for this failure colorized line by line.
+      #
+      # @param colorizer [#wrap] An object to colorize the message_lines by
+      # @return [Array<String>] The example failure message colorized
+      def colorized_message_lines: (?untyped colorizer) -> untyped
+
+      # Returns the failures formatted backtrace.
+      #
+      # @return [Array<String>] the examples backtrace lines
+      def formatted_backtrace: () -> untyped
+
+      # Returns the failures colorized formatted backtrace.
+      #
+      # @param colorizer [#wrap] An object to colorize the message_lines by
+      # @return [Array<String>] the examples colorized backtrace lines
+      def colorized_formatted_backtrace: (?untyped colorizer) -> untyped
+
+      # @return [String] The failure information fully formatted in the way that
+      #   RSpec's built-in formatters emit.
+      def fully_formatted: (untyped failure_number, ?untyped colorizer) -> untyped
+
+      # @return [Array<string>] The failure information fully formatted in the way that
+      #   RSpec's built-in formatters emit, split by line.
+      def fully_formatted_lines: (untyped failure_number, ?untyped colorizer) -> untyped
+
+      private
+
+      def initialize: (untyped example, ?untyped exception_presenter) -> void
+    end
+
+    # @deprecated Use {FailedExampleNotification} instead.
+    class PendingExampleFixedNotification < FailedExampleNotification
+    end
+
+    # @deprecated Use {FailedExampleNotification} instead.
+    class PendingExampleFailedAsExpectedNotification < FailedExampleNotification
+    end
+
+    # The `SkippedExampleNotification` extends `ExampleNotification` with
+    # things useful for specs that are skipped.
+    #
+    # @attr [RSpec::Core::Example] example the current example
+    # @see ExampleNotification
+    class SkippedExampleNotification < ExampleNotification
+      # @return [String] The pending detail fully formatted in the way that
+      #   RSpec's built-in formatters emit.
+      def fully_formatted: (untyped pending_number, ?untyped colorizer) -> untyped
+    end
+
+    # The `GroupNotification` represents notifications sent by the reporter
+    # which contain information about the currently running (or soon to be)
+    # example group. It is used by formatters to access information about that
+    # group.
+    #
+    # @example
+    #   def example_group_started(notification)
+    #     puts "Hey I started #{notification.group.description}"
+    #   end
+    # @attr group [RSpec::Core::ExampleGroup] the current group
+    GroupNotification: untyped
+
+    # The `MessageNotification` encapsulates generic messages that the reporter
+    # sends to formatters.
+    #
+    # @attr message [String] the message
+    MessageNotification: untyped
+
+    # The `SeedNotification` holds the seed used to randomize examples and
+    # whether that seed has been used or not.
+    #
+    # @attr seed [Fixnum] the seed used to randomize ordering
+    # @attr used [Boolean] whether the seed has been used or not
+    SeedNotification: untyped
+
+    class SeedNotification
+      # @api
+      # @return [Boolean] has the seed been used?
+      def seed_used?: () -> untyped
+
+      # @return [String] The seed information fully formatted in the way that
+      #   RSpec's built-in formatters emit.
+      def fully_formatted: () -> ::String
+    end
+
+    # The `SummaryNotification` holds information about the results of running
+    # a test suite. It is used by formatters to provide information at the end
+    # of the test run.
+    #
+    # @attr duration [Float] the time taken (in seconds) to run the suite
+    # @attr examples [Array<RSpec::Core::Example>] the examples run
+    # @attr failed_examples [Array<RSpec::Core::Example>] the failed examples
+    # @attr pending_examples [Array<RSpec::Core::Example>] the pending examples
+    # @attr load_time [Float] the number of seconds taken to boot RSpec
+    #                         and load the spec files
+    # @attr errors_outside_of_examples_count [Integer] the number of errors that
+    #                                                  have occurred processing
+    #                                                  the spec suite
+    SummaryNotification: untyped
+
+    class SummaryNotification
+      @example_count: untyped
+
+      @failure_count: untyped
+
+      @pending_count: untyped
+
+      @duplicate_rerun_locations: untyped
+
+      # @api
+      # @return [Fixnum] the number of examples run
+      def example_count: () -> untyped
+
+      # @api
+      # @return [Fixnum] the number of failed examples
+      def failure_count: () -> untyped
+
+      # @api
+      # @return [Fixnum] the number of pending examples
+      def pending_count: () -> untyped
+
+      # @api
+      # @return [String] A line summarising the result totals of the spec run.
+      def totals_line: () -> untyped
+
+      # @api public
+      #
+      # Wraps the results line with colors based on the configured
+      # colors for failure, pending, and success. Defaults to red,
+      # yellow, green accordingly.
+      #
+      # @param colorizer [#wrap] An object which supports wrapping text with
+      #                          specific colors.
+      # @return [String] A colorized results line.
+      def colorized_totals_line: (?untyped colorizer) -> untyped
+
+      # @api public
+      #
+      # Formats failures into a rerunable command format.
+      #
+      # @param colorizer [#wrap] An object which supports wrapping text with
+      #                          specific colors.
+      # @return [String] A colorized summary line.
+      def colorized_rerun_commands: (?untyped colorizer) -> untyped
+
+      # @return [String] a formatted version of the time it took to run the
+      #   suite
+      def formatted_duration: () -> untyped
+
+      # @return [String] a formatted version of the time it took to boot RSpec
+      #   and load the spec files
+      def formatted_load_time: () -> untyped
+
+      # @return [String] The summary information fully formatted in the way that
+      #   RSpec's built-in formatters emit.
+      def fully_formatted: (?untyped colorizer) -> untyped
+
+      private
+
+      include RSpec::Core::ShellEscape
+
+      def rerun_argument_for: (untyped example) -> untyped
+
+      def duplicate_rerun_locations: () -> untyped
+    end
+
+    # The `ProfileNotification` holds information about the results of running a
+    # test suite when profiling is enabled. It is used by formatters to provide
+    # information at the end of the test run for profiling information.
+    #
+    # @attr duration [Float] the time taken (in seconds) to run the suite
+    # @attr examples [Array<RSpec::Core::Example>] the examples run
+    # @attr number_of_examples [Fixnum] the number of examples to profile
+    # @attr example_groups [Array<RSpec::Core::Profiler>] example groups run
+    class ProfileNotification
+      @duration: untyped
+
+      @examples: untyped
+
+      @number_of_examples: untyped
+
+      @example_groups: untyped
+
+      @slowest_examples: untyped
+
+      @slow_duration: untyped
+
+      @percentage: untyped
+
+      @slowest_groups: untyped
+
+      def initialize: (untyped duration, untyped examples, untyped number_of_examples, untyped example_groups) -> void
+
+      attr_reader duration: untyped
+
+      attr_reader examples: untyped
+
+      attr_reader number_of_examples: untyped
+
+      # @return [Array<RSpec::Core::Example>] the slowest examples
+      def slowest_examples: () -> untyped
+
+      # @return [Float] the time taken (in seconds) to run the slowest examples
+      def slow_duration: () -> untyped
+
+      # @return [String] the percentage of total time taken
+      def percentage: () -> untyped
+
+      # @return [Array<RSpec::Core::Example>] the slowest example groups
+      def slowest_groups: () -> untyped
+
+      private
+
+      def calculate_slowest_groups: () -> (::Hash[untyped, untyped] | untyped)
+    end
+
+    # The `DeprecationNotification` is issued by the reporter when a deprecated
+    # part of RSpec is encountered. It represents information about the
+    # deprecated call site.
+    #
+    # @attr message [String] A custom message about the deprecation
+    # @attr deprecated [String] A custom message about the deprecation (alias of
+    #   message)
+    # @attr replacement [String] An optional replacement for the deprecation
+    # @attr call_site [String] An optional call site from which the deprecation
+    #   was issued
+    DeprecationNotification: untyped
+
+    class DeprecationNotification
+      # @api
+      # Convenience way to initialize the notification
+      def self.from_hash: (untyped data) -> untyped
+    end
+
+    # `NullNotification` represents a placeholder value for notifications that
+    # currently require no information, but we may wish to extend in future.
+    class NullNotification
+    end
+
+    # `CustomNotification` is used when sending custom events to formatters /
+    # other registered listeners, it creates attributes based on supplied hash
+    # of options.
+    class CustomNotification < Struct
+      # @param options [Hash] A hash of method / value pairs to create on this notification
+      # @return [CustomNotification]
+      #
+      # Build a custom notification based on the supplied option key / values.
+      def self.for: (?::Hash[untyped, untyped] options) -> untyped
+    end
+  end
+end

@@ -1,0 +1,46 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class DocumentationFormatter < BaseTextFormatter
+        @group_level: untyped
+
+        @example_running: untyped
+
+        @messages: untyped
+
+        @next_failure_index: untyped
+
+        def initialize: (untyped output) -> void
+
+        def example_started: (untyped _notification) -> untyped
+
+        def example_group_started: (untyped notification) -> untyped
+
+        def example_group_finished: (untyped _notification) -> (untyped | nil)
+
+        def example_passed: (untyped passed) -> untyped
+
+        def example_pending: (untyped pending) -> untyped
+
+        def example_failed: (untyped failure) -> untyped
+
+        def message: (untyped notification) -> untyped
+
+        private
+
+        def flush_messages: () -> untyped
+
+        def passed_output: (untyped example) -> untyped
+
+        def pending_output: (untyped example, untyped message) -> untyped
+
+        def failure_output: (untyped example) -> untyped
+
+        def next_failure_index: () -> untyped
+
+        def current_indentation: (?::Integer offset) -> untyped
+      end
+    end
+  end
+end

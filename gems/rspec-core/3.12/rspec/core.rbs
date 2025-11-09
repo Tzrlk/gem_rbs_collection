@@ -1,33 +1,125 @@
-# https://github.com/rspec/rspec/blob/main/rspec-core/lib/rspec/core.rb
+# Namespace for all core RSpec code.
 module RSpec
-	extend Core::Warnings
+  self.@world: untyped
 
-	attr_writer world: __todo__
+  self.@configuration: untyped
 
-	def self.reset
-		: () -> void
+  extend RSpec::Core::Warnings
 
-	def self.clear_examples
-		: () -> void
+  # Setters for shared global objects
+  # @api private
+  attr_writer self.configuration: untyped
 
-	attr_accessor self.configuration: Core::Configuration
+  # Setters for shared global objects
+  # @api private
+  attr_writer self.world: untyped
 
-	def self.configure
-		: [T] () { (Core::Configuration) -> T } -> T
+  # Used to ensure examples get reloaded and user configuration gets reset to
+  # defaults between multiple runs in the same process.
+  #
+  # Users must invoke this if they want to have the configuration reset when
+  # they use the runner multiple times within the same process. Users must deal
+  # themselves with re-configuration of RSpec before run.
+  def self.reset: () -> untyped
 
-	# TODO
+  # Used to ensure examples get reloaded between multiple runs in the same
+  # process and ensures user configuration is persisted.
+  #
+  # Users must invoke this if they want to clear all examples but preserve
+  # current configuration when they use the runner multiple times within the
+  # same process.
+  def self.clear_examples: () -> untyped
 
-	module Core
+  # Returns the global [Configuration](RSpec/Core/Configuration) object. While
+  # you _can_ use this method to access the configuration, the more common
+  # convention is to use [RSpec.configure](RSpec#configure-class_method).
+  #
+  # @example
+  #     RSpec.configuration.drb_port = 1234
+  # @see RSpec.configure
+  # @see Core::Configuration
+  def self.configuration: () -> untyped
 
-		class Time
-			attr_reader self.now: ::Time
-		end
+  # Yields the global configuration to a block.
+  # @yield [Configuration] global configuration
+  #
+  # @example
+  #     RSpec.configure do |config|
+  #       config.add_formatter 'documentation'
+  #     end
+  # @see Core::Configuration
+  def self.configure: () ?{ (untyped) -> untyped } -> (untyped | nil)
 
-		attr_reader self.path_to_executable: String
+  # The example being executed.
+  #
+  # The primary audience for this method is library authors who need access
+  # to the example currently being executed and also want to support all
+  # versions of RSpec 2 and 3.
+  #
+  # @example
+  #
+  #     RSpec.configure do |c|
+  #       # context.example is deprecated, but RSpec.current_example is not
+  #       # available until RSpec 3.0.
+  #       fetch_current_example = RSpec.respond_to?(:current_example) ?
+  #         proc { RSpec.current_example } : proc { |context| context.example }
+  #
+  #       c.before(:example) do
+  #         example = fetch_current_example.call(self)
+  #
+  #         # ...
+  #       end
+  #     end
+  #
+  def self.current_example: () -> untyped
 
-	end
+  # Set the current example being executed.
+  # @api private
+  def self.current_example=: (untyped example) -> untyped
 
-	def self.const_missing
-		: (String) -> untyped
+  # Set the current scope rspec is executing in
+  # @api private
+  def self.current_scope=: (untyped scope) -> untyped
 
+  # Get the current RSpec execution scope
+  #
+  # Returns (in order of lifecycle):
+  #   * `:suite` as an initial value, this is outside of the test lifecycle.
+  #   * `:before_suite_hook` during `before(:suite)` hooks.
+  #   * `:before_context_hook` during `before(:context)` hooks.
+  #   * `:before_example_hook` during `before(:example)` hooks and `around(:example)` before `example.run`.
+  #   * `:example` within the example run.
+  #   * `:after_example_hook` during `after(:example)` hooks and `around(:example)` after `example.run`.
+  #   * `:after_context_hook` during `after(:context)` hooks.
+  #   * `:after_suite_hook` during `after(:suite)` hooks.
+  #   * `:suite` as a final value, again this is outside of the test lifecycle.
+  #
+  # Reminder, `:context` hooks have `:all` alias and `:example` hooks have `:each` alias.
+  # @return [Symbol]
+  def self.current_scope: () -> untyped
+
+  # @private
+  # Internal container for global non-configuration data.
+  def self.world: () -> untyped
+
+  # Namespace for the rspec-core code.
+  module Core
+    self.@path_to_executable: untyped
+
+    # @private
+    # This avoids issues with reporting time caused by examples that
+    # change the value/meaning of Time.now without properly restoring
+    # it.
+    class Time
+    end
+
+    # @private path to executable file.
+    def self.path_to_executable: () -> untyped
+  end
+
+  # @private
+  MODULES_TO_AUTOLOAD: { Matchers: "rspec/expectations", Expectations: "rspec/expectations", Mocks: "rspec/mocks" }
+
+  # @private
+  def self.const_missing: (untyped name) -> untyped
 end

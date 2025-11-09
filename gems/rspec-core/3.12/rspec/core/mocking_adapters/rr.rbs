@@ -1,0 +1,19 @@
+module RSpec
+  module Core
+    # @private
+    module MockingAdapters
+      # @private
+      module RR
+        def self.framework_name: () -> :rr
+
+        include ::RR::Extensions::InstanceMethods
+
+        def setup_mocks_for_rspec: () -> untyped
+
+        def verify_mocks_for_rspec: () -> untyped
+
+        def teardown_mocks_for_rspec: () -> untyped
+      end
+    end
+  end
+end

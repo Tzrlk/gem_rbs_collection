@@ -1,0 +1,95 @@
+module RSpec
+  module Core
+    # RSpec rake task
+    #
+    # @see Rakefile
+    class RakeTask < ::Rake::TaskLib
+      @name: untyped
+
+      @ruby_opts: untyped
+
+      @rspec_opts: untyped
+
+      @verbose: untyped
+
+      @fail_on_error: untyped
+
+      @rspec_path: untyped
+
+      @pattern: untyped
+
+      @rspec_load_path: untyped
+
+      include ::Rake::DSL
+
+      include RSpec::Core::ShellEscape
+
+      # Default path to the RSpec executable.
+      DEFAULT_RSPEC_PATH: untyped
+
+      # Default pattern for spec files.
+      DEFAULT_PATTERN: "spec/**{,/*/**}/*_spec.rb"
+
+      # Name of task. Defaults to `:spec`.
+      attr_accessor name: untyped
+
+      # Files matching this pattern will be loaded.
+      # Defaults to `'spec/**{,/*/**}/*_spec.rb'`.
+      attr_accessor pattern: untyped
+
+      # Files matching this pattern will be excluded.
+      # Defaults to `nil`.
+      attr_accessor exclude_pattern: untyped
+
+      # Whether or not to fail Rake when an error occurs (typically when
+      # examples fail). Defaults to `true`.
+      attr_accessor fail_on_error: untyped
+
+      # A message to print to stderr when there are failures.
+      attr_accessor failure_message: untyped
+
+      # Run RSpec with a clean (empty) environment is not supported
+      def with_clean_environment=: (untyped _value) -> untyped
+
+      # Run RSpec with a clean (empty) environment is not supported
+      def with_clean_environment: () -> false
+
+      # Run RSpec with a clean (empty) environment.
+      attr_accessor with_clean_environment: untyped
+
+      # Use verbose output. If this is set to true, the task will print the
+      # executed spec command to stdout. Defaults to `true`.
+      attr_accessor verbose: untyped
+
+      # Command line options to pass to ruby. Defaults to `nil`.
+      attr_accessor ruby_opts: untyped
+
+      # Path to RSpec. Defaults to the absolute path to the
+      # rspec binary from the loaded rspec-core gem.
+      attr_accessor rspec_path: untyped
+
+      # Command line options to pass to RSpec. Defaults to `nil`.
+      attr_accessor rspec_opts: untyped
+
+      def initialize: (*untyped args) { (?) -> untyped } -> void
+
+      # @private
+      def run_task: (untyped verbose) -> (nil | untyped)
+
+      private
+
+      # @private
+      def define: (untyped args) { (?) -> untyped } -> untyped
+
+      def file_inclusion_specification: () -> (untyped | nil | ::String | untyped)
+
+      def file_exclusion_specification: () -> (::String | nil)
+
+      def spec_command: () -> untyped
+
+      def blank: () -> untyped
+
+      def rspec_load_path: () -> untyped
+    end
+  end
+end

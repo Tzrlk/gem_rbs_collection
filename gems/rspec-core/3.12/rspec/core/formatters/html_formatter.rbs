@@ -1,0 +1,55 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class HtmlFormatter < BaseFormatter
+        @failed_examples: untyped
+
+        @example_group_number: untyped
+
+        @example_number: untyped
+
+        @header_red: untyped
+
+        @printer: untyped
+
+        @example_group_red: untyped
+
+        @snippet_extractor: untyped
+
+        def initialize: (untyped output) -> void
+
+        def start: (untyped notification) -> untyped
+
+        def example_group_started: (untyped notification) -> untyped
+
+        def start_dump: (untyped _notification) -> untyped
+
+        def example_started: (untyped _notification) -> untyped
+
+        def example_passed: (untyped passed) -> untyped
+
+        def example_failed: (untyped failure) -> untyped
+
+        def example_pending: (untyped pending) -> untyped
+
+        def dump_summary: (untyped summary) -> untyped
+
+        private
+
+        # The number of the currently running example_group.
+        def example_group_number: () -> untyped
+
+        # The number of the currently running example (a global counter).
+        def example_number: () -> untyped
+
+        def percent_done: () -> untyped
+
+        # Override this method if you wish to output extra HTML for a failed
+        # spec. For example, you could output links to images or other files
+        # produced during the specs.
+        def extra_failure_content: (untyped failure) -> ::String
+      end
+    end
+  end
+end

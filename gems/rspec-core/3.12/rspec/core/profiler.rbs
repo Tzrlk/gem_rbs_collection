@@ -1,0 +1,20 @@
+module RSpec
+  module Core
+    # @private
+    class Profiler
+      @example_groups: untyped
+
+      NOTIFICATIONS: ::Array[:example_group_started | :example_group_finished | :example_started]
+
+      def initialize: () -> void
+
+      attr_reader example_groups: untyped
+
+      def example_group_started: (untyped notification) -> (nil | untyped)
+
+      def example_group_finished: (untyped notification) -> (nil | untyped)
+
+      def example_started: (untyped notification) -> untyped
+    end
+  end
+end

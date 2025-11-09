@@ -1,0 +1,100 @@
+module RSpec
+  module Core
+    # @private
+    module Ordering
+      # @private
+      # The default global ordering (defined order).
+      class Identity
+        def order: (untyped items) -> untyped
+      end
+
+      # @private
+      # Orders items randomly.
+      class Random
+        @configuration: untyped
+
+        @used: untyped
+
+        def initialize: (untyped configuration) -> void
+
+        def used?: () -> untyped
+
+        def order: (untyped items) -> untyped
+
+        private
+
+        # http://en.wikipedia.org/wiki/Jenkins_hash_function
+        # Jenkins provides a good distribution and is simpler than MD5.
+        # It's a bit slower than MD5 (primarily because `Digest::MD5` is
+        # implemented in C) but has the advantage of not requiring us
+        # to load another part of stdlib, which we try to minimize.
+        def jenkins_hash_digest: (untyped string) -> untyped
+
+        MAX_32_BIT: 4294967295
+      end
+
+      # @private
+      # Orders items by modification time (most recent modified first).
+      class RecentlyModified
+        def order: (untyped list) -> untyped
+      end
+
+      # @private
+      # Orders items based on a custom block.
+      class Custom
+        @callable: untyped
+
+        def initialize: (untyped callable) -> void
+
+        def order: (untyped list) -> untyped
+      end
+
+      # @private
+      # Stores the different ordering strategies.
+      class Registry
+        @configuration: untyped
+
+        @strategies: untyped
+
+        def initialize: (untyped configuration) -> void
+
+        def fetch: (untyped name) { (?) -> untyped } -> untyped
+
+        def register: (untyped sym, untyped strategy) -> untyped
+
+        def used_random_seed?: () -> untyped
+      end
+
+      # @private
+      # Manages ordering configuration.
+      #
+      # @note This is not intended to be used externally. Use
+      #       the APIs provided by `RSpec::Core::Configuration` instead.
+      class ConfigurationManager
+        @ordering_registry: untyped
+
+        @seed: untyped
+
+        @seed_forced: untyped
+
+        @order_forced: untyped
+
+        attr_reader seed: untyped
+
+        attr_reader ordering_registry: untyped
+
+        def initialize: () -> void
+
+        def seed_used?: () -> untyped
+
+        def seed=: (untyped seed) -> (nil | untyped)
+
+        def order=: (untyped type) -> untyped
+
+        def force: (untyped hash) -> (untyped | untyped | nil)
+
+        def register_ordering: (untyped name, ?untyped strategy) -> (nil | untyped)
+      end
+    end
+  end
+end

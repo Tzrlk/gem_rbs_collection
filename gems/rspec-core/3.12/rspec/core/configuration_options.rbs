@@ -1,0 +1,99 @@
+module RSpec
+  module Core
+    # Responsible for utilizing externally provided configuration options,
+    # whether via the command line, `.rspec`, `~/.rspec`,
+    # `$XDG_CONFIG_HOME/rspec/options`, `.rspec-local` or a custom options
+    # file.
+    class ConfigurationOptions
+      @args: untyped
+
+      @filter_manager_options: untyped
+
+      @options: untyped
+
+      @command_line_options: untyped
+
+      @local_options: untyped
+
+      @project_options: untyped
+
+      @global_options: untyped
+
+      # @param args [Array<String>] command line arguments
+      def initialize: (untyped args) -> void
+
+      # Updates the provided {Configuration} instance based on the provided
+      # external configuration options.
+      #
+      # @param config [Configuration] the configuration instance to update
+      def configure: (untyped config) -> untyped
+
+      # @api private
+      # Updates the provided {FilterManager} based on the filter options.
+      # @param filter_manager [FilterManager] instance to update
+      def configure_filter_manager: (untyped filter_manager) -> untyped
+
+      # @return [Hash] the final merged options, drawn from all external sources
+      attr_reader options: untyped
+
+      # @return [Array<String>] the original command-line arguments
+      attr_reader args: untyped
+
+      private
+
+      def organize_options: () -> untyped
+
+      UNFORCED_OPTIONS: untyped
+
+      UNPROCESSABLE_OPTIONS: untyped
+
+      def force?: (untyped key) -> untyped
+
+      def order: (untyped keys) -> untyped
+
+      OPTIONS_ORDER: ::Array[:deprecation_stream | :libs | :default_path | :only_failures | :files_or_directories_to_run | :pattern | :exclude_pattern | :order | :requires]
+
+      def process_options_into: (untyped config) -> untyped
+
+      def load_formatters_into: (untyped config) -> (untyped | nil)
+
+      def file_options: () -> ::Array[untyped]
+
+      def env_options: () -> (::Hash[untyped, untyped] | untyped)
+
+      def command_line_options: () -> untyped
+
+      def custom_options: () -> untyped
+
+      def local_options: () -> untyped
+
+      def project_options: () -> untyped
+
+      def global_options: () -> untyped
+
+      def options_from: (untyped path) -> untyped
+
+      def parse_args_ignoring_files_or_dirs_to_run: (untyped args, untyped source) -> untyped
+
+      def args_from_options_file: (untyped path) -> (::Array[untyped] | untyped)
+
+      def options_file_as_erb_string: (untyped path) -> untyped
+
+      def custom_options_file: () -> untyped
+
+      def project_options_file: () -> "./.rspec"
+
+      def local_options_file: () -> "./.rspec-local"
+
+      def global_options_file: () -> untyped
+
+      def xdg_options_file_if_exists: () -> untyped
+
+      def home_options_file_path: () -> untyped
+
+      def xdg_options_file_path: () -> untyped
+
+      def resolve_xdg_config_home: () -> untyped
+    end
+  end
+end

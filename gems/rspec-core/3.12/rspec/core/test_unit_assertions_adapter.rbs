@@ -1,0 +1,10 @@
+module RSpec
+  module Core
+    # @private
+    module TestUnitAssertionsAdapter
+      include ::Test::Unit::Assertions
+
+      include ::RSpec::Core::MinitestAssertionsAdapter
+    end
+  end
+end

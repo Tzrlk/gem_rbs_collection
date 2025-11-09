@@ -1,0 +1,33 @@
+module RSpec
+  module Core
+    # @private
+    module Invocations
+      # @private
+      class InitializeProject
+        def call: (*untyped _args) -> 0
+      end
+
+      # @private
+      class DRbWithFallback
+        def call: (untyped options, untyped err, untyped out) -> untyped
+      end
+
+      # @private
+      class Bisect
+        def call: (untyped options, untyped err, untyped out) -> untyped
+
+        private
+
+        def bisect_formatter_klass_for: (untyped argument) -> untyped
+      end
+
+      # @private
+      class PrintVersion
+        def call: (untyped _options, untyped _err, untyped out) -> 0
+      end
+
+      # @private
+      PrintHelp: untyped
+    end
+  end
+end

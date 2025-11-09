@@ -1,0 +1,28 @@
+module RSpec::Core
+  # @private
+  class Parser
+    @original_args: untyped
+
+    def self.parse: (untyped args, ?untyped? source) -> untyped
+
+    attr_reader original_args: untyped
+
+    def initialize: (untyped original_args) -> void
+
+    def parse: (?untyped? source) -> ({ files_or_directories_to_run: ::Array[untyped] } | untyped)
+
+    private
+
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    def parser: (untyped options) -> untyped
+
+    def add_tag_filter: (untyped options, untyped filter_type, untyped tag_name, ?bool value) -> untyped
+
+    def set_fail_fast: (untyped options, untyped value) -> untyped
+
+    def configure_only_failures: (untyped options) -> untyped
+  end
+end

@@ -1,0 +1,60 @@
+module RSpec
+  module Core
+    module Bisect
+      # Provides an API to generate shell commands to run the suite for a
+      # set of locations, using the given bisect server to capture the results.
+      # @private
+      class ShellCommand
+        @original_cli_args: untyped
+
+        @reusable_cli_options: untyped
+
+        @original_cli_args_without_locations: untyped
+
+        @parsed_original_cli_options: untyped
+
+        @load_path: untyped
+
+        attr_reader original_cli_args: untyped
+
+        def initialize: (untyped original_cli_args) -> void
+
+        def command_for: (untyped locations, untyped server) -> untyped
+
+        def repro_command_from: (untyped locations) -> untyped
+
+        def original_locations: () -> untyped
+
+        def bisect_environment_hash: () -> ({ "SPEC_OPTS" => untyped } | ::Hash[untyped, untyped])
+
+        def spec_opts_without_bisect: () -> untyped
+
+        private
+
+        include RSpec::Core::ShellEscape
+
+        # :nocov:
+        alias open3_safe_escape quote
+
+        alias open3_safe_escape escape
+
+        def environment_repro_parts: () -> untyped
+
+        def reusable_cli_options: () -> untyped
+
+        def original_cli_args_without_locations: () -> untyped
+
+        def parsed_original_cli_options: () -> untyped
+
+        def load_path: () -> untyped
+
+        # Path to the currently running Ruby executable, borrowed from Rake:
+        # https://github.com/ruby/rake/blob/v10.4.2/lib/rake/file_utils.rb#L8-L12
+        # Note that we skip `ENV['RUBY']` because we don't have to deal with running
+        # RSpec from within a MRI source repository:
+        # https://github.com/ruby/rake/commit/968682759b3b65e42748cd2befb2ff3e982272d9
+        RUBY: untyped
+      end
+    end
+  end
+end

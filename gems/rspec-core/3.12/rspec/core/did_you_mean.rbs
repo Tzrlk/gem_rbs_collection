@@ -1,0 +1,27 @@
+module RSpec
+  module Core
+    # @private
+    # Wrapper around Ruby's `DidYouMean::SpellChecker` when available to provide file name suggestions.
+    class DidYouMean
+      @relative_file_name: untyped
+
+      attr_reader relative_file_name: untyped
+
+      def initialize: (untyped relative_file_name) -> void
+
+      # provide probable suggestions
+      def call: () -> ("" | untyped)
+
+      # return a hint if API for ::DidYouMean::SpellChecker not supported
+      def call: () -> "\nHint: Install the `did_you_mean` gem in order to provide suggestions for similarly named files."
+
+      private
+
+      def formats: (untyped probables) -> untyped
+
+      def top_and_tail: (untyped rspec_format) -> untyped
+
+      def red_font: (untyped mytext) -> untyped
+    end
+  end
+end

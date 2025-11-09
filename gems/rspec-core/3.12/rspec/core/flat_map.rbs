@@ -1,0 +1,8 @@
+module RSpec
+  module Core
+    # @private
+    module FlatMap
+      def self?.flat_map: (untyped array) { (?) -> untyped } -> untyped
+    end
+  end
+end

@@ -1,0 +1,23 @@
+# This is borrowed (slightly modified) from Scott Taylor's
+# project_path project:
+#   http://github.com/smtlaissezfaire/project_path
+module RSpec
+  module Core
+    # @private
+    module RubyProject
+      @project_root: untyped
+
+      def self?.add_to_load_path: (*untyped dirs) -> untyped
+
+      def self?.add_dir_to_load_path: (untyped dir) -> (untyped | nil)
+
+      def self?.root: () -> untyped
+
+      def self?.determine_root: () -> untyped
+
+      def self?.find_first_parent_containing: (untyped dir) -> untyped
+
+      def self?.ascend_until: () { (untyped) -> untyped } -> untyped
+    end
+  end
+end

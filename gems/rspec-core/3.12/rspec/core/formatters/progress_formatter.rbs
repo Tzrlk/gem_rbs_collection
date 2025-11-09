@@ -1,0 +1,16 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class ProgressFormatter < BaseTextFormatter
+        def example_passed: (untyped _notification) -> untyped
+
+        def example_pending: (untyped _notification) -> untyped
+
+        def example_failed: (untyped _notification) -> untyped
+
+        def start_dump: (untyped _notification) -> untyped
+      end
+    end
+  end
+end

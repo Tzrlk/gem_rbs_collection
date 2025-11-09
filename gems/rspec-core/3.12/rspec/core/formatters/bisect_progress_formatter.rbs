@@ -1,0 +1,73 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      # Produces progress output while bisecting.
+      class BisectProgressFormatter < BaseTextFormatter
+        @bisect_runner: untyped
+
+        @round_count: untyped
+
+        def initialize: (untyped output, untyped bisect_runner) -> void
+
+        def bisect_starting: (untyped notification) -> untyped
+
+        def bisect_original_run_complete: (untyped notification) -> untyped
+
+        def bisect_dependency_check_started: (untyped _notification) -> untyped
+
+        def bisect_dependency_check_passed: (untyped _notification) -> untyped
+
+        def bisect_dependency_check_failed: (untyped _notification) -> untyped
+
+        def bisect_round_started: (untyped notification, ?bool include_trailing_space) -> untyped
+
+        def bisect_round_ignoring_ids: (untyped notification) -> untyped
+
+        def bisect_round_detected_multiple_culprits: (untyped notification) -> untyped
+
+        def bisect_individual_run_complete: (untyped _) -> untyped
+
+        def bisect_complete: (untyped notification) -> untyped
+
+        def bisect_repro_command: (untyped notification) -> untyped
+
+        def bisect_failed: (untyped notification) -> untyped
+
+        def bisect_aborted: (untyped notification) -> untyped
+
+        private
+
+        def bisect_started_message: (untyped notification) -> ::String
+      end
+
+      # @private
+      # Produces detailed debug output while bisecting. Used when bisect is
+      # performed with `--bisect=verbose`. Designed to provide details for
+      # us when we need to troubleshoot bisect bugs.
+      class BisectDebugFormatter < BisectProgressFormatter
+        def bisect_original_run_complete: (untyped notification) -> untyped
+
+        def bisect_individual_run_start: (untyped notification) -> untyped
+
+        def bisect_individual_run_complete: (untyped notification) -> untyped
+
+        def bisect_dependency_check_passed: (untyped _notification) -> untyped
+
+        def bisect_dependency_check_failed: (untyped _notification) -> untyped
+
+        def bisect_round_started: (untyped notification) -> untyped
+
+        def bisect_round_ignoring_ids: (untyped notification) -> untyped
+
+        def bisect_round_detected_multiple_culprits: (untyped _notification) -> untyped
+
+        private
+
+        def describe_ids: (untyped description, untyped ids) -> ::String
+
+        def bisect_started_message: (untyped notification) -> ::String
+      end
+    end
+  end
+end

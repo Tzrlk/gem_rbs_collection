@@ -1,0 +1,46 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      # Provides terminal syntax highlighting of code snippets
+      # when coderay is available.
+      class SyntaxHighlighter
+        @configuration: untyped
+
+        @color_enabled_implementation: untyped
+
+        def initialize: (untyped configuration) -> void
+
+        def highlight: (untyped lines) -> untyped
+
+        # rubocop:disable Lint/RescueException
+        # rubocop:disable Lint/HandleExceptions
+        def self.attempt_to_add_rspec_terms_to_coderay_keywords: () -> untyped
+
+        private
+
+        # :nocov:
+        def implementation: () -> untyped
+
+        def color_enabled_implementation: () -> untyped
+
+        # @private
+        module CodeRayImplementation
+          RESET_CODE: "\e[0m"
+
+          def self.highlight_syntax: (untyped lines) -> untyped
+        end
+
+        # @private
+        module NoSyntaxHighlightingImplementation
+          def self.highlight_syntax: (untyped lines) -> untyped
+        end
+
+        # @private
+        # Not sure why, but our code above (and/or coderay itself) does not work
+        # on Windows, so we disable the feature on Windows.
+        WindowsImplementation: untyped
+      end
+    end
+  end
+end

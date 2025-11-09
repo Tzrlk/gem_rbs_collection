@@ -1,0 +1,144 @@
+# ## Built-in Formatters
+#
+# * progress (default) - Prints dots for passing examples, `F` for failures, `*`
+#                        for pending.
+# * documentation - Prints the docstrings passed to `describe` and `it` methods
+#                   (and their aliases).
+# * html
+# * json - Useful for archiving data for subsequent analysis.
+#
+# The progress formatter is the default, but you can choose any one or more of
+# the other formatters by passing with the `--format` (or `-f` for short)
+# command-line option, e.g.
+#
+#     rspec --format documentation
+#
+# You can also send the output of multiple formatters to different streams, e.g.
+#
+#     rspec --format documentation --format html --out results.html
+#
+# This example sends the output of the documentation formatter to `$stdout`, and
+# the output of the html formatter to results.html.
+#
+# ## Custom Formatters
+#
+# You can tell RSpec to use a custom formatter by passing its path and name to
+# the `rspec` command. For example, if you define MyCustomFormatter in
+# path/to/my_custom_formatter.rb, you would type this command:
+#
+#     rspec --require path/to/my_custom_formatter.rb --format MyCustomFormatter
+#
+# The reporter calls every formatter with this protocol:
+#
+# * To start
+#   * `start(StartNotification)`
+# * Once per example group
+#   * `example_group_started(GroupNotification)`
+# * Once per example
+#   * `example_started(ExampleNotification)`
+# * One of these per example, depending on outcome
+#   * `example_passed(ExampleNotification)`
+#   * `example_failed(FailedExampleNotification)`
+#   * `example_pending(ExampleNotification)`
+# * Optionally at any time
+#   * `message(MessageNotification)`
+# * At the end of the suite
+#   * `stop(ExamplesNotification)`
+#   * `start_dump(NullNotification)`
+#   * `dump_pending(ExamplesNotification)`
+#   * `dump_failures(ExamplesNotification)`
+#   * `dump_summary(SummaryNotification)`
+#   * `seed(SeedNotification)`
+#   * `close(NullNotification)`
+#
+# Only the notifications to which you subscribe your formatter will be called
+# on your formatter. To subscribe your formatter use:
+# `RSpec::Core::Formatters#register` e.g.
+#
+# `RSpec::Core::Formatters.register FormatterClassName, :example_passed, :example_failed`
+#
+# We recommend you implement the methods yourself; for simplicity we provide the
+# default formatter output via our notification objects but if you prefer you
+# can subclass `RSpec::Core::Formatters::BaseTextFormatter` and override the
+# methods you wish to enhance.
+#
+# @see RSpec::Core::Formatters::BaseTextFormatter
+# @see RSpec::Core::Reporter
+module RSpec::Core::Formatters
+  # Register the formatter class
+  # @param formatter_class [Class] formatter class to register
+  # @param notifications [Array<Symbol>] one or more notifications to be
+  #   registered to the specified formatter
+  #
+  # @see RSpec::Core::Formatters::BaseFormatter
+  def self.register: (untyped formatter_class, *untyped notifications) -> untyped
+
+  # @api private
+  #
+  # `RSpec::Core::Formatters::Loader` is an internal class for
+  # managing formatters used by a particular configuration. It is
+  # not expected to be used directly, but only through the configuration
+  # interface.
+  class Loader
+    self.@formatters: untyped
+
+    @formatters: untyped
+
+    @reporter: untyped
+
+    # @api private
+    #
+    # Internal formatters are stored here when loaded.
+    def self.formatters: () -> untyped
+
+    # @api private
+    def initialize: (untyped reporter) -> void
+
+    # @return [Array] the loaded formatters
+    attr_reader formatters: untyped
+
+    # @return [Reporter] the reporter
+    attr_reader reporter: untyped
+
+    # @return [String] the default formatter to setup, defaults to `progress`
+    attr_accessor default_formatter: untyped
+
+    # @private
+    def prepare_default: (untyped output_stream, untyped deprecation_stream) -> untyped
+
+    # @private
+    def setup_default: (untyped output_stream, untyped deprecation_stream) -> (nil | untyped)
+
+    # @private
+    def add: (untyped formatter_to_use, *untyped paths) -> (nil | untyped)
+
+    private
+
+    def find_formatter: (untyped formatter_to_use) -> untyped
+
+    def register: (untyped formatter, untyped notifications) -> (nil | untyped)
+
+    def duplicate_formatter_exists?: (untyped new_formatter) -> untyped
+
+    def has_matching_output?: (untyped formatter, untyped new_formatter) -> (true | untyped)
+
+    def existing_formatter_implements?: (untyped notification) -> untyped
+
+    def built_in_formatter: (untyped key) -> untyped
+
+    def notifications_for: (untyped formatter_class) -> untyped
+
+    def custom_formatter: (untyped formatter_ref) -> (untyped | untyped | nil)
+
+    def string_const?: (untyped str) -> untyped
+
+    def path_for: (untyped const_ref) -> untyped
+
+    def underscore_with_fix_for_non_standard_rspec_naming: (untyped string) -> untyped
+
+    # activesupport/lib/active_support/inflector/methods.rb, line 48
+    def underscore: (untyped camel_cased_word) -> untyped
+
+    def open_stream: (untyped path_or_wrapper) -> untyped
+  end
+end

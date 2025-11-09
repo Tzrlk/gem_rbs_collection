@@ -1,0 +1,36 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class JsonFormatter < BaseFormatter
+        @output_hash: untyped
+
+        attr_reader output_hash: untyped
+
+        def initialize: (untyped output) -> void
+
+        def message: (untyped notification) -> untyped
+
+        def dump_summary: (untyped summary) -> untyped
+
+        def stop: (untyped notification) -> untyped
+
+        def seed: (untyped notification) -> (nil | untyped)
+
+        def close: (untyped _notification) -> untyped
+
+        def dump_profile: (untyped profile) -> untyped
+
+        # @api private
+        def dump_profile_slowest_examples: (untyped profile) -> untyped
+
+        # @api private
+        def dump_profile_slowest_example_groups: (untyped profile) -> untyped
+
+        private
+
+        def format_example: (untyped example) -> { id: untyped, description: untyped, full_description: untyped, status: untyped, file_path: untyped, line_number: untyped, run_time: untyped, pending_message: untyped }
+      end
+    end
+  end
+end

@@ -1,0 +1,34 @@
+module RSpec
+  module Core
+    module Bisect
+      # Provides an API to run the suite for a set of locations, using
+      # the given bisect server to capture the results.
+      #
+      # Sets of specs are run by shelling out.
+      # @private
+      class ShellRunner
+        @server: untyped
+
+        @shell_command: untyped
+
+        @original_results: untyped
+
+        def self.start: (untyped shell_command, untyped _spec_runner) { (untyped) -> untyped } -> untyped
+
+        def self.name: () -> :shell
+
+        def initialize: (untyped server, untyped shell_command) -> void
+
+        def run: (untyped locations) -> untyped
+
+        def original_results: () -> untyped
+
+        private
+
+        def run_locations: (*untyped capture_args) -> untyped
+
+        def run_command: (untyped cmd) -> untyped
+      end
+    end
+  end
+end

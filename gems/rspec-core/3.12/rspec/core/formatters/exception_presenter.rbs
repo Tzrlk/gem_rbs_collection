@@ -1,0 +1,225 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class ExceptionPresenter
+        @exception: untyped
+
+        @example: untyped
+
+        @message_color: untyped
+
+        @description: untyped
+
+        @detail_formatter: untyped
+
+        @extra_detail_formatter: untyped
+
+        @backtrace_formatter: untyped
+
+        @indentation: untyped
+
+        @skip_shared_group_trace: untyped
+
+        @failure_lines: untyped
+
+        @exception_lines: untyped
+
+        @extra_failure_lines: untyped
+
+        attr_reader exception: untyped
+
+        attr_reader example: untyped
+
+        attr_reader description: untyped
+
+        private
+
+        attr_reader message_color: untyped
+
+        attr_reader detail_formatter: untyped
+
+        attr_reader extra_detail_formatter: untyped
+
+        attr_reader backtrace_formatter: untyped
+
+        public
+
+        def initialize: (untyped exception, untyped example, ?::Hash[untyped, untyped] options) -> void
+
+        def message_lines: () -> untyped
+
+        def colorized_message_lines: (?untyped colorizer) -> untyped
+
+        def formatted_backtrace: (?untyped exception) -> untyped
+
+        def formatted_cause: (untyped exception) -> untyped
+
+        # :nocov:
+        def formatted_cause: (untyped _) -> ::Array[untyped]
+
+        def colorized_formatted_backtrace: (?untyped colorizer) -> untyped
+
+        def fully_formatted: (untyped failure_number, ?untyped colorizer) -> untyped
+
+        def fully_formatted_lines: (untyped failure_number, untyped colorizer) -> untyped
+
+        private
+
+        def final_exception: (untyped exception, ?untyped previous) -> untyped
+
+        def encoding_of: (untyped string) -> untyped
+
+        def encoded_string: (untyped string) -> untyped
+
+        # :nocov:
+        def encoding_of: (untyped _string) -> nil
+
+        def indent_lines: (untyped lines, untyped failure_number) -> untyped
+
+        def exception_class_name: (?untyped exception) -> untyped
+
+        def failure_lines: () -> untyped
+
+        def failure_slash_error_lines: () -> untyped
+
+        # rubocop:disable Lint/RescueException
+        def exception_message_string: (untyped exception) -> untyped
+
+        def exception_lines: () -> untyped
+
+        def extra_failure_lines: () -> untyped
+
+        def add_shared_group_lines: (untyped lines, untyped colorizer) -> untyped
+
+        def read_failed_lines: () -> untyped
+
+        def find_failed_line: () -> untyped
+
+        def formatted_message_and_backtrace: (untyped colorizer) -> untyped
+
+        def encoded_description: (untyped description) -> (nil | untyped)
+
+        def encoded_description: (untyped description) -> untyped
+
+        def exception_backtrace: () -> untyped
+
+        # @private
+        # Configuring the `ExceptionPresenter` with the right set of options to handle
+        # pending vs failed vs skipped and aggregated (or not) failures is not simple.
+        # This class takes care of building an appropriate `ExceptionPresenter` for the
+        # provided example.
+        class Factory
+          @example: untyped
+
+          @execution_result: untyped
+
+          @exception: untyped
+
+          def build: () -> untyped
+
+          private
+
+          def initialize: (untyped example) -> void
+
+          def options: () -> untyped
+
+          def pending_options: () -> ({ description: ::String, message_color: untyped, failure_lines: ::Array[::String] } | { message_color: untyped, detail_formatter: untyped } | nil)
+
+          def with_multiple_error_options_as_needed: (untyped exception, untyped options) -> untyped
+
+          def multiple_exceptions_error?: (untyped exception) -> untyped
+
+          def multiple_exception_summarizer: (untyped exception, untyped prior_detail_formatter, untyped color) -> untyped
+
+          def sub_failure_list_formatter: (untyped exception, untyped message_color) -> untyped
+
+          # @private
+          # Used to prevent a confusing backtrace from showing up from the `aggregate_failures`
+          # block declared for `:aggregate_failures` metadata.
+          module EmptyBacktraceFormatter
+            def self.format_backtrace: () -> ::Array[untyped]
+          end
+
+          # @private
+          class CommonBacktraceTruncater
+            @parent: untyped
+
+            def initialize: (untyped parent) -> void
+
+            def with_truncated_backtrace: (untyped child) -> untyped
+          end
+        end
+
+        # @private
+        PENDING_DETAIL_FORMATTER: untyped
+      end
+    end
+
+    # Provides a single exception instance that provides access to
+    # multiple sub-exceptions. This is used in situations where a single
+    # individual spec has multiple exceptions, such as one in the `it` block
+    # and one in an `after` block.
+    class MultipleExceptionError < StandardError
+      @failures: untyped
+
+      @other_errors: untyped
+
+      @all_exceptions: untyped
+
+      @aggregation_metadata: untyped
+
+      @aggregation_block_label: untyped
+
+      # @private
+      # Used so there is a common module in the ancestor chain of this class
+      # and `RSpec::Expectations::MultipleExpectationsNotMetError`, which allows
+      # code to detect exceptions that are instances of either, without first
+      # checking to see if rspec-expectations is loaded.
+      module InterfaceTag
+        # Appends the provided exception to the list.
+        # @param exception [Exception] Exception to append to the list.
+        # @private
+        def add: (untyped exception) -> (nil | untyped)
+
+        # Provides a way to force `ex` to be something that satisfies the multiple
+        # exception error interface. If it already satisfies it, it will be returned;
+        # otherwise it will wrap it in a `MultipleExceptionError`.
+        # @private
+        def self.for: (untyped ex) -> untyped
+      end
+
+      include InterfaceTag
+
+      # @return [Array<Exception>] The list of failures.
+      attr_reader failures: untyped
+
+      # @return [Array<Exception>] The list of other errors.
+      attr_reader other_errors: untyped
+
+      # @return [Array<Exception>] The list of failures and other exceptions, combined.
+      attr_reader all_exceptions: untyped
+
+      # @return [Hash] Metadata used by RSpec for formatting purposes.
+      attr_reader aggregation_metadata: untyped
+
+      # @return [nil] Provided only for interface compatibility with
+      #   `RSpec::Expectations::MultipleExpectationsNotMetError`.
+      attr_reader aggregation_block_label: untyped
+
+      # @param exceptions [Array<Exception>] The initial list of exceptions.
+      def initialize: (*untyped exceptions) -> void
+
+      # @return [String] Combines all the exception messages into a single string.
+      # @note RSpec does not actually use this -- instead it formats each exception
+      #   individually.
+      def message: () -> untyped
+
+      # @return [String] A summary of the failure, including the block label and a count of failures.
+      def summary: () -> ::String
+
+      # return [String] A description of the failure/error counts.
+      def exception_count_description: () -> (untyped | ::String)
+    end
+  end
+end

@@ -1,0 +1,160 @@
+module RSpec::Core
+  # A reporter will send notifications to listeners, usually formatters for the
+  # spec suite run.
+  class Reporter
+    @configuration: untyped
+
+    @listeners: untyped
+
+    @examples: untyped
+
+    @failed_examples: untyped
+
+    @pending_examples: untyped
+
+    @duration: untyped
+
+    @non_example_exception_count: untyped
+
+    @setup_default: untyped
+
+    @setup: untyped
+
+    @profiler: untyped
+
+    @start: untyped
+
+    @load_time: untyped
+
+    # @private
+    RSPEC_NOTIFICATIONS: untyped
+
+    def initialize: (untyped configuration) -> void
+
+    # @private
+    attr_reader examples: untyped
+
+    # @private
+    attr_reader failed_examples: untyped
+
+    # @private
+    attr_reader pending_examples: untyped
+
+    # Registers a listener to a list of notifications. The reporter will send
+    # notification of events to all registered listeners.
+    #
+    # @param listener [Object] An object that wishes to be notified of reporter
+    #   events
+    # @param notifications [Array] Array of symbols represents the events a
+    #   listener wishes to subscribe too
+    def register_listener: (untyped listener, *untyped notifications) -> true
+
+    # @private
+    def prepare_default: (untyped loader, untyped output_stream, untyped deprecation_stream) -> untyped
+
+    # @private
+    def registered_listeners: (untyped notification) -> untyped
+
+    # @overload report(count, &block)
+    # @overload report(count, &block)
+    # @param expected_example_count [Integer] the number of examples being run
+    # @yield [Block] block yields itself for further reporting.
+    #
+    # Initializes the report run and yields itself for further reporting. The
+    # block is required, so that the reporter can manage cleaning up after the
+    # run.
+    #
+    # @example
+    #
+    #     reporter.report(group.examples.size) do |r|
+    #       example_groups.map {|g| g.run(r) }
+    #     end
+    #
+    def report: (untyped expected_example_count) { (untyped) -> untyped } -> untyped
+
+    # @param exit_code [Integer] the exit_code to be return by the reporter
+    #
+    # Reports a run that exited early without having run any examples.
+    #
+    def exit_early: (untyped exit_code) -> untyped
+
+    # @private
+    def start: (untyped expected_example_count, ?untyped time) -> untyped
+
+    # @param message [#to_s] A message object to send to formatters
+    #
+    # Send a custom message to supporting formatters.
+    def message: (untyped message) -> untyped
+
+    # @param event [Symbol] Name of the custom event to trigger on formatters
+    # @param options [Hash] Hash of arguments to provide via `CustomNotification`
+    #
+    # Publish a custom event to supporting registered formatters.
+    # @see RSpec::Core::Notifications::CustomNotification
+    def publish: (untyped event, ?::Hash[untyped, untyped] options) -> untyped
+
+    # @private
+    def example_group_started: (untyped group) -> (untyped | nil)
+
+    # @private
+    def example_group_finished: (untyped group) -> (untyped | nil)
+
+    # @private
+    def example_started: (untyped example) -> untyped
+
+    # @private
+    def example_finished: (untyped example) -> untyped
+
+    # @private
+    def example_passed: (untyped example) -> untyped
+
+    # @private
+    def example_failed: (untyped example) -> untyped
+
+    # @private
+    def example_pending: (untyped example) -> untyped
+
+    # @private
+    def deprecation: (untyped hash) -> untyped
+
+    # @private
+    # Provides a way to notify of an exception that is not tied to any
+    # particular example (such as an exception encountered in a :suite hook).
+    # Exceptions will be formatted the same way they normally are.
+    def notify_non_example_exception: (untyped exception, untyped context_description) -> untyped
+
+    # @private
+    def finish: () -> untyped
+
+    # @private
+    def close_after: () { () -> untyped } -> untyped
+
+    # @private
+    def stop: () -> untyped
+
+    # @private
+    def notify: (untyped event, untyped notification) -> untyped
+
+    # @private
+    def abort_with: (untyped msg, untyped exit_status) -> untyped
+
+    # @private
+    def fail_fast_limit_met?: () -> (false | untyped)
+
+    private
+
+    def ensure_listeners_ready: () -> (nil | untyped)
+
+    def close: () -> untyped
+
+    def mute_profile_output?: () -> untyped
+
+    def seed_used?: () -> untyped
+  end
+
+  # @private
+  # # Used in place of a {Reporter} for situations where we don't want reporting output.
+  class NullReporter
+    def self.method_missing: () -> nil
+  end
+end

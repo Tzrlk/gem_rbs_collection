@@ -1,0 +1,35 @@
+module RSpec
+  module Core
+    # @private
+    # Generates conventional files for an RSpec project.
+    class ProjectInitializer
+      @destination: untyped
+
+      @stream: untyped
+
+      @template_path: untyped
+
+      attr_reader destination: untyped
+
+      attr_reader stream: untyped
+
+      attr_reader template_path: untyped
+
+      DOT_RSPEC_FILE: ".rspec"
+
+      SPEC_HELPER_FILE: "spec/spec_helper.rb"
+
+      def initialize: (?::Hash[untyped, untyped] opts) -> void
+
+      def run: () -> untyped
+
+      private
+
+      def copy_template: (untyped file) -> untyped
+
+      def report_exists: (untyped file) -> untyped
+
+      def report_creating: (untyped file) -> untyped
+    end
+  end
+end

@@ -1,0 +1,24 @@
+module RSpec
+  module Core
+    module Formatters
+      # @api private
+      # Formatter for providing message output as a fallback when no other
+      # profiler implements #message
+      class FallbackMessageFormatter
+        @output: untyped
+
+        def initialize: (untyped output) -> void
+
+        # @private
+        attr_reader output: untyped
+
+        # @api public
+        #
+        # Used by the reporter to send messages to the output stream.
+        #
+        # @param notification [MessageNotification] containing message
+        def message: (untyped notification) -> untyped
+      end
+    end
+  end
+end

@@ -1,0 +1,20 @@
+module RSpec
+  module Core
+    module MockingAdapters
+      # @private
+      module Mocha
+        def self.framework_name: () -> :mocha
+
+        include ::Mocha::API
+
+        include ::Mocha::Standalone
+
+        def setup_mocks_for_rspec: () -> untyped
+
+        def verify_mocks_for_rspec: () -> untyped
+
+        def teardown_mocks_for_rspec: () -> untyped
+      end
+    end
+  end
+end

@@ -1,0 +1,123 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class DeprecationFormatter
+        @deprecation_stream: untyped
+
+        @summary_stream: untyped
+
+        @seen_deprecations: untyped
+
+        @count: untyped
+
+        @printer: untyped
+
+        attr_reader count: untyped
+
+        attr_reader deprecation_stream: untyped
+
+        attr_reader summary_stream: untyped
+
+        def initialize: (untyped deprecation_stream, untyped summary_stream) -> void
+
+        alias output deprecation_stream
+
+        def printer: () -> untyped
+
+        def deprecation: (untyped notification) -> (nil | untyped)
+
+        def deprecation_summary: (untyped _notification) -> untyped
+
+        def deprecation_message_for: (untyped data) -> untyped
+
+        RAISE_ERROR_CONFIG_NOTICE: untyped
+
+        DEPRECATION_STREAM_NOTICE: "Pass `--deprecation-out` or set `config.deprecation_stream` to a file for full output."
+
+        TOO_MANY_WARNINGS_NOTICE: ::String
+
+        # @private
+        SpecifiedDeprecationMessage: untyped
+
+        # @private
+        GeneratedDeprecationMessage: untyped
+
+        # @private
+        class ImmediatePrinter
+          @deprecation_stream: untyped
+
+          @summary_stream: untyped
+
+          @deprecation_formatter: untyped
+
+          attr_reader deprecation_stream: untyped
+
+          attr_reader summary_stream: untyped
+
+          attr_reader deprecation_formatter: untyped
+
+          def initialize: (untyped deprecation_stream, untyped summary_stream, untyped deprecation_formatter) -> void
+
+          def print_deprecation_message: (untyped data) -> untyped
+
+          def deprecation_summary: () -> (nil | untyped)
+        end
+
+        # @private
+        class DelayedPrinter
+          @deprecation_stream: untyped
+
+          @summary_stream: untyped
+
+          @deprecation_formatter: untyped
+
+          @seen_deprecations: untyped
+
+          @deprecation_messages: untyped
+
+          TOO_MANY_USES_LIMIT: 4
+
+          attr_reader deprecation_stream: untyped
+
+          attr_reader summary_stream: untyped
+
+          attr_reader deprecation_formatter: untyped
+
+          def initialize: (untyped deprecation_stream, untyped summary_stream, untyped deprecation_formatter) -> void
+
+          def print_deprecation_message: (untyped data) -> untyped
+
+          def stash_deprecation_message: (untyped deprecation_message) -> (untyped | untyped | nil)
+
+          def deprecation_summary: () -> (nil | untyped)
+
+          def print_deferred_deprecation_warnings: () -> untyped
+        end
+
+        # @private
+        # Not really a stream, but is usable in place of one.
+        class RaiseErrorStream
+          def puts: (untyped message) -> untyped
+
+          def summarize: (untyped summary_stream, untyped deprecation_count) -> untyped
+        end
+
+        # @private
+        # Wraps a File object and provides file-specific operations.
+        class FileStream
+          @file: untyped
+
+          def initialize: (untyped file) -> void
+
+          def puts: (*untyped args) -> untyped
+
+          def summarize: (untyped summary_stream, untyped deprecation_count) -> untyped
+        end
+      end
+    end
+
+    # Deprecation Error.
+    DeprecationError: untyped
+  end
+end

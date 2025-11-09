@@ -1,0 +1,31 @@
+module RSpec
+  module Core
+    module Bisect
+      # The main entry point into the bisect logic. Coordinates among:
+      #   - Bisect::ShellCommand: Generates shell commands to run spec subsets
+      #   - Bisect::ExampleMinimizer: Contains the core bisect logic.
+      #   - A bisect runner: runs a set of examples and returns the results.
+      #   - A bisect formatter: provides progress updates to the user.
+      # @private
+      class Coordinator
+        @spec_runner: untyped
+
+        @shell_command: untyped
+
+        @notifier: untyped
+
+        def self.bisect_with: (untyped spec_runner, untyped original_cli_args, untyped formatter) -> untyped
+
+        def initialize: (untyped spec_runner, untyped original_cli_args, untyped formatter) -> void
+
+        def bisect: () -> untyped
+
+        private
+
+        def start_bisect_runner: () { (?) -> untyped } -> untyped
+
+        def gracefully_abort_on_sigint: (untyped minimizer) -> untyped
+      end
+    end
+  end
+end

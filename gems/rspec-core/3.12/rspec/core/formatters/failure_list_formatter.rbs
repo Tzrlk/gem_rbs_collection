@@ -1,0 +1,18 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class FailureListFormatter < BaseFormatter
+        def example_failed: (untyped failure) -> untyped
+
+        # Discard profile and messages
+        #
+        # These outputs are not really relevant in the context of this failure
+        # list formatter.
+        def dump_profile: (untyped _profile) -> nil
+
+        def message: (untyped _message) -> nil
+      end
+    end
+  end
+end

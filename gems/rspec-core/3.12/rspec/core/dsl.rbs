@@ -1,0 +1,57 @@
+module RSpec
+  module Core
+    # DSL defines methods to group examples, most notably `describe`,
+    # and exposes them as class methods of {RSpec}. They can also be
+    # exposed globally (on `main` and instances of `Module`) through
+    # the {Configuration} option `expose_dsl_globally`.
+    #
+    # By default the methods `describe`, `context` and `example_group`
+    # are exposed. These methods define a named context for one or
+    # more examples. The given block is evaluated in the context of
+    # a generated subclass of {RSpec::Core::ExampleGroup}.
+    #
+    # ## Examples:
+    #
+    #     RSpec.describe "something" do
+    #       context "when something is a certain way" do
+    #         it "does something" do
+    #           # example code goes here
+    #         end
+    #       end
+    #     end
+    #
+    # @see ExampleGroup
+    # @see ExampleGroup.example_group
+    module DSL
+      self.@example_group_aliases: untyped
+
+      self.@exposed_globally: untyped
+
+      # @private
+      def self.example_group_aliases: () -> untyped
+
+      # @private
+      def self.exposed_globally?: () -> untyped
+
+      # @private
+      def self.expose_example_group_alias: (untyped name) -> (nil | untyped)
+
+      # @private
+      attr_accessor self.top_level: untyped
+
+      # Adds the describe method to Module and the top level binding.
+      # @api private
+      def self.expose_globally!: () -> (nil | untyped)
+
+      # Removes the describe method from Module and the top level binding.
+      # @api private
+      def self.remove_globally!: () -> (nil | untyped)
+
+      # @private
+      def self.expose_example_group_alias_globally: (untyped method_name) -> untyped
+
+      # @private
+      def self.change_global_dsl: () { (?) -> untyped } -> untyped
+    end
+  end
+end

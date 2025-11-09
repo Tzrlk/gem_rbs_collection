@@ -1,0 +1,109 @@
+module RSpec
+  module Core
+    # Contains metadata filtering logic. This has been extracted from
+    # the metadata classes because it operates ON a metadata hash but
+    # does not manage any of the state in the hash. We're moving towards
+    # having metadata be a raw hash (not a custom subclass), so externalizing
+    # this filtering logic helps us move in that direction.
+    module MetadataFilter
+      # @private
+      def self.apply?: (untyped predicate, untyped filters, untyped metadata) -> untyped
+
+      # @private
+      def self.filter_applies?: (untyped key, untyped filter_value, untyped metadata) -> untyped
+
+      # @private
+      def self.silence_metadata_example_group_deprecations: () { () -> untyped } -> untyped
+
+      private
+
+      def self.filter_applies_to_any_value?: (untyped key, untyped value, untyped metadata) -> untyped
+
+      def self.id_filter_applies?: (untyped rerun_paths_to_scoped_ids, untyped metadata) -> (false | untyped)
+
+      def self.location_filter_applies?: (untyped locations, untyped metadata) -> untyped
+
+      def self.proc_filter_applies?: (untyped key, untyped proc, untyped metadata) -> untyped
+
+      def self.filters_apply?: (untyped key, untyped value, untyped metadata) -> (false | untyped)
+    end
+
+    # Tracks a collection of filterable items (e.g. modules, hooks, etc)
+    # and provides an optimized API to get the applicable items for the
+    # metadata of an example or example group.
+    #
+    # There are two implementations, optimized for different uses.
+    # @private
+    module FilterableItemRepository
+      # This implementation is simple, and is optimized for frequent
+      # updates but rare queries. `append` and `prepend` do no extra
+      # processing, and no internal memoization is done, since this
+      # is not optimized for queries.
+      #
+      # This is ideal for use by a example or example group, which may
+      # be updated multiple times with globally configured hooks, etc,
+      # but will not be queried frequently by other examples or example
+      # groups.
+      # @private
+      class UpdateOptimized
+        @applies_predicate: untyped
+
+        @items_and_filters: untyped
+
+        attr_reader items_and_filters: untyped
+
+        def initialize: (untyped applies_predicate) -> void
+
+        def append: (untyped item, untyped metadata) -> untyped
+
+        def prepend: (untyped item, untyped metadata) -> untyped
+
+        def delete: (untyped item, untyped metadata) -> untyped
+
+        def items_for: (untyped request_meta) -> untyped
+      end
+
+      # This implementation is much more complex, and is optimized for
+      # rare (or hopefully no) updates once the queries start. Updates
+      # incur a cost as it has to clear the memoization and keep track
+      # of applicable keys. Queries will be O(N) the first time an item
+      # is provided with a given set of applicable metadata; subsequent
+      # queries with items with the same set of applicable metadata will
+      # be O(1) due to internal memoization.
+      #
+      # This is ideal for use by config, where filterable items (e.g. hooks)
+      # are typically added at the start of the process (e.g. in `spec_helper`)
+      # and then repeatedly queried as example groups and examples are defined.
+      # @private
+      class QueryOptimized < UpdateOptimized
+        @applicable_keys: untyped
+
+        @proc_keys: untyped
+
+        @memoized_lookups: untyped
+
+        alias find_items_for items_for
+
+        def initialize: (untyped applies_predicate) -> void
+
+        def append: (untyped item, untyped metadata) -> untyped
+
+        def prepend: (untyped item, untyped metadata) -> untyped
+
+        def delete: (untyped item, untyped metadata) -> untyped
+
+        def items_for: (untyped metadata) -> untyped
+
+        private
+
+        def reconstruct_caches: () -> untyped
+
+        def handle_mutation: (untyped metadata) -> untyped
+
+        def applicable_metadata_from: (untyped metadata) -> untyped
+
+        def proc_keys_from: (untyped metadata) -> untyped
+      end
+    end
+  end
+end

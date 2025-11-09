@@ -1,0 +1,367 @@
+module RSpec
+  module Core
+    # Wrapper for an instance of a subclass of {ExampleGroup}. An instance of
+    # `RSpec::Core::Example` is returned by example definition methods
+    # such as {ExampleGroup.it it} and is yielded to the {ExampleGroup.it it},
+    # {Hooks#before before}, {Hooks#after after}, {Hooks#around around},
+    # {MemoizedHelpers::ClassMethods#let let} and
+    # {MemoizedHelpers::ClassMethods#subject subject} blocks.
+    #
+    # This allows us to provide rich metadata about each individual
+    # example without adding tons of methods directly to the ExampleGroup
+    # that users may inadvertently redefine.
+    #
+    # Useful for configuring logging and/or taking some action based
+    # on the state of an example's metadata.
+    #
+    # @example
+    #
+    #     RSpec.configure do |config|
+    #       config.before do |example|
+    #         log example.description
+    #       end
+    #
+    #       config.after do |example|
+    #         log example.description
+    #       end
+    #
+    #       config.around do |example|
+    #         log example.description
+    #         example.run
+    #       end
+    #     end
+    #
+    #     shared_examples "auditable" do
+    #       it "does something" do
+    #         log "#{example.full_description}: #{auditable.inspect}"
+    #         auditable.should do_something
+    #       end
+    #     end
+    #
+    # @see ExampleGroup
+    # @note Example blocks are evaluated in the context of an instance
+    #   of an `ExampleGroup`, not in the context of an instance of `Example`.
+    class Example
+      @location_rerun_argument: untyped
+
+      @id: untyped
+
+      @example_group_class: untyped
+
+      @example_block: untyped
+
+      @metadata: untyped
+
+      @example_group_instance: untyped
+
+      @clock: untyped
+
+      @reporter: untyped
+
+      @exception: untyped
+
+      # @private
+      #
+      # Used to define methods that delegate to this example's metadata.
+      def self.delegate_to_metadata: (untyped key) -> untyped
+
+      # Returns the string submitted to `example` or its aliases (e.g.
+      # `specify`, `it`, etc). If no string is submitted (e.g.
+      # `it { is_expected.to do_something }`) it returns the message generated
+      # by the matcher if there is one, otherwise returns a message including
+      # the location of the example.
+      def description: () -> untyped
+
+      # Returns a description of the example that always includes the location.
+      def inspect_output: () -> untyped
+
+      # Returns the location-based argument that can be passed to the `rspec` command to rerun this example.
+      def location_rerun_argument: () -> untyped
+
+      # Returns the location-based argument that can be passed to the `rspec` command to rerun this example.
+      #
+      # @deprecated Use {#location_rerun_argument} instead.
+      # @note If there are multiple examples identified by this location, they will use {#id}
+      #   to rerun instead, but this method will still return the location (that's why it is deprecated!).
+      def rerun_argument: () -> untyped
+
+      # @return [String] the unique id of this example. Pass
+      #   this at the command line to re-run this exact example.
+      def id: () -> untyped
+
+      # @private
+      def self.parse_id: (untyped id) -> untyped
+
+      # Duplicates the example and overrides metadata with the provided
+      # hash.
+      #
+      # @param metadata_overrides [Hash] the hash to override the example metadata
+      # @return [Example] a duplicate of the example with modified metadata
+      def duplicate_with: (?::Hash[untyped, untyped] metadata_overrides) -> untyped
+
+      # @private
+      def update_inherited_metadata: (untyped updates) -> untyped
+
+      # @attr_reader
+      #
+      # Returns the first exception raised in the context of running this
+      # example (nil if no exception is raised).
+      attr_reader exception: untyped
+
+      # @attr_reader
+      #
+      # Returns the metadata object associated with this example.
+      attr_reader metadata: untyped
+
+      # @attr_reader
+      # @private
+      #
+      # Returns the example_group_instance that provides the context for
+      # running this example.
+      attr_reader example_group_instance: untyped
+
+      # @attr
+      # @private
+      attr_accessor clock: untyped
+
+      # Creates a new instance of Example.
+      # @param example_group_class [Class] the subclass of ExampleGroup in which
+      #   this Example is declared
+      # @param description [String] the String passed to the `it` method (or
+      #   alias)
+      # @param user_metadata [Hash] additional args passed to `it` to be used as
+      #   metadata
+      # @param example_block [Proc] the block of code that represents the
+      #   example
+      # @api private
+      def initialize: (untyped example_group_class, untyped description, untyped user_metadata, ?untyped? example_block) -> void
+
+      # Provide a human-readable representation of this class
+      def inspect: () -> ::String
+
+      alias to_s inspect
+
+      # @return [RSpec::Core::Reporter] the current reporter for the example
+      attr_reader reporter: untyped
+
+      # Returns the example group class that provides the context for running
+      # this example.
+      def example_group: () -> untyped
+
+      def pending?: () -> untyped
+
+      def skipped?: () -> untyped
+
+      # @api private
+      # instance_execs the block passed to the constructor in the context of
+      # the instance of {ExampleGroup}.
+      # @param example_group_instance the instance of an ExampleGroup subclass
+      def run: (untyped example_group_instance, untyped reporter) -> untyped
+
+      # :nocov:
+      # For some reason, rescuing `Support::AllExceptionsExceptOnesWeMustNotRescue`
+      # in place of `Exception` above can cause the exit status to be the wrong
+      # thing. I have no idea why. See:
+      # https://github.com/rspec/rspec-core/pull/2063#discussion_r38284978
+      # @private
+      AllExceptionsExcludingDangerousOnesOnRubiesThatAllowIt: untyped
+
+      # @private
+      AllExceptionsExcludingDangerousOnesOnRubiesThatAllowIt: untyped
+
+      # Wraps both a `Proc` and an {Example} for use in {Hooks#around
+      # around} hooks. In around hooks we need to yield this special
+      # kind of object (rather than the raw {Example}) because when
+      # there are multiple `around` hooks we have to wrap them recursively.
+      #
+      # @example
+      #
+      #     RSpec.configure do |c|
+      #       c.around do |ex| # Procsy which wraps the example
+      #         if ex.metadata[:key] == :some_value && some_global_condition
+      #           raise "some message"
+      #         end
+      #         ex.run         # run delegates to ex.call.
+      #       end
+      #     end
+      #
+      # @note This class also exposes the instance methods of {Example},
+      #   proxying them through to the wrapped {Example} instance.
+      class Procsy
+        @executed: untyped
+
+        @example: untyped
+
+        @proc: untyped
+
+        # The {Example} instance.
+        attr_reader example: untyped
+
+        # Calls the proc and notes that the example has been executed.
+        def call: (*untyped args) { (?) -> untyped } -> untyped
+
+        alias run call
+
+        # Provides a wrapped proc that will update our `executed?` state when
+        # executed.
+        def to_proc: () -> untyped
+
+        def initialize: (untyped example) { (?) -> untyped } -> void
+
+        # @private
+        def wrap: () { (?) -> untyped } -> untyped
+
+        # Indicates whether or not the around hook has executed the example.
+        def executed?: () -> untyped
+
+        # @private
+        def inspect: () -> untyped
+      end
+
+      # @private
+      #
+      # The exception that will be displayed to the user -- either the failure of
+      # the example or the `pending_exception` if the example is pending.
+      def display_exception: () -> untyped
+
+      # @private
+      #
+      # Assigns the exception that will be displayed to the user -- either the failure of
+      # the example or the `pending_exception` if the example is pending.
+      def display_exception=: (untyped ex) -> untyped
+
+      # @private
+      #
+      # Used internally to set an exception in an after hook, which
+      # captures the exception but doesn't raise it.
+      def set_exception: (untyped exception) -> untyped
+
+      # @private
+      #
+      # Used to set the exception when `aggregate_failures` fails.
+      def set_aggregate_failures_exception: (untyped exception) -> untyped
+
+      # @private
+      #
+      # Used internally to set an exception and fail without actually executing
+      # the example when an exception is raised in before(:context).
+      def fail_with_exception: (untyped reporter, untyped exception) -> untyped
+
+      # @private
+      #
+      # Used internally to skip without actually executing the example when
+      # skip is used in before(:context).
+      def skip_with_exception: (untyped reporter, untyped exception) -> untyped
+
+      # @private
+      def instance_exec: (*untyped args) { (?) -> untyped } -> untyped
+
+      private
+
+      def hooks: () -> untyped
+
+      def with_around_example_hooks: () { () -> untyped } -> untyped
+
+      def start: (untyped reporter) -> untyped
+
+      def finish: (untyped reporter) -> untyped
+
+      def record_finished: (untyped status, untyped reporter) -> untyped
+
+      def run_before_example: () -> untyped
+
+      def with_around_and_singleton_context_hooks: () { () -> untyped } -> untyped
+
+      def run_after_example: () -> untyped
+
+      def verify_mocks: () -> untyped
+
+      def mocks_need_verification?: () -> untyped
+
+      def assign_generated_description: () -> untyped
+
+      def generate_description: () -> untyped
+
+      def location_description: () -> ::String
+
+      # Represents the result of executing an example.
+      # Behaves like a hash for backwards compatibility.
+      class ExecutionResult
+        include HashImitatable
+
+        # @return [Symbol] `:passed`, `:failed` or `:pending`.
+        attr_accessor status: untyped
+
+        # @return [Exception, nil] The failure, if there was one.
+        attr_accessor exception: untyped
+
+        # @return [Time] When the example started.
+        attr_accessor started_at: untyped
+
+        # @return [Time] When the example finished.
+        attr_accessor finished_at: untyped
+
+        # @return [Float] How long the example took in seconds.
+        attr_accessor run_time: untyped
+
+        # @return [String, nil] The reason the example was pending,
+        #   or nil if the example was not pending.
+        attr_accessor pending_message: untyped
+
+        # @return [Exception, nil] The exception triggered while
+        #   executing the pending example. If no exception was triggered
+        #   it would no longer get a status of `:pending` unless it was
+        #   tagged with `:skip`.
+        attr_accessor pending_exception: untyped
+
+        # @return [Boolean] For examples tagged with `:pending`,
+        #   this indicates whether or not it now passes.
+        attr_accessor pending_fixed: untyped
+
+        def pending_fixed?: () -> untyped
+
+        # @return [Boolean] Indicates if the example was completely skipped
+        #   (typically done via `:skip` metadata or the `skip` method). Skipped examples
+        #   will have a `:pending` result. A `:pending` result can also come from examples
+        #   that were marked as `:pending`, which causes them to be run, and produces a
+        #   `:failed` result if the example passes.
+        def example_skipped?: () -> untyped
+
+        # @api private
+        # Records the finished status of the example.
+        def record_finished: (untyped status, untyped finished_at) -> untyped
+
+        # @api private
+        # Populates finished_at and run_time if it has not yet been set
+        def ensure_timing_set: (untyped clock) -> (untyped | nil)
+
+        private
+
+        def calculate_run_time: (untyped finished_at) -> untyped
+
+        # For backwards compatibility we present `status` as a string
+        # when presenting the legacy hash interface.
+        def hash_for_delegation: () -> untyped
+
+        def set_value: (untyped name, untyped value) -> untyped
+
+        def get_value: (untyped name) -> (untyped | nil | untyped)
+
+        def issue_deprecation: (untyped _method_name, *untyped _args) -> untyped
+      end
+    end
+
+    # @private
+    # Provides an execution context for before/after :suite hooks.
+    class SuiteHookContext < Example
+      @example_group_instance: untyped
+
+      @reporter: untyped
+
+      def initialize: (untyped hook_description, untyped reporter) -> void
+
+      # rubocop:disable Naming/AccessorMethodName
+      def set_exception: (untyped exception) -> untyped
+    end
+  end
+end

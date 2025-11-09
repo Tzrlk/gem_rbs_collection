@@ -1,0 +1,38 @@
+module RSpec
+  module Core
+    # Exposes {ExampleGroup}-level methods to a module, so you can include that
+    # module in an {ExampleGroup}.
+    #
+    # @example
+    #
+    #     module LoggedInAsAdmin
+    #       extend RSpec::Core::SharedContext
+    #       before(:example) do
+    #         log_in_as :admin
+    #       end
+    #     end
+    #
+    #     describe "admin section" do
+    #       include LoggedInAsAdmin
+    #       # ...
+    #     end
+    module SharedContext
+      @__shared_context_recordings: untyped
+
+      # @private
+      def included: (untyped group) -> untyped
+
+      # @private
+      def __shared_context_recordings: () -> untyped
+
+      # @private
+      Recording: untyped
+
+      # @private
+      def self.record: (untyped methods) -> untyped
+    end
+  end
+
+  # @private
+  SharedContext: untyped
+end

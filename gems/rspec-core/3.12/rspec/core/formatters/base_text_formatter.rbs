@@ -1,0 +1,51 @@
+module RSpec
+  module Core
+    module Formatters
+      # Base for all of RSpec's built-in formatters. See
+      # RSpec::Core::Formatters::BaseFormatter to learn more about all of the
+      # methods called by the reporter.
+      #
+      # @see RSpec::Core::Formatters::BaseFormatter
+      # @see RSpec::Core::Reporter
+      class BaseTextFormatter < BaseFormatter
+        # @api public
+        #
+        # Used by the reporter to send messages to the output stream.
+        #
+        # @param notification [MessageNotification] containing message
+        def message: (untyped notification) -> untyped
+
+        # @api public
+        #
+        # Dumps detailed information about each example failure.
+        #
+        # @param notification [NullNotification]
+        def dump_failures: (untyped notification) -> (nil | untyped)
+
+        # @api public
+        #
+        # This method is invoked after the dumping of examples and failures.
+        # Each parameter is assigned to a corresponding attribute.
+        #
+        # @param summary [SummaryNotification] containing duration,
+        #   example_count, failure_count and pending_count
+        def dump_summary: (untyped summary) -> untyped
+
+        # @private
+        def dump_pending: (untyped notification) -> (nil | untyped)
+
+        # @private
+        def seed: (untyped notification) -> (nil | untyped)
+
+        # @api public
+        #
+        # Invoked at the end of a suite run. Allows the formatter to do any
+        # tidying up, but be aware that formatter output streams may be used
+        # elsewhere so don't actually close them.
+        #
+        # @param _notification [NullNotification] (Ignored)
+        def close: (untyped _notification) -> (nil | untyped)
+      end
+    end
+  end
+end

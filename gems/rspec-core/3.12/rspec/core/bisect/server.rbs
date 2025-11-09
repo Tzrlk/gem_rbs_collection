@@ -1,0 +1,35 @@
+module RSpec
+  module Core
+    # @private
+    module Bisect
+      # @private
+      # A DRb server that receives run results from a separate RSpec process
+      # started by the bisect process.
+      class Server
+        # We pass `nil` as the first arg to allow it to pick a DRb port.
+        @drb: untyped
+
+        @drb_port: untyped
+
+        def self.run: () { (untyped) -> untyped } -> untyped
+
+        def capture_run_results: (?untyped files_or_directories_to_run, ?untyped expected_failures) { () -> untyped } -> untyped
+
+        def start: () -> untyped
+
+        def stop: () -> untyped
+
+        def drb_port: () -> untyped
+
+        # Fetched via DRb by the BisectDRbFormatter to determine when to abort.
+        attr_accessor expected_failures: untyped
+
+        # Set via DRb by the BisectDRbFormatter with the results of the run.
+        attr_accessor latest_run_results: untyped
+
+        # Fetched via DRb to tell clients which files to run
+        attr_accessor files_or_directories_to_run: untyped
+      end
+    end
+  end
+end

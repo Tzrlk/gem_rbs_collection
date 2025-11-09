@@ -1,0 +1,52 @@
+module RSpec
+  module Core
+    module Formatters
+      # @private
+      class HtmlPrinter
+        @output: untyped
+
+        include ERB::Util
+
+        def initialize: (untyped output) -> void
+
+        def print_html_start: () -> untyped
+
+        def print_example_group_end: () -> untyped
+
+        def print_example_group_start: (untyped group_id, untyped description, untyped number_of_parents) -> untyped
+
+        def print_example_passed: (untyped description, untyped run_time) -> untyped
+
+        def print_example_failed: (untyped pending_fixed, untyped description, untyped run_time, untyped failure_id, untyped exception, untyped extra_content) -> untyped
+
+        def print_example_pending: (untyped description, untyped pending_message) -> untyped
+
+        def print_summary: (untyped duration, untyped example_count, untyped failure_count, untyped pending_count) -> untyped
+
+        def flush: () -> untyped
+
+        def move_progress: (untyped percent_done) -> untyped
+
+        def make_header_red: () -> untyped
+
+        def make_header_yellow: () -> untyped
+
+        def make_example_group_header_red: (untyped group_id) -> untyped
+
+        def make_example_group_header_yellow: (untyped group_id) -> untyped
+
+        private
+
+        def indentation_style: (untyped number_of_parents) -> ::String
+
+        REPORT_HEADER: "<div class=\"rspec-report\">\n\n<div id=\"rspec-header\">\n  <div id=\"label\">\n    <h1>RSpec Code Examples</h1>\n  </div>\n\n  <div id=\"display-filters\">\n    <input id=\"passed_checkbox\"  name=\"passed_checkbox\"  type=\"checkbox\" checked=\"checked\" onchange=\"apply_filters()\" value=\"1\" /> <label for=\"passed_checkbox\">Passed</label>\n    <input id=\"failed_checkbox\"  name=\"failed_checkbox\"  type=\"checkbox\" checked=\"checked\" onchange=\"apply_filters()\" value=\"2\" /> <label for=\"failed_checkbox\">Failed</label>\n    <input id=\"pending_checkbox\" name=\"pending_checkbox\" type=\"checkbox\" checked=\"checked\" onchange=\"apply_filters()\" value=\"3\" /> <label for=\"pending_checkbox\">Pending</label>\n  </div>\n\n  <div id=\"summary\">\n    <p id=\"totals\">&#160;</p>\n    <p id=\"duration\">&#160;</p>\n  </div>\n</div>\n\n\n<div class=\"results\">\n"
+
+        GLOBAL_SCRIPTS: "\nfunction addClass(element_id, classname) {\n  document.getElementById(element_id).className += (\" \" + classname);\n}\n\nfunction removeClass(element_id, classname) {\n  var elem = document.getElementById(element_id);\n  var classlist = elem.className.replace(classname,'');\n  elem.className = classlist;\n}\n\nfunction moveProgressBar(percentDone) {\n  document.getElementById(\"rspec-header\").style.width = percentDone +\"%\";\n}\n\nfunction makeRed(element_id) {\n  removeClass(element_id, 'passed');\n  removeClass(element_id, 'not_implemented');\n  addClass(element_id,'failed');\n}\n\nfunction makeYellow(element_id) {\n  var elem = document.getElementById(element_id);\n  if (elem.className.indexOf(\"failed\") == -1) {  // class doesn't includes failed\n    if (elem.className.indexOf(\"not_implemented\") == -1) { // class doesn't include not_implemented\n      removeClass(element_id, 'passed');\n      addClass(element_id,'not_implemented');\n    }\n  }\n}\n\nfunction apply_filters() {\n  var passed_filter = document.getElementById('passed_checkbox').checked;\n  var failed_filter = document.getElementById('failed_checkbox').checked;\n  var pending_filter = document.getElementById('pending_checkbox').checked;\n\n  assign_display_style(\"example passed\", passed_filter);\n  assign_display_style(\"example failed\", failed_filter);\n  assign_display_style(\"example not_implemented\", pending_filter);\n\n  assign_display_style_for_group(\"example_group passed\", passed_filter);\n  assign_display_style_for_group(\"example_group not_implemented\", pending_filter, pending_filter || passed_filter);\n  assign_display_style_for_group(\"example_group failed\", failed_filter, failed_filter || pending_filter || passed_filter);\n}\n\nfunction get_display_style(display_flag) {\n  var style_mode = 'none';\n  if (display_flag == true) {\n    style_mode = 'block';\n  }\n  return style_mode;\n}\n\nfunction assign_display_style(classname, display_flag) {\n  var style_mode = get_display_style(display_flag);\n  var elems = document.getElementsByClassName(classname)\n  for (var i=0; i<elems.length;i++) {\n    elems[i].style.display = style_mode;\n  }\n}\n\nfunction assign_display_style_for_group(classname, display_flag, subgroup_flag) {\n  var display_style_mode = get_display_style(display_flag);\n  var subgroup_style_mode = get_display_style(subgroup_flag);\n  var elems = document.getElementsByClassName(classname)\n  for (var i=0; i<elems.length;i++) {\n    var style_mode = display_style_mode;\n    if ((display_flag != subgroup_flag) && (elems[i].getElementsByTagName('dt')[0].innerHTML.indexOf(\", \") != -1)) {\n      elems[i].style.display = subgroup_style_mode;\n    } else {\n      elems[i].style.display = display_style_mode;\n    }\n  }\n}\n"
+
+        GLOBAL_STYLES: "#rspec-header {\n  background: #65C400; color: #fff; height: 4em;\n}\n\n.rspec-report h1 {\n  margin: 0px 10px 0px 10px;\n  padding: 10px;\n  font-family: \"Lucida Grande\", Helvetica, sans-serif;\n  font-size: 1.8em;\n  position: absolute;\n}\n\n#label {\n  float:left;\n}\n\n#display-filters {\n  float:left;\n  padding: 28px 0 0 40%;\n  font-family: \"Lucida Grande\", Helvetica, sans-serif;\n}\n\n#summary {\n  float:right;\n  padding: 5px 10px;\n  font-family: \"Lucida Grande\", Helvetica, sans-serif;\n  text-align: right;\n}\n\n#summary p {\n  margin: 0 0 0 2px;\n}\n\n#summary #totals {\n  font-size: 1.2em;\n}\n\n.example_group {\n  margin: 0 10px 5px;\n  background: #fff;\n}\n\ndl {\n  margin: 0; padding: 0 0 5px;\n  font: normal 11px \"Lucida Grande\", Helvetica, sans-serif;\n}\n\ndt {\n  padding: 3px;\n  background: #65C400;\n  color: #fff;\n  font-weight: bold;\n}\n\ndd {\n  margin: 5px 0 5px 5px;\n  padding: 3px 3px 3px 18px;\n}\n\ndd .duration {\n  padding-left: 5px;\n  text-align: right;\n  right: 0px;\n  float:right;\n}\n\ndd.example.passed {\n  border-left: 5px solid #65C400;\n  border-bottom: 1px solid #65C400;\n  background: #DBFFB4; color: #3D7700;\n}\n\ndd.example.not_implemented {\n  border-left: 5px solid #FAF834;\n  border-bottom: 1px solid #FAF834;\n  background: #FCFB98; color: #131313;\n}\n\ndd.example.pending_fixed {\n  border-left: 5px solid #0000C2;\n  border-bottom: 1px solid #0000C2;\n  color: #0000C2; background: #D3FBFF;\n}\n\ndd.example.failed {\n  border-left: 5px solid #C20000;\n  border-bottom: 1px solid #C20000;\n  color: #C20000; background: #FFFBD3;\n}\n\n\ndt.not_implemented {\n  color: #000000; background: #FAF834;\n}\n\ndt.pending_fixed {\n  color: #FFFFFF; background: #C40D0D;\n}\n\ndt.failed {\n  color: #FFFFFF; background: #C40D0D;\n}\n\n\n#rspec-header.not_implemented {\n  color: #000000; background: #FAF834;\n}\n\n#rspec-header.pending_fixed {\n  color: #FFFFFF; background: #C40D0D;\n}\n\n#rspec-header.failed {\n  color: #FFFFFF; background: #C40D0D;\n}\n\n\n.backtrace {\n  color: #000;\n  font-size: 12px;\n}\n\na {\n  color: #BE5C00;\n}\n\n/* Ruby code, style similar to vibrant ink */\n.ruby {\n  font-size: 12px;\n  font-family: monospace;\n  color: white;\n  background-color: black;\n  padding: 0.1em 0 0.2em 0;\n}\n\n.ruby .keyword { color: #FF6600; }\n.ruby .constant { color: #339999; }\n.ruby .attribute { color: white; }\n.ruby .global { color: white; }\n.ruby .module { color: white; }\n.ruby .class { color: white; }\n.ruby .string { color: #66FF00; }\n.ruby .ident { color: white; }\n.ruby .method { color: #FFCC00; }\n.ruby .number { color: white; }\n.ruby .char { color: white; }\n.ruby .comment { color: #9933CC; }\n.ruby .symbol { color: white; }\n.ruby .regex { color: #44B4CC; }\n.ruby .punct { color: white; }\n.ruby .escape { color: white; }\n.ruby .interp { color: white; }\n.ruby .expr { color: white; }\n\n.ruby .offending { background-color: gray; }\n.ruby .linenum {\n  width: 75px;\n  padding: 0.1em 1em 0.2em 0;\n  color: #000000;\n  background-color: #FFFBD3;\n}\n"
+
+        HTML_HEADER: ::String
+      end
+    end
+  end
+end
