@@ -1,33 +1,35 @@
 module RSpec
-  module Core
-    # @private
-    #
-    # We use this to replace `::Set` so we can have the advantage of
-    # constant time key lookups for unique arrays but without the
-    # potential to pollute a developers environment with an extra
-    # piece of the stdlib. This helps to prevent false positive
-    # builds.
-    #
-    class Set
-      @values: untyped
+	module Core
+		class Set[T = untyped]
+			include Enumerable[T]
 
-      include Enumerable
+			@values: Hash[T, true]
 
-      def initialize: (?untyped array) -> void
+			def initialize
+				: (?Array[T]) -> void
 
-      def empty?: () -> untyped
+			def empty?
+				: () -> bool
 
-      def <<: (untyped key) -> self
+			def <<
+				: (T) -> self
 
-      def delete: (untyped key) -> untyped
+			def delete
+				: (T) -> true
+				| [R] (T) { (T) -> R } -> R # Might not _actually_ be legit.
 
-      def each: () { (?) -> untyped } -> self
+			def each
+				: () { (T) -> void } -> self
 
-      def include?: (untyped key) -> untyped
+			def include?
+				: (T) -> bool
 
-      def merge: (untyped values) -> self
+			def merge
+				: (_Each[T]) -> self
 
-      def clear: () -> self
-    end
-  end
+			def clear
+				: () -> self
+
+		end
+	end
 end

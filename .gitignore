@@ -7,6 +7,9 @@ tmp
 /gems/*/*/_test/Gemfile.back
 /gems/*/*/_test/Gemfile.lock.back
 
+# RBenv
+.ruby-version
+
 # IntelliJ
 .idea/
 *.iml
